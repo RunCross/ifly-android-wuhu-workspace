@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+<TextView 
+    android:id="@+id/txtBase"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_centerInParent="true"
+    />
+
+<TextView 
+    android:id="@+id/txtleft"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_toLeftOf="@id/txtBase"
+    android:layout_alignBottom="@id/txtBase"
+    
+    />
+<TextView 
+    android:id="@+id/txtright"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_toRightOf="@id/txtBase"
+    android:layout_alignBottom="@id/txtBase"
+    
+    />
+
+<TextView 
+    android:id="@+id/txttop"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_above="@id/txtBase"
+    android:layout_alignLeft="@id/txtBase"
+    
+    />
+<TextView 
+    android:id="@+id/txttopleft"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_toLeftOf="@id/txttop"
+    android:layout_alignBottom="@id/txttop"    
+    />
+<TextView 
+    android:id="@+id/txttopright"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_toRightOf="@id/txttop"
+    android:layout_alignBottom="@id/txttop"
+    
+    />
+<TextView 
+    android:id="@+id/txtbottom"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_below="@id/txtBase"
+    android:layout_alignLeft="@id/txtBase"
+    
+    />
+<TextView 
+    android:id="@+id/txtbottomleft"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_toLeftOf="@id/txtbottom"
+    android:layout_alignBottom="@id/txtbottom"
+    
+    />
+<TextView 
+    android:id="@+id/txtbottomright"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/qwe"
+    android:layout_toRightOf="@id/txtbottom"
+    android:layout_alignBottom="@id/txtbottom"
+    
+    />
+</RelativeLayout>

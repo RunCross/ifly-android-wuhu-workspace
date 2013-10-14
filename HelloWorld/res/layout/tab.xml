@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--     android:shrinkColumns="2"  扩展某列以占满-->
+<!--     android:collapseColumns="2" 收缩某列以显示全部行-->
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="2"
+     >
+    
+    <TableRow >
+        
+        <TextView 
+            android:text="tt"/>
+    </TableRow>
+
+    <TableRow >
+        <TextView 
+            android:text="tt"/>
+    </TableRow>
+</TableLayout>

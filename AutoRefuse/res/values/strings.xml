@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AutoRefuse</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="sure_ok">确认</string>
+    <string name="sure_check">勾选</string>
+    <string name="sure_users">用户/用户组</string>
+    <string name="sure_regular">规则</string>
+    <string name="group_name">组名</string>
+    <string name="group_count">人数</string>
+
+</resources>
