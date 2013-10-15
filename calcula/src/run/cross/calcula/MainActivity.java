@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener{
 
@@ -31,16 +32,19 @@ public class MainActivity extends Activity implements OnClickListener{
 	private Button btnclear;
 	//结果栏
 	private TextView result;
-	
-	
+	//输入标记
+	private boolean inputflag;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.comgrid);
+		
 		//初始化栈
 		initStack();
+		
 		//初始化组件
 		initView();
+		
 		//初始化监听
 		initListener();
 		
@@ -127,9 +131,13 @@ public class MainActivity extends Activity implements OnClickListener{
 		numb = new Stack<Double>();
 		sign = new Stack<Integer>();
 		sign.push(Integer.valueOf((int)'#'));
+		inputflag = true;
 //		cont = new String();
 	}
 
+	/**
+	 * 监听响应
+	 */
 	@Override
 	public void onClick(View v) {
 		Button btn = (Button) v;
@@ -146,6 +154,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			tst = tst + bst;
 			result.setText(tst);
 			numtemp = numtemp*10 + bst.charAt(0) - 48;
+			inputflag = true;
 		}
 		else {
 //			int num = 0;
@@ -165,14 +174,28 @@ public class MainActivity extends Activity implements OnClickListener{
 			case '-':
 			case '*':
 			case '/':
+				
+				//简易判断
+				if (!inputflag){
+					Toast.makeText(this, "输入错误", Toast.LENGTH_SHORT).show();
+					break;
+				}
+				
 				numb.push((double) numtemp);				
 				numtemp = 0.0;
 				sign.push((int) bst.charAt(0));
 				tst = tst + bst;
 				result.setText(tst);
+				inputflag = false;
 				break;
 			case '=':
-				//计算
+				//简易判断
+				if (!inputflag){
+					Toast.makeText(this, "输入错误", Toast.LENGTH_SHORT).show();
+					break;
+				}
+				
+				//计算				
 				numb.push((double) numtemp);				
 				numtemp = 0.0;
 				Cal();
