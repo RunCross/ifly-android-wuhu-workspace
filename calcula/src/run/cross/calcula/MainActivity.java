@@ -202,6 +202,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				numtemp = numb.peek();
 				tst= numb.pop().toString();
 				result.setText(tst);
+				inputflag = true;
 			}
 			
 		}
