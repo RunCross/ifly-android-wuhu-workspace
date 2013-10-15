@@ -20,7 +20,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	//符号栈
 	private Stack<Integer> sign;
 	//临时数字
-	private int numtemp = 0;
+	private Double numtemp = 0.0;
 	//数字按钮组
 	private Button[] btnum;
 	//符号按钮组
@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		if ("clear".equals(btn.getText().toString()))
 		{
 			result.setText("");
-			numtemp = 0; 
+			numtemp = 0.0; 
 			initStack();
 			return ;
 		}
@@ -166,7 +166,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			case '*':
 			case '/':
 				numb.push((double) numtemp);				
-				numtemp = 0;
+				numtemp = 0.0;
 				sign.push((int) bst.charAt(0));
 				tst = tst + bst;
 				result.setText(tst);
@@ -174,8 +174,9 @@ public class MainActivity extends Activity implements OnClickListener{
 			case '=':
 				//计算
 				numb.push((double) numtemp);				
-				numtemp = 0;
+				numtemp = 0.0;
 				Cal();
+				numtemp = numb.peek();
 				tst= numb.pop().toString();
 				result.setText(tst);
 			}
@@ -197,10 +198,20 @@ public class MainActivity extends Activity implements OnClickListener{
 			  case '+':
 				  switch (cht){
 				  case '#':
-				  case '+':
-				  case '-':
-					  a += b;
+					  a = a + b;
 					  numb.push(a);
+					  break;
+				  case '+':
+					  a = a + b;
+					  numb.push(a);
+					  sign.pop();
+					  sign.push(Integer.valueOf((int) '+'));
+					  break;
+				  case '-':
+					  a =0 - b + a;
+					  numb.push(a);
+					  sign.pop();
+					  sign.push(Integer.valueOf((int) '+'));
 					  //sign.push(Integer.valueOf((int)cht));
 					  break;
 				  case '*':
@@ -224,10 +235,20 @@ public class MainActivity extends Activity implements OnClickListener{
 			  case '-':
 				  switch (cht){
 				  case '#':
-				  case '+':
-				  case '-':
 					  a = b - a;
 					  numb.push(a);
+					  break;
+				  case '+':
+					  a = b - a;
+					  numb.push(a);
+					  sign.pop();
+					  sign.push(Integer.valueOf((int) '+'));
+					  break;
+				  case '-':
+					  a = 0 - b - a;
+					  numb.push(a);
+					  sign.pop();
+					  sign.push(Integer.valueOf((int) '+'));
 					 // sign.push(Integer.valueOf((int)cht));
 					  break;
 				  case '*':
@@ -236,14 +257,14 @@ public class MainActivity extends Activity implements OnClickListener{
 					  numb.push(c);
 					  numb.push(a);
 					  sign.pop();
-					 // sign.push(Integer.valueOf((int)ch));
+					  sign.push(Integer.valueOf((int)ch));
 					  break;
 				  case '/':
 					  c = numb.pop();
 					  c = c/b;
 					  numb.push(c);
 					  sign.pop();
-//					  sign.push(Integer.valueOf((int)cht));
+					  sign.push(Integer.valueOf((int)ch));
 					  break;
 				  }
 				  break;
