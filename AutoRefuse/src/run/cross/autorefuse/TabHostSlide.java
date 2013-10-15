@@ -12,6 +12,14 @@ public class TabHostSlide extends android.widget.TabHost {
 	private Animation slideRightIn;// 从屏幕右边进来 
 	private Animation slideRightOut;// 从屏幕右边出去
 	
+//	private Animation slideLeftIn = AnimationUtils.loadAnimation(context, 
+//			R.anim.push_left_in); 
+//	private Animation slideLeftOut = AnimationUtils.loadAnimation(context, 
+//	        R.anim.push_left_out); 
+//	private Animation slideRightIn = AnimationUtils.loadAnimation(context, 
+//			R.anim.push_right_in); 
+//	private Animation slideRightOut = AnimationUtils.loadAnimation(context, 
+//			R.anim.push_right_out); 
 	
 	
 	/** 记录是否打开动画效果 */
@@ -25,13 +33,13 @@ public class TabHostSlide extends android.widget.TabHost {
 		
 		slideLeftIn = AnimationUtils.loadAnimation(context, 
 				R.anim.push_left_in); 
-				slideLeftOut = AnimationUtils.loadAnimation(context, 
+		slideLeftOut = AnimationUtils.loadAnimation(context, 
 				R.anim.push_left_out); 
-				slideRightIn = AnimationUtils.loadAnimation(context, 
+		slideRightIn = AnimationUtils.loadAnimation(context, 
 				R.anim.push_right_in); 
-				slideRightOut = AnimationUtils.loadAnimation(context, 
+		slideRightOut = AnimationUtils.loadAnimation(context, 
 				R.anim.push_right_out); 
-				isOpenAnimation = true;
+		isOpenAnimation = true;
 	}
 	
 	public TabHostSlide(Context context,AttributeSet attrs) {
@@ -40,13 +48,13 @@ public class TabHostSlide extends android.widget.TabHost {
 		
 		slideLeftIn = AnimationUtils.loadAnimation(context, 
 				R.anim.push_left_in); 
-				slideLeftOut = AnimationUtils.loadAnimation(context, 
+		slideLeftOut = AnimationUtils.loadAnimation(context, 
 				R.anim.push_left_out); 
-				slideRightIn = AnimationUtils.loadAnimation(context, 
+		slideRightIn = AnimationUtils.loadAnimation(context, 
 				R.anim.push_right_in); 
-				slideRightOut = AnimationUtils.loadAnimation(context, 
+		slideRightOut = AnimationUtils.loadAnimation(context, 
 				R.anim.push_right_out); 
-				isOpenAnimation = true;
+		isOpenAnimation = true;
 	}
 	
 	/**
@@ -74,7 +82,7 @@ public class TabHostSlide extends android.widget.TabHost {
 	super.addTab(tabSpec); 
 	} 
 	
-	
+	@Override
 	public void setCurrentTab(int index) { 
 		// 切换前所在页的页面 
 		int mCurrentTabID = getCurrentTab(); 

@@ -12,16 +12,17 @@ public class TabH extends TabActivity {
 	// ÷ ∆º‡Ã˝
 	GestureDetector mGestureDetector;  
 
-	TabHost tab;
+	TabHostSlide tab;
 
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        tab = (TabHost) getTabHost();
-//        TabHost th = getTabHost() ;        
+        TabHost th = getTabHost() ;        
+        tab = (TabHostSlide) th;
+//        tab = (TabHostSlide) findViewById(R.id.tabh);
+//        tab = (TabHostSlide) getTabHost();
 //        tab =  (TabHostSlide) th;
         //TabSpec tabs1 = tab.newTabSpec("tab1").setIndicator("∆Ù∂Ø").setContent(R.id.tab1);
         //tabs1.setContent(new Intent(this,SstartActivity.class));
