@@ -31,6 +31,8 @@ public class SpinnerTest extends Activity {
 		
 		MySpinnerAdapter myspinner = new MySpinnerAdapter(SpinnerTest.this, imageShows);
 		sp.setAdapter(myspinner);
+		
+		
 
 	}
 
