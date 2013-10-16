@@ -31,21 +31,21 @@ public class TabHostSlide extends android.widget.TabHost {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		slideLeftIn = AnimationUtils.loadAnimation(context, 
-				R.anim.push_left_in); 
-		slideLeftOut = AnimationUtils.loadAnimation(context, 
-				R.anim.push_left_out); 
-		slideRightIn = AnimationUtils.loadAnimation(context, 
-				R.anim.push_right_in); 
-		slideRightOut = AnimationUtils.loadAnimation(context, 
-				R.anim.push_right_out); 
-		isOpenAnimation = true;
+		initAnimation(context);
 	}
 	
 	public TabHostSlide(Context context,AttributeSet attrs) {
 		super(context,attrs);
 		// TODO Auto-generated constructor stub
 		
+		initAnimation(context);
+	}
+	
+	/**
+	 * 初始化动画效果
+	 * @param context
+	 */
+	private void initAnimation(Context context){
 		slideLeftIn = AnimationUtils.loadAnimation(context, 
 				R.anim.push_left_in); 
 		slideLeftOut = AnimationUtils.loadAnimation(context, 
