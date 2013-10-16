@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 
 		imagev.setOnTouchListener(imageListenter);
 
-		LinearLayout ly = (LinearLayout) findViewById(R.id.go);
+		LinearLayout ly = (LinearLayout) findViewById(R.id.go1);
 
 		ly.setClickable(true);
 
@@ -83,6 +83,12 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	
+	/**
+	 * LinearLayout监听
+	 * @author RunCross
+	 *
+	 */
 	class LinearLayoutListenter implements OnTouchListener, OnGestureListener {
 
 		@SuppressLint("NewApi")
@@ -150,10 +156,15 @@ public class MainActivity extends Activity {
 
 	}
 
+	/**
+	 * ImageView 监听
+	 * @author RunCross
+	 *
+	 */
 	class ImageViewListenter implements OnTouchListener, OnGestureListener {
 
 		/**
-		 * 单击获取部分
+		 * 单击
 		 */
 		@Override
 		public boolean onDown(MotionEvent e) {
@@ -161,9 +172,9 @@ public class MainActivity extends Activity {
 			float x = e.getX();
 			float y = e.getY();
 
-			System.out.println(x + "   " + y);
-			System.out.println(image[count].getWidth() + " "
-					+ image[count].getHeight());
+//			System.out.println(x + "   " + y);
+//			System.out.println(image[count].getWidth() + " "
+//					+ image[count].getHeight());
 
 			int width = image[count].getWidth() / 5;
 			int height = image[count].getHeight() / 5;
@@ -181,9 +192,9 @@ public class MainActivity extends Activity {
 			if (yleft < 0)
 				yleft = 0;
 
-			System.out.println(xleft + "  " + yleft);
-
-			System.out.println(width + "  " + height);
+//			System.out.println(xleft + "  " + yleft);
+//
+//			System.out.println(width + "  " + height);
 
 			Bitmap bt = Bitmap.createBitmap(image[count], xleft, yleft, width,
 					height);
@@ -194,7 +205,7 @@ public class MainActivity extends Activity {
 			towidth = 1;
 			toheight = 1;			
 			
-			return true;
+			return false;
 		}
 
 		@Override
@@ -225,16 +236,18 @@ public class MainActivity extends Activity {
 		@Override
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
+			
+			System.out.printf("%f %f %f %f\n",e1.getX(),e2.getX(),e1.getY(),e2.getY());
+			
 			if (Math.abs(e1.getX() - e2.getX()) > imageDistance
 					&& Math.abs(e1.getY() - e2.getY()) > imageDistance) {
 				
-				System.out.printf("%f %f %f %f",e1.getX(),e2.getX(),e1.getY(),e2.getY());
-				
+				System.out.printf("ss  %f %f %f %f\n",e1.getX(),e2.getX(),e1.getY(),e2.getY());
 				//比例系数
 				towidth = (float) (towidth * 1.5);
 				toheight = (float) (toheight * 1.5);
+				System.out.println(towidth+" "+toheight);
 
-				System.out.println(toheight+" "+toheight);
 				
 				//矩阵变换
 				Matrix scalMatrix = new Matrix();
@@ -263,7 +276,7 @@ public class MainActivity extends Activity {
 				
 				imagev.setImageBitmap(newBitemap);
 			}
-			return true;
+			return false;
 		}
 
 		@Override
@@ -272,6 +285,7 @@ public class MainActivity extends Activity {
 			return vGestureDetector.onTouchEvent(event);
 		}
 
+	 
 	}
 
 }

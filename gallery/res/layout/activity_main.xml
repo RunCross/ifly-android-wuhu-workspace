@@ -18,21 +18,27 @@
 
         <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="680px" >
+            android:layout_height="680px" > 
 
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="d"
+                android:scaleType="fitXY"
                 android:src="@drawable/a" />
         </ScrollView>
-    </HorizontalScrollView>
-
+    </HorizontalScrollView> 
+<LinearLayout
+    android:id="@+id/go1"
+        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
     <ImageView
         android:id="@+id/imgpart"
         android:layout_width="300px"
         android:layout_height="300px"
         android:layout_marginBottom="0px" />
+    </LinearLayout>
 
 </LinearLayout>
