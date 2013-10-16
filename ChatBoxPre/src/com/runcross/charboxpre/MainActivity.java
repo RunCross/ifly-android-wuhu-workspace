@@ -1,5 +1,11 @@
 package com.runcross.charboxpre;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.runcross.charboxpre.adapter.ChatAdapter;
+import com.runcross.charboxpre.po.ChatMessage;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -13,6 +19,16 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		ListView listview = (ListView) findViewById(R.id.charlist);
+		
+		List<ChatMessage>  chatMessages = new ArrayList<ChatMessage>();
+		
+		
+		
+		ChatAdapter chatAdapter = new ChatAdapter(MainActivity.this, chatMessages);
+		
+		listview.setAdapter(chatAdapter);
+		
+		
 	}
 
 	@Override
