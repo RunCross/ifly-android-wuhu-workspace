@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
+    <CheckBox 
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        />
+    
     <TextView
         android:id="@+id/textId"
         android:layout_width="wrap_content"

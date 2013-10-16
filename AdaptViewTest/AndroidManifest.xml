@@ -14,8 +14,11 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.runcross.adaptviewtest.MainActivity"
+            android:name="com.runcross.adaptviewtest.ListViewTest"
             android:label="@string/app_name" >
+            
+        </activity>
+        <activity android:name=".SpinnerTest" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

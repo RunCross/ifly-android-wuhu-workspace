@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class MyAdapter extends BaseAdapter {
@@ -56,12 +57,15 @@ public class MyAdapter extends BaseAdapter {
 		TextView txtId = (TextView) selfView.findViewById(R.id.textId);
 		TextView txtName = (TextView) selfView.findViewById(R.id.textName);
 		TextView txtGen = (TextView) selfView.findViewById(R.id.textGender);
+		CheckBox checkBox = (CheckBox) selfView.findViewById(R.id.check);
 		
 		Student student = currentDates.get(position);
 		
 		txtId.setText(String.valueOf(student.getId()));
 		txtName.setText(student.getName());
 		txtGen.setText(student.getGender());
+		checkBox.setChecked(student.isChecked());	
+		
 		
 		return selfView;
 	}

@@ -5,7 +5,17 @@ public class Student {
 	private int id;
 	private String name;
 	private String gender;
+	private boolean checked;
 	
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	public Student(int id,String name , String gender){
 		this.id = id;
 		this.name = name;
