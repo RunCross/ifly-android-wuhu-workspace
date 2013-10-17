@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Handler.Callback;
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,12 @@ public class MainActivity extends Activity implements Callback{
 		
 		//≥ı ºªØ
 		initMovieItem();							
+		initImages();
+		inintGallery();
 		
 		final ExpandAdapter expandAdapetr = new ExpandAdapter(MainActivity.this,movieList);
+		
+		explistView.addHeaderView(gal);
 		
 		explistView.setAdapter(expandAdapetr);
 		
@@ -73,8 +78,6 @@ public class MainActivity extends Activity implements Callback{
 		});
 		
 		
-		initImages();
-		inintGallery();
 		
 	}
 
@@ -87,8 +90,10 @@ public class MainActivity extends Activity implements Callback{
 
 	private void inintGallery() {
        handler = new Handler(this);
-		
-		gal = (Gallery) findViewById(R.id.gallery);
+		LayoutInflater inflater = getLayoutInflater();
+       
+       gal = (Gallery) inflater.inflate(R.layout.gallery, null);
+//		gal = (Gallery) findViewById(R.id.gallery);
 		
 		gal.setAdapter(adapter);
 		handler.sendEmptyMessage(1);
@@ -113,6 +118,34 @@ public class MainActivity extends Activity implements Callback{
 		movies.add(new MovieInfo("Air",24,10,3L));
 		movieList.add(new MovieList("Action", movies));
 		
+movies = new ArrayList<MovieInfo>();
+		
+		movies.add(new MovieInfo("Angel Beats!",16,10,0L));
+		movies.add(new MovieInfo("Clannad",32,10,1L));
+		movies.add(new MovieInfo("Kanno",24,9,2L));
+		movies.add(new MovieInfo("Air",24,10,3L));
+		movieList.add(new MovieList("Action", movies));
+movies = new ArrayList<MovieInfo>();
+		
+		movies.add(new MovieInfo("Angel Beats!",16,10,0L));
+		movies.add(new MovieInfo("Clannad",32,10,1L));
+		movies.add(new MovieInfo("Kanno",24,9,2L));
+		movies.add(new MovieInfo("Air",24,10,3L));
+		movieList.add(new MovieList("Action", movies));
+movies = new ArrayList<MovieInfo>();
+		
+		movies.add(new MovieInfo("Angel Beats!",16,10,0L));
+		movies.add(new MovieInfo("Clannad",32,10,1L));
+		movies.add(new MovieInfo("Kanno",24,9,2L));
+		movies.add(new MovieInfo("Air",24,10,3L));
+		movieList.add(new MovieList("Action", movies));
+movies = new ArrayList<MovieInfo>();
+		
+		movies.add(new MovieInfo("Angel Beats!",16,10,0L));
+		movies.add(new MovieInfo("Clannad",32,10,1L));
+		movies.add(new MovieInfo("Kanno",24,9,2L));
+		movies.add(new MovieInfo("Air",24,10,3L));
+		movieList.add(new MovieList("Action", movies));
 	}
 
 	@Override
