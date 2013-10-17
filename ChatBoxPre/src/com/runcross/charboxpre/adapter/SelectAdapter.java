@@ -3,7 +3,6 @@ package com.runcross.charboxpre.adapter;
 import java.util.List;
 
 import com.runcross.charboxpre.R;
-import com.runcross.charboxpre.po.ChatMessage;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -54,7 +53,9 @@ private Context currentcontext;
 		
 		ImageView iv = (ImageView) view.findViewById(R.id.usericon);
 		iv.setImageDrawable(currentDates.get(position));
-		
+		iv.setMaxHeight(125);
+		iv.setMaxWidth(125);
+		//iv.setLayoutParams(new LayoutParams(100, 100));
 		
 		return view;
 	}

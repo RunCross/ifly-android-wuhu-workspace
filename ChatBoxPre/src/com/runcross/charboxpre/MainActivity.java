@@ -56,11 +56,13 @@ public class MainActivity extends Activity {
 		//下拉列表
 		
 		Spinner sp = (Spinner) findViewById(R.id.choice);
+		
 		List<Drawable> splist= new ArrayList<Drawable>();
 		splist.add(this.getResources().getDrawable(R.drawable.tuanzia));
 		splist.add(this.getResources().getDrawable(R.drawable.tuanzib));
-		SelectAdapter sa = new SelectAdapter(MainActivity.this, splist);
 		
+		SelectAdapter sa = new SelectAdapter(MainActivity.this, splist);
+		sp.setAdapter(sa);
 	}
 
 	@Override
