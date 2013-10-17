@@ -26,6 +26,7 @@ public class ExpandListView extends Activity {
 		inflater  = LayoutInflater.from(this);
 		ExpandableListView expand = (ExpandableListView) findViewById(R.id.expand);
 		
+		//设置头信息
 		LayoutInflater inflater = LayoutInflater.from(ExpandListView.this);
 		TextView tview = (TextView) inflater.inflate(R.layout.textiewitem, null);
 		tview.setText("header");
