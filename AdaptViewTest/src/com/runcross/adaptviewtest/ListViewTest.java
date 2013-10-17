@@ -79,9 +79,9 @@ public class ListViewTest extends Activity {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				boolean checked = buttonView.isChecked();
+//				boolean checked = buttonView.isChecked();
 				for(Student stu:students){
-					stu.setChecked(checked);
+					stu.setChecked(isChecked);
 				}
 				
 //				CheckBox check = (CheckBox) findViewById(R.id.check);
