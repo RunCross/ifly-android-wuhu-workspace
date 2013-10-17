@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.runcross.charboxpre.adapter.ChatAdapter;
-import com.runcross.charboxpre.adapter.SelectAdapter;
 import com.runcross.charboxpre.po.ChatMessage;
+import com.runcross.chatboxpre.adapter.ChatAdapter;
+import com.runcross.chatboxpre.adapter.SelectAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
 		List<Drawable> splist= new ArrayList<Drawable>();
 		splist.add(this.getResources().getDrawable(R.drawable.tuanzia));
 		splist.add(this.getResources().getDrawable(R.drawable.tuanzib));
-		
+//		sp.setLayoutParams(new LayoutParams(125, 125));
 		SelectAdapter sa = new SelectAdapter(MainActivity.this, splist);
 		sp.setAdapter(sa);
 	}

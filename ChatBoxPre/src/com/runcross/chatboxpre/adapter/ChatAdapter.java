@@ -1,4 +1,4 @@
-package com.runcross.charboxpre.adapter;
+package com.runcross.chatboxpre.adapter;
 
 import java.util.List;
 
