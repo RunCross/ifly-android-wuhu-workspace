@@ -10,6 +10,12 @@ public class ChatMessage {
 	private int image;
 	private boolean send;
 	
+	public ChatMessage(boolean send,String cont,Calendar cal){
+		this.send = send;
+		this.cont = cont;
+		this.cal  = cal;
+	}
+	
 	public boolean isSend() {
 		return send;
 	}

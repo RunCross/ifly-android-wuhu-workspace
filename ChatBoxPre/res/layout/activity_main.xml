@@ -1,30 +1,27 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <ListView
-        android:id="@+id/charlist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="#66ccff"
-        android:dividerHeight="2px"
-        android:visibility="gone" >
-    </ListView>
 
-    <LinearLayout
+
+    <LinearLayout        
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="0px"
-        android:orientation="horizontal" >
+        android:layout_marginBottom="0px"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:id="@+id/se" >
 
         <EditText
             android:id="@+id/cont"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="7"
+            android:singleLine="false"
              />
 
         <Button
@@ -42,4 +39,10 @@
         
     </LinearLayout>
 
-</LinearLayout>
+    <ListView 
+    android:id="@+id/charlist"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@id/se"
+    ></ListView>
+</RelativeLayout>

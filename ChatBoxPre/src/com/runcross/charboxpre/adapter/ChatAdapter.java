@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ChatAdapter extends BaseAdapter {
@@ -57,24 +59,32 @@ public class ChatAdapter extends BaseAdapter {
 		//获取布局		
 		View selfView = inflater.inflate(R.layout.chat_list, null);
 		
-		TextView txtTime = (TextView) selfView.findViewById(R.id.sendtiem);
+		TextView txtTime = (TextView) selfView.findViewById(R.id.sendtime);
 		TextView txtMess = (TextView) selfView.findViewById(R.id.sendmessage);
+		ImageView icon = (ImageView) selfView.findViewById(R.id.icon);
+		LinearLayout layout = (LinearLayout) selfView.findViewById(R.id.layout);
 		
 		ChatMessage chatMessage = currentDates.get(position);
 		
-		txtTime.setText(String.valueOf(chatMessage.getCal()));
+		txtTime.setText(String.valueOf(chatMessage.getCal().getTime().toLocaleString()));
 		txtTime.setGravity(android.view.Gravity.CENTER);
+//		txtMess.setBackgroundResource(chatMessage.isSend()?R.drawable.chatto_bg_pressed:R.drawable.chatfrom_bg_focused);
 		txtMess.setText(chatMessage.getCont());		
-		txtMess.setBackgroundResource(chatMessage.isSend()?R.drawable.chatfrom_bg_focused:R.drawable.chatto_bg_pressed);
+//		icon.setImageDrawable(currentcontext.getResources().getDrawable(chatMessage.isSend()?R.drawable.tuanzib:R.drawable.tuanzia));
 		if(chatMessage.isSend()){
 //			txtMess.setCompoundDrawablesWithIntrinsicBounds(null,R.drawable.tuanzib,null,null);
-			txtMess.setCompoundDrawablesWithIntrinsicBounds(null,currentcontext.getResources().getDrawable(R.drawable.tuanzib),null,null);
+//			txtMess.setCompoundDrawablesWithIntrinsicBounds(null,currentcontext.getResources().getDrawable(R.drawable.tuanzib),null,null);
+			txtMess.setBackgroundResource(R.drawable.chatto_bg_pressed);
+			icon.setImageDrawable(currentcontext.getResources().getDrawable(R.drawable.tuanzib));
 			txtMess.setGravity(android.view.Gravity.RIGHT);
-			
+			layout.setGravity(android.view.Gravity.RIGHT);
 		}
 		else{
-			txtMess.setCompoundDrawablesWithIntrinsicBounds(null,null,currentcontext.getResources().getDrawable(R.drawable.tuanzib),null);
+//			txtMess.setCompoundDrawablesWithIntrinsicBounds(null,null,currentcontext.getResources().getDrawable(R.drawable.tuanzia),null);
+			txtMess.setBackgroundResource(R.drawable.chatfrom_bg_focused);
+			icon.setImageDrawable(currentcontext.getResources().getDrawable(R.drawable.tuanzia));
 			txtMess.setGravity(android.view.Gravity.LEFT);
+			layout.setGravity(android.view.Gravity.LEFT);
 		}
 		return selfView;
 	}
