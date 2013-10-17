@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/home_group_bg"
+    android:gravity="center_vertical" >
+
+    
+
+    <TextView
+        android:id="@+id/movieName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:layout_weight="1"
+        android:textColor="#ff57810f"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    
+    <ImageView
+        android:id="@+id/btnimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/list_indecator_button" />
+</LinearLayout>
