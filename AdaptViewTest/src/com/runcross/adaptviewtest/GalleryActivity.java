@@ -2,6 +2,9 @@ package com.runcross.adaptviewtest;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,17 +14,25 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-public class GalleryActivity extends Activity {
+@SuppressWarnings("deprecation")
+public class GalleryActivity extends Activity implements Callback{
 
 	private int[] imageids = {R.drawable.baiyang,R.drawable.jinniu,R.drawable.mojie};
 	
+	private Handler handler;
+	
+	private int currenIndex = 0;
+	
+	private Gallery gal;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gallery);
 		
-		Gallery gal = (Gallery) findViewById(R.id.gallery);
+		handler = new Handler(this);
+		
+		gal = (Gallery) findViewById(R.id.gallery);
 		
 		gal.setAdapter(adapter);
 		
@@ -37,16 +48,17 @@ public class GalleryActivity extends Activity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
+		
+		handler.sendEmptyMessage(1);
+//		handler.removeMessages(1);
 		
 	}
 
 	private BaseAdapter adapter = new BaseAdapter() {
 		
-		@SuppressWarnings("deprecation")
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
@@ -60,21 +72,29 @@ public class GalleryActivity extends Activity {
 		
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return imageids[position];
 		}
 		
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return imageids.length;
 		}
 	};
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		if(currenIndex >= imageids.length) {
+			currenIndex = 0;
+		}
+		gal.setSelection(currenIndex);
+		++currenIndex;
+		handler.sendEmptyMessageDelayed(1, 1500);
+		return false;
+	}
 	
 }
