@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.TextView;
 
 public class ExpandListView extends Activity {
@@ -23,7 +26,43 @@ public class ExpandListView extends Activity {
 		inflater  = LayoutInflater.from(this);
 		ExpandableListView expand = (ExpandableListView) findViewById(R.id.expand);
 		
+		LayoutInflater inflater = LayoutInflater.from(ExpandListView.this);
+		TextView tview = (TextView) inflater.inflate(R.layout.textiewitem, null);
+		tview.setText("header");
+		expand.addHeaderView(tview);
+		
+		
 		expand.setAdapter(adapter);
+		//展开
+		expand.setOnGroupExpandListener(new OnGroupExpandListener() {
+			
+			@Override
+			public void onGroupExpand(int groupPosition) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		//收缩
+		expand.setOnGroupCollapseListener(new OnGroupCollapseListener() {
+			
+			@Override
+			public void onGroupCollapse(int groupPosition) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		//子项目监听
+		expand.setOnChildClickListener(new OnChildClickListener() {
+			
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+		
 		
 	}
 	

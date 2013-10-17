@@ -5,16 +5,19 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.runcross.charboxpre.adapter.ChatAdapter;
+import com.runcross.charboxpre.adapter.SelectAdapter;
 import com.runcross.charboxpre.po.ChatMessage;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 public class MainActivity extends Activity {
 
@@ -49,6 +52,14 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+	
+		//下拉列表
+		
+		Spinner sp = (Spinner) findViewById(R.id.choice);
+		List<Drawable> splist= new ArrayList<Drawable>();
+		splist.add(this.getResources().getDrawable(R.drawable.tuanzia));
+		splist.add(this.getResources().getDrawable(R.drawable.tuanzib));
+		SelectAdapter sa = new SelectAdapter(MainActivity.this, splist);
 		
 	}
 
