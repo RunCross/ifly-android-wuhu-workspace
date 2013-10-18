@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:spacing="20px"
-    android:unselectedAlpha="0.4" >
+    android:unselectedAlpha="0.4" 
+    >
 
 </Gallery>

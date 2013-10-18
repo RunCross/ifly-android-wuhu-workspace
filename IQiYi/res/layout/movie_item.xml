@@ -7,15 +7,12 @@
     <ImageView
         android:id="@+id/pre"
         android:layout_width="150px"
-        android:layout_height="@dimen/movie_item_height"
-        />
+        android:layout_height="@dimen/movie_item_height" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        
-         >
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/movie_name"
@@ -29,7 +26,7 @@
             style="?android:attr/ratingBarStyleIndicator"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:numStars="5"  />
+            android:numStars="5" />
 
         <TextView
             android:id="@+id/movie_size"
@@ -38,17 +35,19 @@
             android:textColor="#66ccff"
             android:textSize="15sp" />
     </LinearLayout>
+
     <TextView
-            android:id="@+id/movie_mark"
-            android:layout_width="100px"
-            android:layout_height="fill_parent"
-            android:textColor="#66ccff"
-            android:gravity="center"
-            android:textSize="15sp" />
-<ImageView
-    android:layout_width="50px"
-    android:layout_height="@dimen/movie_item_height"
-    android:src="@drawable/play_btn"
-    android:layout_weight="1"
-    />
+        android:id="@+id/movie_mark"
+        android:layout_width="100px"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:textColor="#66ccff"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="50px"
+        android:layout_height="@dimen/movie_item_height"
+        android:layout_weight="1"
+        android:src="@drawable/play_btn" />
+
 </LinearLayout>
