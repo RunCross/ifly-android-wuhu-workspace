@@ -2,6 +2,7 @@ package com.runcross.iqiyi.adapter;
 
 import java.util.List;
 
+import com.runcross.iqiyi.MainActivity;
 import com.runcross.iqiyi.R;
 import com.runcross.iqiyi.po.MovieInfo;
 import com.runcross.iqiyi.po.MovieList;
@@ -11,6 +12,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView.OnGroupExpandListener;
@@ -43,6 +46,8 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
 		return datas.get(groupPosition).getMovieList().size();
 	}
 
+	
+	
 	@Override
 	public Object getGroup(int groupPosition) {
 		// TODO Auto-generated method stub
@@ -73,20 +78,40 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
+	class GroupHolder {
+		ImageView img;
+		TextView title;
+	}
+	
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
-		View movie  = inflater.inflate(R.layout.movie_list, null);
-		TextView txtView = (TextView) movie.findViewById(R.id.movieName);
-		txtView.setText(datas.get(groupPosition).getType());
-		ImageView image = (ImageView) movie.findViewById(R.id.btnimg);
-		if(datas.get(groupPosition).isDown()){
-			image.setImageResource(R.drawable.list_indecator_button_down);
+//		View movie  = inflater.inflate(R.layout.movie_list, null);
+//		TextView txtView = (TextView) movie.findViewById(R.id.movieName);
+//		txtView.setText(datas.get(groupPosition).getType());
+//		ImageView image = (ImageView) movie.findViewById(R.id.btnimg);
+//		
+//		if(datas.get(groupPosition).isDown()){
+//			image.setImageResource(R.drawable.list_indecator_button_down);
+//		}
+//		else{
+//			image.setImageResource(R.drawable.list_indecator_button);
+//		}
+//		return movie;
+		
+		GroupHolder grouph;
+		if(convertView== null){
+			convertView = inflater.inflate(R.layout.movie_list, null);
+			grouph = new GroupHolder();
+			grouph.img =  (ImageView) convertView.findViewById(R.id.btnimg);
+			grouph.title = (TextView) convertView.findViewById(R.id.movieName);			
+			convertView.setTag(grouph);
 		}
-		else{
-			image.setImageResource(R.drawable.list_indecator_button);
+		else {
+			grouph = (GroupHolder) convertView.getTag();
 		}
-		return movie;
+		grouph.title.setText(datas.get(groupPosition).getType());
+		return convertView;
 	}
 
 	@Override
