@@ -22,7 +22,12 @@
         <activity android:name=".ViewSwitchActivity" >
         </activity>
         <activity android:name=".ViewFliperActivity" >
-            <intent-filter>
+           
+        </activity>
+        <activity android:name=".FirstActivity"></activity>
+        <activity android:name=".SecondActivity"></activity>
+        <activity android:name=".ViewFliperGroupActivity">
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
