@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ProgressBar
+        android:id="@+id/smallprocess"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/largeprocess"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/myCircleprocess"
+        style="@android:style/Widget.ProgressBar.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateDrawable="@drawable/ic_launcher" />
+
+    <ProgressBar
+        android:id="@+id/myHorizontalprocess"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+    <!-- max是分成了多少份 -->
+
+    <SeekBar
+        android:id="@+id/seekBartest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:thumb="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/myimage"
+        android:layout_width="wrap_content"
+        android:layout_height="200px"
+        android:src="@drawable/tuanzib" />
+
+    <!-- 星星控件 -->
+    <!-- 最大是200，共5颗星，stepSize指允许有半颗星，progress指一颗半星 -->
+
+    <RatingBar
+        android:id="@+id/ratingbarTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="200"
+        android:numStars="10"
+        android:progress="60"
+        android:stepSize="1" />
+
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试" />
+
+</LinearLayout>

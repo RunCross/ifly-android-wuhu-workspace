@@ -16,16 +16,17 @@
         <activity
             android:name="com.example.subgroup.MainActivity"
             android:label="@string/app_name" >
-            
         </activity>
-        <activity android:name=".ProcessBarActivity">
+        <activity android:name=".ProcessBarActivity" >
         </activity>
-        <activity android:name=".ViewSwitchActivity"><intent-filter>
+        <activity android:name=".ViewSwitchActivity" >
+        </activity>
+        <activity android:name=".ViewFliperActivity" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
