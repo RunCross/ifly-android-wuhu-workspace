@@ -70,8 +70,7 @@ public class CookieLogin {
 			ErrorData.currentErrorType = ErrorData.ErrorType.LoginDataError;
 			ErrorData.text = ERR_MAINMENU;
 			throw ex;
-		}
-		try {
+		}try{
 			return parse(doc);
 		} catch (Exception ex) {
 			throw ex;
