@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/simpledialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="asd" />
+
+    <Button
+        android:id="@+id/simpllist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="列表" 
+        android:layout_below="@id/simpledialog"/>
+<Button
+        android:id="@+id/simpldan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单选" 
+        android:layout_below="@id/simpllist"/>
+<Button
+        android:id="@+id/simplduo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="多选" 
+        android:layout_below="@id/simpldan"/>
+<Button
+        android:id="@+id/simpladapter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义列表" 
+        android:layout_below="@id/simplduo"/>
+<Button
+        android:id="@+id/simplmine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义布局" 
+        android:layout_below="@id/simpladapter"/>
+</RelativeLayout>
