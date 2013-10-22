@@ -8,7 +8,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.GestureDetector.OnGestureListener;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -37,14 +40,16 @@ public class MainActivity extends ActivityGroup implements OnGestureListener{
 
 //		vf.startFlipping();
 
+		
+		 
 	}
 
-	@Override
+/*	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
 		return gdetector.onTouchEvent(event);
 	}
-
+*/
 //	@Override
 //	public boolean onTouch(View v, MotionEvent event) {
 //		// TODO Auto-generated method stub
@@ -101,8 +106,10 @@ public class MainActivity extends ActivityGroup implements OnGestureListener{
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-		// TODO Auto-generated method stub
-		return gdetector.onTouchEvent(ev);
+		if(gdetector.onTouchEvent(ev)){
+			return gdetector.onTouchEvent(ev);
+			}
+		return super.dispatchTouchEvent(ev);
 	}
 	
 
