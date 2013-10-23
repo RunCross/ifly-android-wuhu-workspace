@@ -64,7 +64,7 @@ public class Phone {
 		
 		Gson gson = new Gson();
         Page page = gson.fromJson(result,
-                                    Page.class);
+                                    Page.class);       
         //System.out.println(page.getFirstPage());
 		
 		return page;

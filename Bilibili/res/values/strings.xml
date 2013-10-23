@@ -4,5 +4,6 @@
     <string name="app_name">Bilibili</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="search">请输入搜索内容</string>
 
 </resources>
