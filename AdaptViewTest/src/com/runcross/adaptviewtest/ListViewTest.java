@@ -10,10 +10,16 @@ import com.runcross.pojo.Student;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -26,6 +32,12 @@ public class ListViewTest extends Activity {
 	private List<Student> students;
 	
 	private ListView listview;
+	
+	private final int DELE = 0x111;
+	
+	private MyAdapter myadapter;
+	
+	private int pos;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +81,19 @@ public class ListViewTest extends Activity {
 		students.add(new Student(2,"学生2","男"));
 		students.add(new Student(3,"学生3","男"));
 		
-		final MyAdapter myadapter = new MyAdapter(ListViewTest.this, students);
+		myadapter = new MyAdapter(ListViewTest.this, students);
 		
 		listview.setAdapter(myadapter);
+		registerForContextMenu(listview);
+		listview.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				pos = position;
+				return false;
+			}
+		});
 		
 		CheckBox checkAll = (CheckBox) findViewById(R.id.checkAll);
 		
@@ -108,10 +130,34 @@ public class ListViewTest extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+
+		menu.add(0, DELE, 0, "删除");
+//		menu.add(0, COLOR_GREEN, 0, "绿色");
+//		menu.add(0, COLOR_BlUE, 0, "蓝色");
+		menu.setGroupCheckable(0, true, true);
+//		
+//		MenuInflater mi = new MenuInflater(ListViewTest.this);
+//		mi.inflate(R.menu.main, menu);
+//		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+		case DELE:
+			item.setChecked(true);
+			
+//			students.remove(pos);
+			
+			AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+			students.remove(menuInfo.position);
+			
+			myadapter.notifyDataSetChanged();
+			break;		
+		}
+		return super.onContextItemSelected(item);
 	}
 
 }
