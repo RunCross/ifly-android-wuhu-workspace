@@ -14,12 +14,12 @@ import android.widget.ListView;
 
 public class SecondF extends Fragment {
 
-	public interface ItemClick
-	{
-		public void onItemClick(String content);
-
-		
-	}
+//	public interface ItemClick
+//	{
+//		public void onItemClick(String content);
+//
+//		
+//	}
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -41,15 +41,15 @@ public class SecondF extends Fragment {
 				getActivity(), android.R.layout.simple_list_item_1,
 				news);
 		listView.setAdapter(arrAdapter);
-		final ItemClick click=(ItemClick) getActivity();
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				click.onItemClick(news[arg2]);
-			}
-		});
+//		final ItemClick click=(ItemClick) getActivity();
+//		listView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				click.onItemClick(news[arg2]);
+//			}
+//		});
 		return view;
 	}
 
