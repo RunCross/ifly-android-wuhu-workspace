@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements OnGestureListener,
 		vf.addView(layout);
 		NewslistFragment fragment = new NewslistFragment();
 		SecondF sf = new SecondF();
-		fragmentManager.beginTransaction().replace(R.id.cont, fragment)
+		fragmentManager.beginTransaction().replace(R.id.vff, fragment)
 				.commit();
 		fragmentManager.beginTransaction().replace(layout.getId(), sf).commit();
 		
