@@ -13,18 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" >
-<!--         <FrameLayout 
-        android:id="@+id/cont"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:visibility="gone"
-        ></FrameLayout> -->
-        </ViewFlipper>
 
-<!--     <TextView 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="adfafdads"
-        /> -->
+        <fragment
+            android:name="com.example.fragementtest.NewslistFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <fragment
+            android:name="com.example.fragementtest.SecondF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ViewFlipper>
+
+
 </RelativeLayout>

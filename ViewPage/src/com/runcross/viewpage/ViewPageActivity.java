@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
@@ -16,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class ViewPageActivity extends Activity {
+public class ViewPageActivity extends Activity implements ActionBar.TabListener{
 
 	private View view1, view2, view3;//需要滑动的页卡  
     private ViewPager viewPager;//viewpager  
@@ -129,6 +132,24 @@ public class ViewPageActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

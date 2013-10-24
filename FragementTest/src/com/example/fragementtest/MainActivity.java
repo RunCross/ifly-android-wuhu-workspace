@@ -33,18 +33,20 @@ public class MainActivity extends Activity implements OnGestureListener,
 
 		FrameLayout layout = new FrameLayout(MainActivity.this);
 		layout.setId(0x123);
-		
+
 		// LayoutParams params = new LayoutParams(, height)
+
+		vf.addView(layout,0);
 		
-		vf.addView(layout);
 		NewslistFragment fragment = new NewslistFragment();
 		SecondF sf = new SecondF();
-		fragmentManager.beginTransaction().replace(R.id.vff, fragment)
-				.commit();
-		fragmentManager.beginTransaction().replace(layout.getId(), sf).commit();
+		
+		//vf.addView(fragment.getView());
 		
 		
-		
+		//fragmentManager.beginTransaction().replace(layout.getId(), sf).commit();
+		//fragmentManager.beginTransaction().replace(R.id.vff, fragment).commit();
+
 		// fragmentManager.putFragment(savedInstanceState, "first", fragment);
 		// fragmentManager.putFragment(savedInstanceState, "second", sf);
 

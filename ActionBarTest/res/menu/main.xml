@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/selectcolor"
+        android:showAsAction="withText"
+        android:title="颜色">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/red"
+                    android:title="红色"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>
