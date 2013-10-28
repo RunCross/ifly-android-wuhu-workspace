@@ -1,14 +1,13 @@
-package com.runcross.vpfragmenutab.viewpage;
+package com.example.viewpagefragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.runcross.vpfragmenutab.R;
 import com.runcross.vpfragmenutab.po.Parent;
 import com.runcross.vpfragmenutab.po.Person;
 import com.runcross.vpfragmenutab.po.Student;
 import com.runcross.vpfragmenutab.po.Teacher;
-import com.runcross.vpfragmenutab.viewpage.PersonDetailFragment;
+
 
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -20,22 +19,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.GestureDetector.OnGestureListener;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
-		GestureDetector.OnGestureListener, PersonFragement.ItemClick,
-		ActionBar.TabListener {
+		PersonFragement.ItemClick, ActionBar.TabListener {
 
 	public interface ItemFlingBack {
 
 		public void onItemFlingBack();
 	}
 
-	private GestureDetector gdetector;
-	private boolean flingflag;
+	// private GestureDetector gdetector;
 
 	// 页面数据
 	private ArrayList<Student> students;
@@ -60,14 +56,11 @@ public class MainActivity extends FragmentActivity implements
 
 	private Fragment fragment;
 
-	private PersonDetailFragment pdf;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_viewpage);
-		gdetector = new GestureDetector(this);
-		flingflag = true;
+		// gdetector = new GestureDetector(this);
 		// layout = new FrameLayout(MainActivity.this);
 		// layout.setId(0x123);
 		// fragment =getSupportFragmentManager().findFragmentById(R.id.viewgo);
@@ -169,30 +162,27 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onItemClick(Bundle bundle) {
-
-		pdf = new PersonDetailFragment();
+		
+		PersonDetailFragment pdf = new PersonDetailFragment();
 		pdf.setArguments(bundle);
-
-		// Toast.makeText(MainActivity.this,
-		// "onitemclick " + bundle.getSerializable("datas"),
-		// Toast.LENGTH_SHORT).show();
-		// ArrayList<Fragment> frags = new ArrayList<Fragment>();
-		// frags.clear();
-		// frags.add(pdf);
+		
+		Toast.makeText(MainActivity.this,
+				"onitemclick " + bundle.getSerializable("person"),
+				Toast.LENGTH_SHORT).show();
+		frags.clear();
+		frags.add(pdf);
 		// adapter.notifyDataSetChanged();
-		// Person per = (Person) bundle.getSerializable("datas");
-		// System.out.println(per.getName());
-		// System.out.println("frags size " + frags.size());
-		//
-		// viewPager.removeAllViews();
-		// adapter = new FragAdapter(getSupportFragmentManager(), frags);
-		// viewPager.setAdapter(adapter);
+		// adapter.notify();
+		Person per = (Person) bundle.getSerializable("person");
+		System.out.println(per.getName());
+		System.out.println("frags size " + frags.size());
+		
+		
+		adapter = new FragAdapter(getSupportFragmentManager(), frags);
+		viewPager.setAdapter(adapter);
 
-		// viewPager.removeAllViewsInLayout();
-		viewPager.setVisibility(View.GONE);
-		flingflag = false;
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.viewmain, pdf).commit();
+		// getSupportFragmentManager().beginTransaction().replace(R.id.viewmain,
+		// pdf).commit();
 	}
 
 	@Override
@@ -216,60 +206,59 @@ public class MainActivity extends FragmentActivity implements
 	/*
 	 * 手势监听
 	 */
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		// Toast.makeText(MainActivity.this, "go", Toast.LENGTH_SHORT).show();
-		// 向右滑动
-		if (e2.getX() - e1.getX() > 20 && velocityX > 2) {
-			// getSupportFragmentManager().beginTransaction().replace(layout.getId(),
-			viewPager.setVisibility(View.VISIBLE);
-			flingflag = true;
-			getSupportFragmentManager().beginTransaction().remove(pdf).commit();
-		} else if (!flingflag && e1.getX() - e2.getX() > 20) {
-			// getSupportFragmentManager().beginTransaction().replace(layout.getId(),
+	// @Override
+	// public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+	// float velocityY) {
+	// Toast.makeText(MainActivity.this, "go", Toast.LENGTH_SHORT).show();
+	// if (e2.getX() - e1.getX() > 20 && velocityX > 2) {
+	// // getSupportFragmentManager().beginTransaction().replace(layout.getId(),
+	// frags.get(0)).commit();
+	// }
+	// else if (e1.getX() - e2.getX() > 20 ){
+	// // getSupportFragmentManager().beginTransaction().replace(layout.getId(),
+	// frags.get(1)).commit();
+	//
+	// }
+	// return false;
+	// }
+	// @Override
+	// public boolean onDown(MotionEvent e) {
+	// // TODO Auto-generated method stub
+	// return false;
+	// }
+	//
+	// @Override
+	// public void onShowPress(MotionEvent e) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public boolean onSingleTapUp(MotionEvent e) {
+	// // TODO Auto-generated method stub
+	// return false;
+	// }
+	//
+	// @Override
+	// public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+	// float distanceY) {
+	// // TODO Auto-generated method stub
+	// return false;
+	// }
+	//
+	// @Override
+	// public void onLongPress(MotionEvent e) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	// @Override
+	// public boolean dispatchTouchEvent(MotionEvent ev) {
+	// if (gdetector.onTouchEvent(ev)) {
+	// return gdetector.onTouchEvent(ev);
+	// }
+	// return super.dispatchTouchEvent(ev);
+	// }
 
-		}
-		return false;
-	}
-
-	@Override
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onLongPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		if (gdetector.onTouchEvent(ev)) {
-			return gdetector.onTouchEvent(ev);
-		}
-		return super.dispatchTouchEvent(ev);
-	}
-
+	
+	
 }

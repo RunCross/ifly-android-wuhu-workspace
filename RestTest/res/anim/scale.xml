@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 伸缩变化 -->
+<!-- fromXScale从X方向变化，pivotX="50%"以这个图片的中心为依据 ，fillAfter="true"缩放效果不恢复，保持状态-->
+
+<scale
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXScale="1.0"  
+    android:toXScale="1.4"  
+    android:fromYScale="1.0"  
+    android:toYScale="0.6"  
+    android:pivotX="0" 
+    android:pivotY="50%" 
+    android:fillAfter="true" 
+    android:duration="2000">
+    
+
+</scale>

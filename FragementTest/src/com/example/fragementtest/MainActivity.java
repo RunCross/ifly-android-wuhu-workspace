@@ -44,8 +44,8 @@ public class MainActivity extends Activity implements OnGestureListener,
 		//vf.addView(fragment.getView());
 		
 		
-		//fragmentManager.beginTransaction().replace(layout.getId(), sf).commit();
-		//fragmentManager.beginTransaction().replace(R.id.vff, fragment).commit();
+		fragmentManager.beginTransaction().replace(layout.getId(), sf).commit();
+		fragmentManager.beginTransaction().replace(R.id.vff, fragment).commit();
 
 		// fragmentManager.putFragment(savedInstanceState, "first", fragment);
 		// fragmentManager.putFragment(savedInstanceState, "second", sf);
