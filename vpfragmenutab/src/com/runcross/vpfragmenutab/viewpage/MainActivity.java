@@ -3,39 +3,38 @@ package com.runcross.vpfragmenutab.viewpage;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import com.runcross.vpfragmenutab.PersonDetailFragment;
 import com.runcross.vpfragmenutab.R;
 import com.runcross.vpfragmenutab.po.Parent;
+import com.runcross.vpfragmenutab.po.Person;
 import com.runcross.vpfragmenutab.po.Student;
 import com.runcross.vpfragmenutab.po.Teacher;
+import com.runcross.vpfragmenutab.viewpage.PersonDetailFragment;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
+import android.view.GestureDetector.OnGestureListener;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements
-		PersonFragement.ItemClick, GestureDetector.OnGestureListener,
-		OnTouchListener, ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements GestureDetector.OnGestureListener,
+		PersonFragement.ItemClick, ActionBar.TabListener {
 
 	public interface ItemFlingBack {
 
 		public void onItemFlingBack();
 	}
 
-	// 手势
-	private GestureDetector gd;
+	 private GestureDetector gdetector;
+	 private boolean flingflag;
 
 	// 页面数据
 	private ArrayList<Student> students;
@@ -54,53 +53,35 @@ public class MainActivity extends FragmentActivity implements
 
 	private ActionBar actionBar;
 
-	private List<Fragment> frags;
-	
-	FrameLayout layout ;
+	private ArrayList<Fragment> frags;
 
-	@SuppressWarnings("deprecation")
+	FrameLayout layout;
+
+	private Fragment fragment;
+	
+	private PersonDetailFragment pdf;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_viewpage);
+		 gdetector = new GestureDetector(this);
+		 flingflag = true;
+		// layout = new FrameLayout(MainActivity.this);
+		// layout.setId(0x123);
+		// fragment =getSupportFragmentManager().findFragmentById(R.id.viewgo);
 
-		gd = new GestureDetector(this);
-
-		layout = new FrameLayout(MainActivity.this);
-		layout.setId(0x123);
-		
+		// 初始化数据
 		intiDatas();
 
+		// 初始化fragment
 		initFragments();
 
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
-		// // pagerTitleStrip = (PagerTitleStrip) findViewById(R.id.pagertitle);
-		// pagerTabStrip = (PagerTabStrip) findViewById(R.id.pagertab);
-		// //
-		// pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.));
-		// pagerTabStrip.setDrawFullUnderline(false);
-		// //
-		// pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.azure));
-		// pagerTabStrip.setTextSpacing(50);
-		//
-		// titleList = new ArrayList<String>();// 每个页面的Title数据
-		// titleList.add("学生");
-		// titleList.add("老师");
-		// titleList.add("家长");
-		//
-		// List<Fragment> fragments = new ArrayList<Fragment>();
-		// fragments.add(initPersonFragment("学生"));
-		// fragments.add(initPersonFragment("老师"));
-		// fragments.add(initPersonFragment("家长"));
-		// fragments.add(new PersonDetailFragment());
-		//
-		// adapter = new FragAdapter(getSupportFragmentManager(), fragments);
-		// viewPager.setAdapter(adapter);
-		// viewPager.setCurrentItem(0);
-		adapter = new FragAdapter(getSupportFragmentManager(), datas);
+
+		adapter = new FragAdapter(getSupportFragmentManager(), frags);
 		viewPager.setAdapter(adapter);
-//		viewPager.addView(layout);
-		
+
 		actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setHomeButtonEnabled(false);
@@ -114,6 +95,7 @@ public class MainActivity extends FragmentActivity implements
 		actionBar.addTab(actionBar.newTab().setText("家长").setTabListener(this),
 				2, false);
 
+		// actionbar随着viewpage滑动
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -153,13 +135,14 @@ public class MainActivity extends FragmentActivity implements
 	// return personFra;
 	// }
 
+	// 初始化tab显示的fragment
 	private void initFragments() {
 		frags = new ArrayList<Fragment>();
 		for (int i = 0; i < datas.size(); i++) {
 			Bundle bund = new Bundle();
-			bund.putSerializable("datas", datas.get(0));
+			bund.putSerializable("datas", datas.get(i));
 			PersonFragement personFra = new PersonFragement();
-			personFra.setArguments(bund);			
+			personFra.setArguments(bund);
 			frags.add(personFra);
 		}
 	}
@@ -183,85 +166,32 @@ public class MainActivity extends FragmentActivity implements
 		datas.add(parents);
 	}
 
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		if (e2.getX() - e1.getX() > 20 && velocityX > 2) {
-			// Toast.makeText(MainActivity.this, "ontouch", Toast.LENGTH_SHORT)
-			// .show();
-			// // onTabSelected(getActionBar().getSelectedTab(),
-			// // getFragmentManager()
-			// // .beginTransaction());
-			// Tab tab = getActionBar().getSelectedTab();
-			// FragmentTransaction ft = getFragmentManager().beginTransaction();
-			//
-			// Bundle datas = new Bundle();
-			// if (tab.getText().equals("学生")) {
-			// datas.putSerializable("datas", students);
-			// datas.putString("type", "student");
-			// }
-			// if (tab.getText().equals("老师")) {
-			// datas.putSerializable("datas", teachers);
-			// datas.putString("type", "teacher");
-			// }
-			// if (tab.getText().equals("家长")) {
-			// datas.putSerializable("datas", parents);
-			// datas.putString("type", "parent");
-			// }
-			// PersonFragement personFra = new PersonFragement();
-			// personFra.setArguments(datas);
-
-			// ft.replace(R.id.container, personFra).commit();
-
-		}
-		return false;
-	}
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onLongPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void onItemClick(Bundle bundle) {
-		 PersonDetailFragment pdf = new PersonDetailFragment();
-		 pdf.setArguments(bundle);
-		 Toast.makeText(MainActivity.this, "onitemclick", Toast.LENGTH_SHORT)
-		 .show();
-		 getFragmentManager().beginTransaction().replace(R.id.viewpager, pdf)
-		 .commit();
 
+		pdf = new PersonDetailFragment();
+		pdf.setArguments(bundle);
+
+		// Toast.makeText(MainActivity.this,
+		// "onitemclick " + bundle.getSerializable("datas"),
+		// Toast.LENGTH_SHORT).show();
+		// ArrayList<Fragment> frags = new ArrayList<Fragment>();
+		// frags.clear();
+		// frags.add(pdf);
+		// adapter.notifyDataSetChanged();
+		// Person per = (Person) bundle.getSerializable("datas");
+		// System.out.println(per.getName());
+		// System.out.println("frags size " + frags.size());
+		//
+		// viewPager.removeAllViews();
+		// adapter = new FragAdapter(getSupportFragmentManager(), frags);
+		// viewPager.setAdapter(adapter);
+
+//		viewPager.removeAllViewsInLayout();
+		viewPager.setVisibility(View.GONE);
+		flingflag = false;
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.viewmain, pdf).commit();
 	}
 
 	@Override
@@ -281,5 +211,64 @@ public class MainActivity extends FragmentActivity implements
 		// TODO Auto-generated method stub
 
 	}
+
+	/*
+	 * 手势监听
+	 */
+	 @Override
+	 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+	 float velocityY) {
+//	 Toast.makeText(MainActivity.this, "go", Toast.LENGTH_SHORT).show();
+		 //向右滑动
+	 if (e2.getX() - e1.getX() > 20 && velocityX > 2) {
+	 // getSupportFragmentManager().beginTransaction().replace(layout.getId(),
+		 viewPager.setVisibility(View.VISIBLE);
+		 flingflag = true;
+		 getSupportFragmentManager().beginTransaction().remove(pdf).commit();
+	 }
+	 else if (!flingflag && e1.getX() - e2.getX() > 20){
+	 // getSupportFragmentManager().beginTransaction().replace(layout.getId(),
+	 
+	
+	 }
+	 return false;
+	 }
+	 @Override
+	 public boolean onDown(MotionEvent e) {
+	 // TODO Auto-generated method stub
+	 return false;
+	 }
+	
+	 @Override
+	 public void onShowPress(MotionEvent e) {
+	 // TODO Auto-generated method stub
+	
+	 }
+	
+	 @Override
+	 public boolean onSingleTapUp(MotionEvent e) {
+	 // TODO Auto-generated method stub
+	 return false;
+	 }
+	
+	 @Override
+	 public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+	 float distanceY) {
+	 // TODO Auto-generated method stub
+	 return false;
+	 }
+	
+	 @Override
+	 public void onLongPress(MotionEvent e) {
+	 // TODO Auto-generated method stub
+	
+	 }
+	 @Override
+	 public boolean dispatchTouchEvent(MotionEvent ev) {
+	 if (gdetector.onTouchEvent(ev)) {
+	 return gdetector.onTouchEvent(ev);
+	 }
+	 return super.dispatchTouchEvent(ev);
+	 }
 
 }

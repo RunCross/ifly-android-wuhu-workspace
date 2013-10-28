@@ -10,6 +10,7 @@ import android.app.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 
 public class PersonFragement extends Fragment {
 
-	private List<Person> persons = new ArrayList<Person>();
+	private ArrayList<Person> persons ;
 
 	
 	public interface ItemClick
@@ -59,9 +60,12 @@ public class PersonFragement extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Bundle datas = new Bundle();
-				datas.putString("name", persons.get(position).getName());
-				datas.putString("sex", persons.get(position).getSex());
-				Toast.makeText(container.getContext(), "perf", Toast.LENGTH_SHORT).show();
+//				datas.putString("name", persons.get(position).getName());
+//				datas.putString("sex", persons.get(position).getSex());
+				datas.putSerializable("datas", persons.get(position));
+				Toast.makeText(container.getContext(), "personFragment", Toast.LENGTH_SHORT).show();
+				System.out.println("personfragment "+persons.get(position).getName());
+//				System.out.println("personfragment "+datas.getSerializable("person"));
 				click.onItemClick(datas);
 			}			
 		});
@@ -69,6 +73,8 @@ public class PersonFragement extends Fragment {
 		return fraView;
 	}
 
+	
+	
 	private BaseAdapter myAdapter = new BaseAdapter() {
 
 		@Override
@@ -101,4 +107,6 @@ public class PersonFragement extends Fragment {
 			return persons.size();
 		}
 	};
+	
+
 }
