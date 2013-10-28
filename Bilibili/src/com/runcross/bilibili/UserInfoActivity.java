@@ -3,7 +3,7 @@ package com.runcross.bilibili;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class UserInfo extends Activity {
+public class UserInfoActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

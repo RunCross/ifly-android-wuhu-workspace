@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name=".UserInfo"></activity>
+            android:name=".UserInfoActivity"></activity>
         <activity 
             android:name=".TypeListActivity"></activity>
     </application>
