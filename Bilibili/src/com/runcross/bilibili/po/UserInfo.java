@@ -11,6 +11,9 @@ public class UserInfo {
 		this.coins = coins;
 		this.points = points;
 	}
+	public UserInfo(){
+		
+	}
 	public String getName() {
 		return name;
 	}

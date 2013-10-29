@@ -5,30 +5,48 @@
     android:orientation="vertical" >
 
     <include
-        android:id="@+id/loginshow"       
+        android:id="@+id/loginedshow"
         layout="@layout/userlogined" />
 
-    <LinearLayout 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:showDividers="middle|end"
         android:divider="#c2ccd0"
         android:orientation="vertical"
-        >
-        <TextView 
+        android:showDividers="middle|end" >
+
+        <TextView style="@style/UserListShow" />
+
+        <TextView
+            android:id="@+id/checkUpdate"
             style="@style/UserListShow"
-            />
-        <TextView 
+            android:drawableLeft="@drawable/bili_titlebar_refresh_button"
+            android:gravity="center_vertical"
+            android:text="@string/check_update" />
+
+        <TextView
+            android:id="@+id/myCollect"
             style="@style/UserListShow"
-            android:text="dd"
-            />
-        <TextView 
+            android:drawableLeft="@drawable/bilibili_title_shoucang"
+            android:text="@string/MyCollect" />
+
+        <TextView
+            android:id="@+id/history"
             style="@style/UserListShow"
-            android:text="dd"
-            />
-        <TextView 
+            android:drawableLeft="@drawable/bili_titlebar_history_button"
+            android:text="@string/history" />
+
+        <TextView
+            android:id="@+id/downloadManager"
             style="@style/UserListShow"
-            android:text="dd"
-            />
+            android:drawableLeft="@drawable/title_stacks_download"
+            android:text="@string/download_manager" />
+
+        <TextView
+            android:id="@+id/userSetting"
+            style="@style/UserListShow"
+            android:drawableLeft="@drawable/usersettings"
+            android:text="@string/user_setting" />
     </LinearLayout>
+
 </LinearLayout>

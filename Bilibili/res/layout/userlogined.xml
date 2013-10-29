@@ -4,13 +4,13 @@
     android:id="@+id/userlogined">
 <RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"    
+    android:layout_height="250px"    
     >
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:text="@string/login"
+        android:text="@string/login"        
         android:layout_centerInParent="true"
         android:background="@color/pink"
         android:visibility="gone"
@@ -37,6 +37,7 @@
     android:layout_height="wrap_content"
     android:layout_toRightOf="@id/userPhoto"
     android:layout_alignTop="@id/userPhoto"
+    android:layout_marginLeft="10px"
     android:text="no user"
     android:paddingTop="0px"
     />
@@ -61,7 +62,7 @@
     android:text="points"
     />
 <TextView 
-    android:id="@+id/userPoints"
+    android:id="@+id/loginoff"
     android:textSize="20sp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

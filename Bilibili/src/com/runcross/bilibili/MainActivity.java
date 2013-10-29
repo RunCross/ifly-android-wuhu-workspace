@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.runcross.bilibili.adapter.MainPageAdapter;
+import com.runcross.bilibili.po.UserInfo;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends Activity {
@@ -28,7 +27,6 @@ public class MainActivity extends Activity {
 	private ArrayList<View> viewList;// 把需要滑动的页卡添加到这个list中
 	private List<String> titleList;// viewpager的标题
 
-	private RelativeLayout pagetitle;
 	private ImageView titleLeft;
 	private ImageView titleLeftBack;
 	private ImageView titleLeftApp;
@@ -45,9 +43,10 @@ public class MainActivity extends Activity {
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN); // 隐藏状态栏
 		setContentView(R.layout.activity_main);
+		//初始化全局变量
+		initDate();
 
 		initPagetitle();
-		
 		
 		
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -66,6 +65,10 @@ public class MainActivity extends Activity {
 		viewPager.setAdapter(new MainPageAdapter(viewList, titleList));
 		viewPager.setCurrentItem(0);
 
+	}
+
+	private void initDate() {
+		UserInfo user = new UserInfo();				
 	}
 
 	/*
@@ -106,7 +109,6 @@ public class MainActivity extends Activity {
 	 * 初始化title显示
 	 */
 	private void initPagetitle() {
-		pagetitle = (RelativeLayout) findViewById(R.id.title);	
 		titleLeft = (ImageView)  findViewById(R.id.title_left);
 		titleLeftApp = (ImageView) findViewById(R.id.title_left_app);
 		titleLeftBack = (ImageView) findViewById(R.id.title_left_back);
