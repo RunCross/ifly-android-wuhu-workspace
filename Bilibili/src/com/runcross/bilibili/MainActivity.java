@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
 
 	}
 
+	//初始化全局数据，包括用户，配置等等
 	private void initDate() {
 		UserInfo user = new UserInfo();				
 	}
