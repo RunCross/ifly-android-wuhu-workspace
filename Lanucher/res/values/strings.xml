@@ -4,5 +4,31 @@
     <string name="app_name">Lanucher</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string-array name="sexNmaes">
+        <item >男</item>
+        <item >女</item>
+        <item >秀吉</item>
+    </string-array>
 
+    <string-array name="sexValues">
+        <item >man</item>
+        <item >woman</item>
+        <item >unknow</item>
+    </string-array>
+        <string-array name="classNames">
+        <item >C/C++</item>    
+        <item >Java</item>
+        <item >Net</item>
+        <item >Android</item>
+        <item >PASCAL</item>
+        <item >Lua</item>
+    </string-array>
+
+    <string-array name="classNamesDefault">
+         <item >C/C++</item> 
+        <item >Java</item>
+        <item >Android</item>
+        <item >PASCAL</item>
+    </string-array>
+    
 </resources>

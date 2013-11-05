@@ -25,11 +25,13 @@ public final class R {
         public static final int qwe=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
+        public static final int abc=0x7f08000f;
+        public static final int action_settings=0x7f080011;
         public static final int clear=0x7f080001;
         public static final int login=0x7f080004;
         public static final int pwd=0x7f080003;
         public static final int result=0x7f080000;
+        public static final int scroll=0x7f08000e;
         public static final int txtBase=0x7f080005;
         public static final int txtbottom=0x7f08000b;
         public static final int txtbottomleft=0x7f08000c;
@@ -39,7 +41,7 @@ public final class R {
         public static final int txttop=0x7f080008;
         public static final int txttopleft=0x7f080009;
         public static final int txttopright=0x7f08000a;
-        public static final int ua=0x7f08000e;
+        public static final int ua=0x7f080010;
         public static final int uid=0x7f080002;
     }
     public static final class layout {
@@ -52,7 +54,8 @@ public final class R {
         public static final int logintwo=0x7f030006;
         public static final int rela=0x7f030007;
         public static final int tab=0x7f030008;
-        public static final int ua=0x7f030009;
+        public static final int test=0x7f030009;
+        public static final int ua=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f070000;

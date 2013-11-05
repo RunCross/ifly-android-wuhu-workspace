@@ -28,7 +28,7 @@ public class LaunchActivityTest extends LauncherActivity {
 		if(0 == position){
 			return new Intent(LaunchActivityTest.this,ListActivityTest.class);
 		}
-		return super.intentForPosition(position);
+		return new Intent(LaunchActivityTest.this,MainActivity.class);
 	}
 }
 

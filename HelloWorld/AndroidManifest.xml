@@ -25,7 +25,12 @@
         </activity>
         <service android:name=".MyService"></service>  
         <activity android:name="com.runcross.helloworld.UATest">
-             <intent-filter>
+             
+        </activity>
+        <activity 
+            android:name=".ScrollViewTest"
+            >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

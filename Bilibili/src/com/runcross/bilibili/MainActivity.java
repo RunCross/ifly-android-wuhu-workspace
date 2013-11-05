@@ -13,12 +13,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+/**
+ * 主Activity界面
+ * @author RunCross
+ *
+ */
 @SuppressWarnings("deprecation")
 public class MainActivity extends Activity {
 
@@ -34,12 +40,15 @@ public class MainActivity extends Activity {
 	private ImageView titleRightSearch;
 	private EditText edSearch;
 	
+	//标记搜索框状态
+	private boolean flag;
+	
 	LocalActivityManager manager = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE); // 隐藏标题栏
+//		requestWindowFeature(Window.FEATURE_NO_TITLE); // 隐藏标题栏
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN); // 隐藏状态栏
 		setContentView(R.layout.activity_main);
@@ -58,8 +67,10 @@ public class MainActivity extends Activity {
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
 
+		//初始化要滑动的页面
 		initPageView();
 		
+		//初始化滑动的标题
 		initPageTitle();		
 
 		viewPager.setAdapter(new MainPageAdapter(viewList, titleList));
@@ -88,6 +99,7 @@ public class MainActivity extends Activity {
 				edSearch.setVisibility(View.VISIBLE);
 				titleRightSearch.setVisibility(View.GONE);
 				titleRightSearchGo.setVisibility(View.VISIBLE);
+				flag = true;
 			}
 		});
 		
@@ -102,6 +114,8 @@ public class MainActivity extends Activity {
 				edSearch.setVisibility(View.INVISIBLE);
 				titleRightSearchGo.setVisibility(View.GONE);
 				titleRightSearch.setVisibility(View.VISIBLE);
+				
+				flag = false;
 			}
 		});
 	}
@@ -116,6 +130,7 @@ public class MainActivity extends Activity {
 		titleRightSearchGo = (ImageView) findViewById(R.id.title_right_search_go);
 		titleRightSearch = (ImageView) findViewById(R.id.title_right_search);
 		edSearch = (EditText) findViewById(R.id.edSearch);
+		flag = false;
 		initPagetitleListener();
 	}
 
@@ -138,6 +153,27 @@ public class MainActivity extends Activity {
 		viewList.add(manager.startActivity("个人中心", intent1).getDecorView());
 		Intent intent2 = new Intent(this, TypeListActivity.class);
 		viewList.add(manager.startActivity("分区导航", intent2).getDecorView());
+	}
+	
+	
+	/*
+	 * 重写返回键，实现点击一次标题搜索框消失 
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK && flag){
+			
+			titleLeftBack.setVisibility(View.GONE);
+			titleLeft.setVisibility(View.VISIBLE);
+			titleLeftApp.setVisibility(View.GONE);
+			edSearch.setVisibility(View.INVISIBLE);
+			titleRightSearchGo.setVisibility(View.GONE);
+			titleRightSearch.setVisibility(View.VISIBLE);
+			
+			flag  = false;
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 	
 }

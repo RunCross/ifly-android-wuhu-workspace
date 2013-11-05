@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <EditTextPreference
+        android:key="name"
+        android:dialogTitle="修改名称"
+        android:title="修改名称"
+        android:summary="edittext"
+         />
+    <CheckBoxPreference
+        android:key="light"
+        android:title="开关灯"
+        android:summaryOn="关灯"
+        android:summaryOff="开灯"
+        android:defaultValue="true"
+         />
+   
+    
+    <PreferenceCategory
+        android:title="选择类控件"
+        android:summary="设置要选择的东西"
+        >
+        <ListPreference 
+        android:key="sex"
+        android:dialogTitle="选择性别"
+        android:title="性别"
+        android:summary="选择"
+        android:entries="@array/sexNmaes"
+        android:entryValues="@array/sexValues"
+        />
+    <MultiSelectListPreference 
+        android:key="lesson"
+        android:dialogTitle="选择课程"
+        android:title="课程"
+        android:summary="用multi选择课程"
+        android:entries="@array/classNames"
+        android:entryValues="@array/classNames"
+        android:defaultValue="@array/classNamesDefault"
+        />
+        
+    </PreferenceCategory>
+    <SwitchPreference
+        android:key="lightswtich"
+        android:title="开关灯"
+        android:summaryOn="开灯"
+        android:summaryOff="关灯"
+        android:defaultValue="true"
+         />
+    
+
+</PreferenceScreen>

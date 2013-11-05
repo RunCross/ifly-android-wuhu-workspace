@@ -2,8 +2,10 @@ package com.runcross.bilibili;
 
 import com.runcross.bilibili.data.SESSION;
 import com.runcross.bilibili.po.UserInfo;
+import com.runcross.bilibili.usinfo.UserCollection;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +23,9 @@ public class UserInfoActivity extends Activity {
 	private TextView userPoints;
 	private TextView useroff;
 	
+	private TextView myCollect;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -33,8 +38,26 @@ public class UserInfoActivity extends Activity {
 		//根据登录状态显示不同界面
 		initLoginedShow();
 		
+		initListInfo();
+				
 		
+	}
+
+	private void initListInfo() {
+		myCollect = (TextView) findViewById(R.id.myCollect);
 		
+		initListInfoListener();
+	}
+
+	private void initListInfoListener() {
+		myCollect.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(UserInfoActivity.this,UserCollection.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void initLoginedData() {

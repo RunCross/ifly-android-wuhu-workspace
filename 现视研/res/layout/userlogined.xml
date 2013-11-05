@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/userlogined">
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="250px"    
+    >
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:text="@string/login"        
+        android:layout_centerInParent="true"
+        android:background="@color/pink"
+        android:visibility="gone"
+        />
+    <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"  
+    android:id="@+id/userinfoshow"    
+         
+    >
+<ImageView 
+    android:id="@+id/userPhoto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="50px"
+    android:layout_marginLeft="50px"
+    android:layout_marginBottom="50px" 
+    android:src="@drawable/userdefault"
+    />
+<TextView 
+    android:id="@+id/userName"
+    android:textSize="25sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/userPhoto"
+    android:layout_alignTop="@id/userPhoto"
+    android:layout_marginLeft="10px"
+    android:text="no user"
+    android:paddingTop="0px"
+    />
+<TextView 
+    android:id="@+id/userCoins"
+    android:textSize="13sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/userPhoto"
+    android:layout_below="@id/userName"
+    android:layout_alignLeft="@id/userName"
+    android:text="coins"
+    />
+<TextView 
+    android:id="@+id/userPoints"
+    android:textSize="13sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/userPhoto"
+    android:layout_below="@id/userCoins"
+    android:layout_alignLeft="@id/userCoins"
+    android:text="points"
+    />
+<TextView 
+    android:id="@+id/loginoff"
+    android:textSize="20sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignBottom="@id/userPhoto"
+    android:layout_marginRight="15px"
+    android:text="@string/loginoff"
+    />
+</RelativeLayout>
+</RelativeLayout>
+</merge>

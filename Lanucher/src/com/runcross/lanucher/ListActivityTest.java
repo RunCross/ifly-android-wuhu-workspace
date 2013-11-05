@@ -16,6 +16,7 @@ public class ListActivityTest extends ListActivity {
 		setListAdapter(adapter);
 		
 		android.widget.ListView listview = getListView();
+		
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override

@@ -39,8 +39,10 @@ public class MainActivity extends ActivityGroup implements OnGestureListener{
 		vf.addView(manager.startActivity("联系人", intent3).getDecorView());
 
 //		vf.startFlipping();
-
-		
+//打电话的操作
+//		 Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+ "13865963119"));  
+//         
+//         startActivity(intent);  
 		 
 	}
 
