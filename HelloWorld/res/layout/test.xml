@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
+<HorizontalScrollView 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:id="@+id/scrolld"
+    >
 <ScrollView 
     android:id="@+id/scroll"
     android:layout_width="wrap_content"
@@ -60,3 +65,11 @@
 
 </ScrollView>
 </HorizontalScrollView>
+<Button 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="滑动"
+    android:layout_below="@id/scrolld"
+    android:onClick="onScroll"
+    />
+</RelativeLayout>
