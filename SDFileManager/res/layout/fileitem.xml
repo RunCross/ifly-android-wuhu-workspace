@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:textSize="35sp"
         android:layout_weight="1"
+        
         />
 
 </LinearLayout>

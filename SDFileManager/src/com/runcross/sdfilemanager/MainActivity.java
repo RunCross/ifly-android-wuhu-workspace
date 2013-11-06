@@ -14,12 +14,18 @@ import android.os.Environment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -36,12 +42,34 @@ public class MainActivity extends Activity  {
 			.getExternalStorageDirectory().getPath();
 
 	private File currentFile;
+	
+//	private boolean suspen;
+//	
+//	private int location;
+//	
+//	private LinearLayout extra;
+//	
+//	private ImageView extraImg;
+//	
+//	private TextView extraTxt;
+//	
+//	private LayoutInflater inflater;
+//	
+//	private RelativeLayout extraRoot;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+//		suspen = false;
+//		extraRoot = (RelativeLayout) findViewById(R.id.root);
+//		inflater = LayoutInflater.from(MainActivity.this);
+//		extra = (LinearLayout) inflater.inflate(R.layout.fileitem, null);
+//		extraImg = (ImageView) extra.findViewById(R.id.fileType);
+//		extraTxt = (TextView) extra.findViewById(R.id.fileName);
+//		extra.setVisibility(View.GONE);
+//		extraRoot.addView(extra);
 		
 		fileList = (ListView) findViewById(R.id.fileList);
 
@@ -84,6 +112,29 @@ public class MainActivity extends Activity  {
 				return false;
 			}
 		});
+		
+		
+//		fileList.setOnItemLongClickListener(new OnItemLongClickListener() {
+//
+//			@Override
+//			public boolean onItemLongClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				suspen = true;
+//				
+//				location  = position;
+//				File f = (File) files.get(location);
+//				
+//				if(f.isDirectory()){
+//					extraImg.setImageResource(R.drawable.generic_folder);
+//				}else {
+//					extraImg.setImageResource(R.drawable.text_enriched);
+//				}
+//				extraTxt.setText(f.getName());
+//				extra.setVisibility(View.VISIBLE);
+//				extra.layout(200, 500, 0, 0);
+//				return false;
+//			}
+//		});
 		
 	}
 
@@ -223,4 +274,15 @@ public class MainActivity extends Activity  {
 		initList(f);
 		adapter.notifyDataSetChanged();
 	}
+	
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		if(suspen){
+//			
+////			extra.layout((int)event.getX(), (int)event.getY(), 0, 0);
+//			extraTxt.setText(String.valueOf(event.getX()));
+//		}
+//		return super.onTouchEvent(event);
+//	}
+//	
 }
