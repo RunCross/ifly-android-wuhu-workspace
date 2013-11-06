@@ -9,5 +9,11 @@
     <string name="userPwd">密  码</string>
     <string name="userPwdTishi">请输入密码</string>
     <string name="login">登录</string>
+    <string name="maxbc">最大BC</string>    
+    <string name="currentbc">现有BC</string>
+    <string name="maxap">最大AP</string>
+    <string name="currentap">现有AP</string>
+    <string name="playName">角色名</string>
+    <string name="playLevel">等级</string>
 
 </resources>

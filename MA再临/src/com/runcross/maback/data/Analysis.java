@@ -42,7 +42,7 @@ public class Analysis {
 			throw e;
 		}
 	}
-//	
+
 //	public static void doc2FormatString(Document doc) {	
 //		String docString = "";
 //		if(doc != null){

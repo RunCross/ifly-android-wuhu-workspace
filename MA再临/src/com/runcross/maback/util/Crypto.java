@@ -1,12 +1,9 @@
 package com.runcross.maback.util;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
-import org.apache.commons.codec.binary.Base64;
 //import android.util.Base64;
 import com.runcross.maback.data.Info;
 
@@ -14,10 +11,6 @@ import com.runcross.maback.data.Info;
 public class Crypto {
 	private static final String BaseSecretKey = "rBwj1MIAivVN222b";
 	//private static final String UnusedSecretKey = "A1dPUcrvur2CRQyl";	
-	private static final char[] legalChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"  
-            .toCharArray();  
-	
-	
 	
 	private static String GetSecretKey(boolean useLoginId) {
 		String pw = BaseSecretKey;
@@ -46,14 +39,12 @@ public class Crypto {
 		SecretKeySpec keyspec = new SecretKeySpec(GetSecretKey(false).getBytes(),"AES");
 		Cipher c = Cipher.getInstance("AES/ECB/PKCS5Padding");
 		c.init(Cipher.DECRYPT_MODE, keyspec);
-//		return new String(c.doFinal(Base64.decodeBase64(cyphertext)));
 		return new String(android.util.Base64.decode(cyphertext, android.util.Base64.DEFAULT));
 	}
 	public static String DecryptBase64WithKey2Str(String cyphertext) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		SecretKeySpec keyspec = new SecretKeySpec(GetSecretKey(true).getBytes(),"AES");
 		Cipher c = Cipher.getInstance("AES/ECB/PKCS5Padding");
 		c.init(Cipher.DECRYPT_MODE, keyspec);
-//		return new String(c.doFinal(Base64.decodeBase64(cyphertext)));
 		return new String(android.util.Base64.decode(cyphertext, android.util.Base64.DEFAULT));
 	}
 

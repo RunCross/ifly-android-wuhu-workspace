@@ -1,23 +1,15 @@
 package com.runcross.maback.util;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -74,30 +66,10 @@ public class Network {
 		
 		AuthScope as = new AuthScope(hp.getURI().getHost(),hp.getURI().getPort());
 		CredentialsProvider cp = client.getCredentialsProvider();
-//		UsernamePasswordCredentials upc = new UsernamePasswordCredentials(Auth,Key);
-//		cp.setCredentials(as, upc);
+		UsernamePasswordCredentials upc = new UsernamePasswordCredentials(Auth,Key);
+		cp.setCredentials(as, upc);
 		
 		byte[] b = client.execute(hp,new HttpResponseHandler());
-//		HttpResponse response = client.execute(hp);
-//		 HttpEntity entity = response.getEntity();
-//		// gzip Ω‚—π
-//		 
-//		 
-//		 BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent(), "UTF-8")); 
-//		 
-//		 String line = null;   
-//		 String st = new String();
-//		 
-//		    while ((line = reader.readLine()) != null) {
-//		    	st = st+line;
-//		     }   
-		
-//		GZIPInputStream inStream = 
-//		        new GZIPInputStream ( new ByteArrayInputStream(b) );
-//		
-//		 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inStream)); ;
-//		while((st = bufferedReader.readLine()) != null){}
-//		System.out.println("ssssssssss\n"+st);
 		/* end */
 		if (b != null) {
 			if (url.contains("gp_verify_receipt?")) {

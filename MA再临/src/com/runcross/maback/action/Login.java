@@ -36,7 +36,7 @@ public class Login {
 		Document doc;
 		if (!jump) {
 			try {
-				result = Info.network.ConnectToServer(URL_CHECK_INSPECTION, new ArrayList<NameValuePair>(), true);
+				result = ActionDone.network.ConnectToServer(URL_CHECK_INSPECTION, new ArrayList<NameValuePair>(), true);
 			} catch (Exception ex) {
 //				ErrorData.currentDataType = ErrorData.DataType.text;
 //				ErrorData.currentErrorType = ErrorData.ErrorType.ConnectionError;
@@ -47,10 +47,10 @@ public class Login {
 		ArrayList<NameValuePair> al = new ArrayList<NameValuePair>();
 		al.add(new BasicNameValuePair("login_id",Info.LoginId));
 		al.add(new BasicNameValuePair("password",Info.LoginPw));
-		System.out.println(Info.LoginId+" "+Info.LoginPw);
+//		System.out.println(Info.LoginId+" "+Info.LoginPw);
 		try {
-			System.out.println("url "+URL_LOGIN);
-			result = Info.network.ConnectToServer(URL_LOGIN, al,true);
+//			System.out.println("url "+URL_LOGIN);
+			result = ActionDone.network.ConnectToServer(URL_LOGIN, al,true);
 			
 		} catch (Exception ex) {
 //			ErrorData.currentDataType = ErrorData.DataType.text;
@@ -82,8 +82,8 @@ public class Login {
 //				ErrorData.currentErrorType = ErrorData.ErrorType.LoginResponse;
 //				ErrorData.currentDataType = ErrorData.DataType.text;
 //				ErrorData.text = xpath.evaluate("/response/header/error/message", doc);
-				System.out.println("error code 0");
-				System.out.println(new String(result));
+//				System.out.println("error code 0");
+//				System.out.println(new String(result));
 				return false;
 			}
 			
@@ -94,6 +94,8 @@ public class Login {
 			if (!xpath.evaluate("//fairy_appearance", doc).equals("0")) {
 //				Info.info.events.push(Info.EventType.fairyAppear);
 			}
+			Info.name = xpath.evaluate("//your_data/name", doc);
+			Info.name = xpath.evaluate("//your_data/town_level", doc);
 			Info.maxap = Integer.valueOf(xpath.evaluate("//ap/max", doc));
 			Info.ap = Integer.valueOf(xpath.evaluate("//ap/current", doc));
 			Info.maxbc = Integer.valueOf(xpath.evaluate("//bc/max", doc));
@@ -139,7 +141,6 @@ public class Login {
 				try {
 					Login.run();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

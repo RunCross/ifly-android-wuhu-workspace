@@ -4,14 +4,14 @@ import com.runcross.maback.data.Info;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.widget.TextView;
 
 public class Done extends Activity {
 
-	private EditText maxbc;
-	private EditText bc;
-	private EditText maxap;
-	private EditText ap;
+	private TextView maxbc;
+	private TextView bc;
+	private TextView maxap;
+	private TextView ap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +19,10 @@ public class Done extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.userinfo);
 
-		maxbc = (EditText) findViewById(R.id.maxbc);
-		bc = (EditText) findViewById(R.id.bc);
-		maxap = (EditText) findViewById(R.id.maxap);
-		ap = (EditText) findViewById(R.id.ap);
+		maxbc = (TextView) findViewById(R.id.maxbc);
+		bc = (TextView) findViewById(R.id.bc);
+		maxap = (TextView) findViewById(R.id.maxap);
+		ap = (TextView) findViewById(R.id.ap);
 
 		maxbc.setText(String.valueOf(Info.maxbc));
 		maxap.setText(String.valueOf(Info.maxap));
