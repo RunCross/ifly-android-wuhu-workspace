@@ -80,8 +80,8 @@ public class Done extends Activity {
 		viewList = new ArrayList<View>();
 		Intent intent1 = new Intent(this, UserInfoShow.class);
 		viewList.add(manager.startActivity("用户信息", intent1).getDecorView());
-//		Intent intent2 = new Intent(this, TypeListActivity.class);
-//		viewList.add(manager.startActivity("分区导航", intent2).getDecorView());
+		Intent intent2 = new Intent(this, Area.class);
+		viewList.add(manager.startActivity("分区导航", intent2).getDecorView());
 	}
 	
 }

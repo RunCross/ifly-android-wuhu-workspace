@@ -7,7 +7,12 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+<!-- 往sdcard中写入数据的权限 -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"> </uses-permission>
+<!-- 在sdcard中创建/删除文件的权限 -->
+<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"> </uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -20,22 +25,19 @@
         <activity
             android:name=".LoginPre"
             android:launchMode="singleTask" >
-                    </activity>
-        <activity android:name=".Done"
-            android:launchMode="singleTask" 
-            >
-        </activity>
-        <activity 
-            android:name=".UserInfoShow"
-            ></activity>
-        <activity 
-            android:name=".Area"
-            ><intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
+        </activity>
+        <activity
+            android:name=".Done"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity android:name=".UserInfoShow" >
+        </activity>
+        <activity android:name=".Area" >
         </activity>
     </application>
 

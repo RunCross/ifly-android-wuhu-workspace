@@ -10,12 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class LoginPre extends Activity {
-
-	private String uid;
-	private String pwd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

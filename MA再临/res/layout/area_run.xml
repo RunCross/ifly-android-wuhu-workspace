@@ -54,4 +54,7 @@
         style="@style/areaLine"
         android:text="@string/areaAutoYao" />
 
+    <CheckBox
+        style="@style/areaLine"
+        android:text="@string/areaFairy" />
 </LinearLayout>

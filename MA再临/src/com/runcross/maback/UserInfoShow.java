@@ -1,5 +1,6 @@
 package com.runcross.maback;
 
+import com.runcross.maback.action.ActionDone;
 import com.runcross.maback.data.Info;
 
 import android.app.Activity;
@@ -27,12 +28,12 @@ public class UserInfoShow extends Activity {
 		name = (TextView) findViewById(R.id.playerName);
 		level = (TextView) findViewById(R.id.playerLevel);
 
-		maxbc.setText(String.valueOf(Info.maxbc));
-		maxap.setText(String.valueOf(Info.maxap));
-		bc.setText(String.valueOf(Info.bc));
-		ap.setText(String.valueOf(Info.ap));
-		name.setText(String.valueOf(Info.name));
-		level.setText(String.valueOf(Info.level));
+		maxbc.setText(String.valueOf(ActionDone.info.bcMax));
+		maxap.setText(String.valueOf(ActionDone.info.apMax));
+		bc.setText(String.valueOf(ActionDone.info.bc));
+		ap.setText(String.valueOf(ActionDone.info.ap));
+		name.setText(String.valueOf(ActionDone.info.username));
+		level.setText(String.valueOf(ActionDone.info.lv));
 		
 		
 	}
