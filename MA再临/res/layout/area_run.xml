@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <CheckBox
+        style="@style/areaLine"
+        android:text="@string/areaAutoGo" />
+
+    <CheckBox
+        style="@style/areaLine"
+        android:text="@string/areaDailyFirst" />
+
+    <CheckBox
+        style="@style/areaLine"
+        android:text="@string/areaAutoGoNext" />
+
+    <LinearLayout
+        style="@style/areaLine"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/areaText"
+            android:text="@string/areaGoTime" />
+
+        <EditText
+            style="@style/areaText"
+            android:layout_weight="1"
+            android:hint="@string/areaGoTime"
+            android:inputType="number" />
+
+        <TextView
+            style="@style/areaText"
+            android:text="@string/areaGoTimeSP" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/areaLine"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/areaText"
+            android:text="@string/areaGoCondition" />
+
+        <EditText
+            style="@style/areaText"
+            android:layout_weight="1"
+            android:hint="@string/areaGoCondition"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <CheckBox
+        style="@style/areaLine"
+        android:text="@string/areaAutoYao" />
+
+</LinearLayout>

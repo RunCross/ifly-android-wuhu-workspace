@@ -9,11 +9,18 @@
     <string name="userPwd">密  码</string>
     <string name="userPwdTishi">请输入密码</string>
     <string name="login">登录</string>
-    <string name="maxbc">最大BC</string>    
+    <string name="maxbc">最大BC</string>
     <string name="currentbc">现有BC</string>
     <string name="maxap">最大AP</string>
     <string name="currentap">现有AP</string>
     <string name="playName">角色名</string>
     <string name="playLevel">等级</string>
+    <string name="areaAutoGo">自动跑图</string>
+    <string name="areaAutoGoNext">自动跑下一图</string>
+    <string name="areaDailyFirst">每日优先</string>
+    <string name="areaGoTime">跑图间隔时间</string>
+    <string name="areaGoTimeSP">秒</string>
+    <string name="areaGoCondition">大于AP跑图</string>
+    <string name="areaAutoYao">自动嗑药</string>
 
 </resources>

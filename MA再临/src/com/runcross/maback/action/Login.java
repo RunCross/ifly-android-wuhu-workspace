@@ -95,7 +95,7 @@ public class Login {
 //				Info.info.events.push(Info.EventType.fairyAppear);
 			}
 			Info.name = xpath.evaluate("//your_data/name", doc);
-			Info.name = xpath.evaluate("//your_data/town_level", doc);
+			Info.level = xpath.evaluate("//your_data/town_level", doc);
 			Info.maxap = Integer.valueOf(xpath.evaluate("//ap/max", doc));
 			Info.ap = Integer.valueOf(xpath.evaluate("//ap/current", doc));
 			Info.maxbc = Integer.valueOf(xpath.evaluate("//bc/max", doc));

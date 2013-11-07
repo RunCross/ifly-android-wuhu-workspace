@@ -20,13 +20,22 @@
         <activity
             android:name=".LoginPre"
             android:launchMode="singleTask" >
-            <intent-filter>
+                    </activity>
+        <activity android:name=".Done"
+            android:launchMode="singleTask" 
+            >
+        </activity>
+        <activity 
+            android:name=".UserInfoShow"
+            ></activity>
+        <activity 
+            android:name=".Area"
+            ><intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Done" >
+            
         </activity>
     </application>
 

@@ -10,33 +10,28 @@
         android:orientation="horizontal" >
     
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
-            android:text="@string/playName"
-            android:textSize="20sp" />
+            android:text="@string/playName" />
 
         <TextView
+            style="@style/userinfoText"
             android:id="@+id/playerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""
-            android:textSize="20sp" />
+             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
             android:text="@string/playLevel"
-            android:textSize="20sp" />
+            />
 
         <TextView
             android:id="@+id/playerLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp" />
+            style="@style/userinfoText"
+            />
         
         
     </LinearLayout>
@@ -46,33 +41,29 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
             android:text="@string/maxbc"
-            android:textSize="20sp" />
+             />
 
         <TextView
+            style="@style/userinfoText"
             android:id="@+id/maxbc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""
-            android:textSize="20sp" />
+            />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
             android:text="@string/currentbc"
-            android:textSize="20sp" />
+            />
 
         <TextView
             android:id="@+id/bc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp" />
+            style="@style/userinfoText"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -81,33 +72,29 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
             android:text="@string/maxap"
-            android:textSize="20sp" />
+            />
 
         <TextView
             android:id="@+id/maxap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
-            android:textSize="20sp" />
+            />
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="@style/userinfoText"
             android:text="@string/currentap"
-            android:textSize="20sp" />
+            />
 
         <TextView
             android:id="@+id/ap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/userinfoText"
             android:layout_weight="1"
-            android:textSize="20sp" />
+             />
     </LinearLayout>
 
 </LinearLayout>
