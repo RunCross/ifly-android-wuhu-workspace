@@ -103,7 +103,8 @@ public class Login {
 //			Info.bc = Integer.valueOf(xpath.evaluate("//bc/current", doc));
 			ActionDone.info.userId = xpath.evaluate("//login/user_id", doc);
 			ParseUserDataInfo.parse(doc);
-			ParseCardList.parse(doc);
+//			ParseCardList.parse(doc);
+			PULLCardList.getCards(result);
 			
 			ActionDone.info.SetTimeoutByAction(Name);
 			
@@ -115,6 +116,9 @@ public class Login {
 			ErrorData.currentErrorType = ErrorData.ErrorType.LoginDataParseError;
 			ErrorData.bytes = result;
 			throw ex;
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return true;
 	}
