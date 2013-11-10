@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#18A0A0"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:contentDescription="@null"
+        android:src="@drawable/people" />
+
+    <LinearLayout
+        android:id="@+id/name_line"
+        style="@style/login_line"
+        android:layout_below="@id/people" >
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="fill_horizontal"
+            android:text="@string/uname"
+            android:textSize="25sp" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/uname"
+            android:hint="@string/uname" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pwd_line"
+        style="@style/login_line"
+        android:layout_below="@id/name_line" >
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="fill_horizontal"
+            android:text="@string/upwd"
+            android:textSize="25sp" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/upwd"
+            android:hint="@string/upwd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_reg"
+        style="@style/login_line"
+        android:layout_below="@id/pwd_line"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp"
+        android:gravity="clip_horizontal" >
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:text="@string/register" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/off" />
+    </LinearLayout>
+
+</RelativeLayout>
