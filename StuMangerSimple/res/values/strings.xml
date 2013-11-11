@@ -11,5 +11,10 @@
     <string name="cancel">取消</string>
     <string name="login">登录 </string>
     <string name="off">退出 </string>
+    <string name="go_tel">拨打电话 </string>
+    <string name="go_mess">发送短信</string>
+    <string name="name">姓名</string>
+    <string name="sex">性别</string>
+    <string name="tel">手机号</string>
 
 </resources>

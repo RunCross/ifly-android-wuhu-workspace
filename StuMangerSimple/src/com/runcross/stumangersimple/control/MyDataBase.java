@@ -16,7 +16,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 
-		db.execSQL("create table user_login(uid integer primary key ,uname nvarchar(50) not null unique ,upwd varchar(15) not null)");
+		db.execSQL("create table user_login(uid integer primary key AUTOINCREMENT,uname nvarchar(50) not null unique ,upwd varchar(15) not null)");
 		db.execSQL("create table user_mess(uid integer references user_login(uid) ," +
 				                           "uname nvarchar(50)  ," +
 				                           "sex nchar(1) ," +
@@ -25,6 +25,12 @@ public class MyDataBase extends SQLiteOpenHelper {
 				                           "stuNum char(12)," +
 				                           "tel char(11)," +
 				                           "cont nvarchar(200))");
+		// 触发器，当有新用户注册成功时，自动加入user_mess表
+		db.execSQL("create trigger fk_login" +
+				" after insert on user_login " +
+				" begin " +
+				" insert into user_mess(uid,uname) values(new.uid,new.uname);" +
+				" end ;");
 
 	}
 

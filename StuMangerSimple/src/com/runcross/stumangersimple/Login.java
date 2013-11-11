@@ -12,6 +12,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
@@ -64,7 +65,7 @@ public class Login extends Activity implements Callback {
 
 	}
 
-	/*
+	/**
 	 * 初始化控件
 	 */
 	private void initSub() {
@@ -88,6 +89,9 @@ public class Login extends Activity implements Callback {
 
 	}
 
+	/**
+	 * 按钮监听
+	 */
 	private void initListener() {
 
 		login.setOnClickListener(new OnClickListener() {
@@ -111,9 +115,13 @@ public class Login extends Activity implements Callback {
 					hand.sendEmptyMessage(LOGIN_FAIL_DATA);
 				} else {
 
-					// UserInfo user = new UserInfo();
-					// user.setUid();
-					// session.put("user", user);
+					 UserInfo user = new UserInfo();
+					 user.setUname(name);
+					 session.put("user", user);
+					 getUserInfo(user);
+//					System.out.println("SUCCESS");
+					 Intent intent = new Intent(Login.this, StuListPre.class);
+					 startActivity(intent);
 				}
 			}
 		});
@@ -133,10 +141,42 @@ public class Login extends Activity implements Callback {
 		});
 	}
 
+	/**
+	 * 获取用户详细信息
+	 * @param user
+	 */
+	protected boolean getUserInfo(UserInfo user) {
+		ContentResolver cr = getContentResolver();
+		Cursor cursor = cr.query(
+				Uri.parse("content://com.runcross.stumanager.go/get/mess/username/"+user.getUname()), null,
+				null, null, null);
+		if (cursor == null || cursor.getCount() < 1) {
+			// System.out.println("NONE");
+			return false;
+
+		}
+		// System.out.println(222);
+
+		while (cursor.moveToNext()) {
+
+			user.setUid(cursor.getInt(cursor.getColumnIndex("uid")));
+			user.setUname(cursor.getString(cursor.getColumnIndex("uname")));
+		}
+		cursor.close();
+		session.put("user", user);
+		return false;
+	}
+
+	/**
+	 * 登录查询 
+	 * @param name 用户名
+	 * @param pwd 密码
+	 * @return 
+	 */
 	protected boolean login(String name, String pwd) {
 		ContentResolver cr = getContentResolver();
 		Cursor cursor = cr.query(
-				Uri.parse("content://com.runcross.stumanager.go/user/1"), null,
+				Uri.parse("content://com.runcross.stumanager.go/login/username/"+name), null,
 				null, null, null);
 		if (cursor == null || cursor.getCount() < 1) {
 			// System.out.println("NONE");
@@ -150,9 +190,13 @@ public class Login extends Activity implements Callback {
 			System.out.println("ddddddddddddddddddd " + cursor.getString(0));
 		}
 		cursor.close();
-		return false;
+		return true;
 	}
 
+	/**
+	 * 内部消息处理
+	 * 
+	 */
 	@Override
 	public boolean handleMessage(Message msg) {
 		AlertDialog.Builder dialogBulder = new Builder(Login.this);
@@ -186,7 +230,7 @@ public class Login extends Activity implements Callback {
 		case LOGIN_FAIL_DATA:
 
 			AlertDialog dialogb = dialogBulder.setTitle("提示")
-					.setIcon(R.drawable.ic_launcher).setMessage("用户名或密码错误")
+					.setIcon(R.drawable.ic_launcher).setMessage("用户不存在或密码错误")
 					.setPositiveButton("确定", null)
 					.setNegativeButton("取消", null).create();
 			dialogb.show();
@@ -224,6 +268,9 @@ public class Login extends Activity implements Callback {
 						Toast.makeText(Login.this, "密码不一致", Toast.LENGTH_SHORT).show();
 					}else if(!register(regis_uname,regis_upwd)){
 						Toast.makeText(Login.this, "用户已经存在", Toast.LENGTH_SHORT).show();
+					}else{
+						Toast.makeText(Login.this, "注册成功", Toast.LENGTH_SHORT).show();
+						dialogc.dismiss();
 					}
 				}
 			});										
@@ -232,6 +279,13 @@ public class Login extends Activity implements Callback {
 		return false;
 	}
 
+
+	/**
+	 * 注册判断
+	 * @param regis_uname 用户名
+	 * @param regis_upwd 密码
+	 * @return
+	 */
 	protected boolean register(String regis_uname, String regis_upwd) {
 		boolean flag = false;
 		ContentValues values = new ContentValues();
@@ -242,6 +296,8 @@ public class Login extends Activity implements Callback {
 			flag = false;
 		}else{
 			flag = true;
+			uname.setText(regis_uname);
+			
 		}
 		return flag;
 		

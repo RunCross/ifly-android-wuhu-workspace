@@ -4,19 +4,20 @@ import java.sql.Date;
 
 public class UserInfo {
 
-	private String uid;
+	private boolean chk;
+	private int uid;
 	private String uname;
 	private String pwd;
-	private byte sex;
+	private String sex;
 	private String mz;
 	private Date birthday;
 	private String stuNum;
 	private String tel;
 	private String cont;
-	public String getUid() {
+	public int getUid() {
 		return uid;
 	}
-	public void setUid(String uid) {
+	public void setUid(int uid) {
 		this.uid = uid;
 	}
 	public String getUname() {
@@ -31,10 +32,10 @@ public class UserInfo {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public byte getSex() {
+	public String getSex() {
 		return sex;
 	}
-	public void setSex(byte sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 	public String getMz() {
@@ -66,6 +67,12 @@ public class UserInfo {
 	}
 	public void setCont(String cont) {
 		this.cont = cont;
+	}
+	public boolean isChk() {
+		return chk;
+	}
+	public void setChk(boolean chk) {
+		this.chk = chk;
 	}
 	
 	
