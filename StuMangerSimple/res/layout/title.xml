@@ -5,22 +5,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
-        <ImageView 
+        android:layout_height="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <ImageView
             android:id="@+id/title_back"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:contentDescription="@null"
             android:scaleType="fitXY"
             android:src="@drawable/title_back_button"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
         <EditText
             android:id="@+id/searchCont"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" 
-            android:layout_weight="1"
-            />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/search"

@@ -103,6 +103,7 @@ public class Login extends Activity implements Callback {
 
 				Editor editor = shared.edit();
 				editor.putString("uname", name);
+				editor.commit();
 				// System.out.println("name " + name);
 				// System.out.println(editor.commit());
 
@@ -120,8 +121,10 @@ public class Login extends Activity implements Callback {
 					 session.put("user", user);
 					 getUserInfo(user);
 //					System.out.println("SUCCESS");
+					 upwd.setText("");
 					 Intent intent = new Intent(Login.this, StuListPre.class);
 					 startActivity(intent);
+					 finish();
 				}
 			}
 		});

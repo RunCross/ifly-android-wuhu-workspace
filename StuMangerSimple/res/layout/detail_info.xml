@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:text="@string/name" />
+
+            <EditText
+                android:id="@+id/add_name"
+                style="@style/detail_text"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:layout_weight="1"
+                android:text="@string/sex" />
+
+            <RadioGroup
+                style="@style/detail_text"
+                android:orientation="horizontal" >
+
+                <RadioButton android:text="@string/sexf" />
+
+                <RadioButton android:text="@string/sexm" />
+            </RadioGroup>
+        </LinearLayout>
+        <TextView
+            style="@style/detail_text"
+            android:text="@string/mz" 
+            />
+        <Spinner 
+            style="@style/detail_text"
+            android:layout_weight="1"
+            android:entries=""
+            />
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+
+        <LinearLayout style="@style/detail_line" >
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

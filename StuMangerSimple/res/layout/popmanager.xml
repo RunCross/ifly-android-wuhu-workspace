@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:background="#000"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/manager_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            style="@style/pop_image"
+            android:contentDescription="@null"
+            android:src="@drawable/add" />
+
+        <TextView
+            style="@style/pop_text"
+            android:text="@string/add" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manager_del"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            style="@style/pop_image"
+            android:contentDescription="@null"
+            android:src="@drawable/deletered" />
+
+        <TextView
+            style="@style/pop_text"
+            android:text="@string/del" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manager_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            style="@style/pop_image"
+            android:contentDescription="@null"
+            android:src="@drawable/refresh" />
+
+        <TextView
+            style="@style/pop_text"
+            android:text="@string/refresh" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manager_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            style="@style/pop_image"
+            android:contentDescription="@null"
+            android:src="@drawable/manager" />
+
+        <TextView
+            style="@style/pop_text"
+            android:text="@string/managerUser" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -15,6 +15,16 @@
     <string name="go_mess">发送短信</string>
     <string name="name">姓名</string>
     <string name="sex">性别</string>
+    <string name="sexf">男</string>
+    <string name="sexm">女</string>
     <string name="tel">手机号</string>
+    <string name="add">新增</string>
+    <string name="del">删除</string>
+    <string name="refresh">刷新</string>
+    <string name="managerUser">管理用户</string>
+    <string name="mz">民族</string>
+    <string name="xh">学号</string>
+    <string name="sr">生日</string>
+    <string name="bz">备注</string>
 
 </resources>

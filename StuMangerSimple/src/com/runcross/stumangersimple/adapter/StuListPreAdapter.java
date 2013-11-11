@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class StuListPreAdapter extends BaseAdapter {
@@ -56,6 +58,16 @@ public class StuListPreAdapter extends BaseAdapter {
 		sex.setText(stus.get(position).getSex());
 		tel.setText(stus.get(position).getTel());
 		chk.setChecked(stus.get(position).isChk());
+		
+		final int pos = position;
+		
+		chk.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				stus.get(pos).setChk(isChecked);
+			}
+		});
 		
 		return view;
 	}
