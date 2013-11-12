@@ -1,37 +1,42 @@
-package com.runcross.stumangersimple;
+package com.runcross.stumangersimple.stu;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.runcross.stumangersimple.R;
 import com.runcross.stumangersimple.adapter.StuListPreAdapter;
 import com.runcross.stumangersimple.bean.UserInfo;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
-public class StuListPre extends Activity {
+public class StuListPre extends Activity implements OnGestureListener ,StuListPreAdapter.GoTel{
 
 	private ListView stuList;
 	private List<UserInfo> stus;
 	private View header;
 	private CheckBox allChk;
 
-	private ImageView titleBack;
+//	private ImageView titleBack;
 	private EditText searchCont;
 	private ImageButton search;
 	private ImageButton manager;
@@ -41,24 +46,18 @@ public class StuListPre extends Activity {
 	private LinearLayout pop_del;
 	private LinearLayout pop_refresh;
 	private LinearLayout pop_manager;
-
+	private View popupWindow;
 	private PopupWindow popWin;
-
-	// 屏幕的width
-	// private int mScreenWidth;
-	// // 屏幕的height
-	// private int mScreenHeight;
-	// // PopupWindow的width
-	// private int mPopupWindowWidth;
-	// // PopupWindow的height
-	// private int mPopupWindowHeight;
+	
+//	private GestureDetector gdetector ;
+	private float appeatDis = 15;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.stulist);
 
+//		gdetector = new GestureDetector(StuListPre.this);
 		initTitle();
 		stuList = (ListView) findViewById(R.id.stulist);
 		stus = new ArrayList<UserInfo>();
@@ -70,6 +69,20 @@ public class StuListPre extends Activity {
 		initListTitle();
 		stuList.addHeaderView(header);
 		stuList.setAdapter(adapter);
+		stuList.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Bundle bund = new Bundle();
+				System.out.println("position"+position+" "+stus.get(position-1).getBirthday());
+				bund.putSerializable("stu", stus.get(position-1));
+				Intent intent = new Intent(StuListPre.this, StuUpdate.class);
+				intent.putExtras(bund);
+				startActivity(intent);
+				return false;
+			}
+		});
 
 	}
 
@@ -96,20 +109,25 @@ public class StuListPre extends Activity {
 	 * 初始化标题栏
 	 */
 	private void initTitle() {
-		titleBack = (ImageView) findViewById(R.id.title_back);
+//		titleBack = (ImageView) findViewById(R.id.title_back);
 		searchCont = (EditText) findViewById(R.id.searchCont);
 		search = (ImageButton) findViewById(R.id.search);
 		manager = (ImageButton) findViewById(R.id.manager);
 
+		/*
+		 * 搜索框
+		 */
 		search.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 
 			}
 		});
 
+		/*
+		 * 管理按钮
+		 */
 		manager.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -127,7 +145,9 @@ public class StuListPre extends Activity {
 	 */
 	private void initPopuptWindow() {
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
-		View popupWindow = layoutInflater.inflate(R.layout.popmanager, null);
+		if(popupWindow == null){
+			popupWindow = layoutInflater.inflate(R.layout.popmanager, null);			
+		}
 
 		// 创建一个PopupWindow
 		// 参数1：contentView 指定PopupWindow的内容
@@ -135,11 +155,6 @@ public class StuListPre extends Activity {
 		// 参数3：height 指定PopupWindow的height
 		popWin = new PopupWindow(popupWindow, 360, 380);
 
-		// 获取屏幕和PopupWindow的width和height
-		// mScreenWidth = getWindowManager().getDefaultDisplay().getWidth();
-		// mScreenWidth = getWindowManager().getDefaultDisplay().getHeight();
-		// mPopupWindowWidth = popWin.getWidth();
-		// mPopupWindowHeight = popWin.getHeight();
 		if (pop_add == null) {
 			pop_add = (LinearLayout) popupWindow.findViewById(R.id.manager_add);
 			pop_del = (LinearLayout) popupWindow.findViewById(R.id.manager_del);
@@ -162,7 +177,10 @@ public class StuListPre extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
+				Intent intent = new Intent(StuListPre.this, StuAdd.class);
+				startActivity(intent);
+				popWin.dismiss();
+				popWin = null;
 			}
 		});
 		pop_del.setOnClickListener(new OnClickListener() {
@@ -177,7 +195,10 @@ public class StuListPre extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				adapter.notifyDataSetChanged();
+				initAdapter();
+				adapter.notifyDataSetChanged();				
+				popWin.dismiss();
+				popWin = null;
 			}
 		});
 
@@ -185,7 +206,6 @@ public class StuListPre extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -214,7 +234,7 @@ public class StuListPre extends Activity {
 		ContentResolver cr = getContentResolver();
 		Cursor cursor = cr
 				.query(Uri
-						.parse("content://com.runcross.stumanager.go/get/mess/users/part"),
+						.parse("content://com.runcross.stumanager.go/get/mess/users"),
 						null, null, null, null);
 		while (cursor.moveToNext()) {
 			UserInfo user = new UserInfo();
@@ -231,6 +251,11 @@ public class StuListPre extends Activity {
 			} else {
 				user.setTel(cursor.getString(cursor.getColumnIndex("tel")));
 			}
+			user.setMz(cursor.getString(cursor.getColumnIndex("mz")));
+			user.setBirthday(cursor.getString(cursor.getColumnIndex("birthday")));
+			user.setCont(cursor.getString(cursor.getColumnIndex("cont")));
+			user.setStuNum(cursor.getString(cursor.getColumnIndex("stuNum")));
+			user.setPhoto(cursor.getString(cursor.getColumnIndex("photo")));
 			user.setChk(false);
 			// user.setCont(cursor.getString(cursor.getColumnIndex("cont")));
 			// user.setMz(cursor.getString(cursor.getColumnIndex("mz")));
@@ -238,4 +263,50 @@ public class StuListPre extends Activity {
 		}
 		cursor.close();
 	}
+
+	@Override
+	public boolean onDown(MotionEvent e) {
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+		
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		return false;
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		return false;
+	}
+	@Override
+	public void onLongPress(MotionEvent e) {
+		
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
+		if(e1.getX()-e2.getX() > appeatDis){
+			
+		}
+		return false;
+	}
+
+	@Override
+	public void gotel(String telNum) {
+		Uri uriPhone=Uri.parse("tel:"+telNum);
+		Intent intent2 = new Intent(Intent.ACTION_CALL,uriPhone);
+		startActivity(intent2);
+//		Uri uriMassage = Uri.parse("smsto:"+student.getTxtPhone());
+//		Intent intent3 = new Intent(Intent.ACTION_SENDTO, uriMassage);            
+//		startActivity(intent3);
+
+	}
+	
 }

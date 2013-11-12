@@ -15,15 +15,19 @@ public class DataOperation extends ContentProvider {
 	private static final int USERS = 1;
 	private static final int USER = 2;
 	private static final int REGISTER = 3;
-	private static final int USER_INFO = 4;
-	private static final int USERS_MESS_PART = 5;
+	private static final int STU_INFO = 4;
+	private static final int STUS_MESS = 5;
+	private static final int STU_ADD = 6;
+	private static final int STU_UPDATE = 7;
 	static{
 		uriMatch = new UriMatcher(UriMatcher.NO_MATCH);
 		uriMatch.addURI("com.runcross.stumanager.go", "users", USERS);
 		uriMatch.addURI("com.runcross.stumanager.go", "login/username/*", USER);
 		uriMatch.addURI("com.runcross.stumanager.go", "register", REGISTER);
-		uriMatch.addURI("com.runcross.stumanager.go", "get/mess/username/*", USER_INFO);
-		uriMatch.addURI("com.runcross.stumanager.go", "get/mess/users/part", USERS_MESS_PART);
+		uriMatch.addURI("com.runcross.stumanager.go", "get/mess/username/*", STU_INFO);
+		uriMatch.addURI("com.runcross.stumanager.go", "get/mess/users", STUS_MESS);
+		uriMatch.addURI("com.runcross.stumanager.go", "add/user", STU_ADD);
+		uriMatch.addURI("com.runcross.stumanager.go", "update/user", STU_UPDATE);
 	}
 	
 	@Override
@@ -46,13 +50,13 @@ public class DataOperation extends ContentProvider {
 //			System.out.println(111);
 			cursor = db.rawQuery("select * from user_login", null);
 			break;
-		case USER_INFO:						
+		case STU_INFO:						
 //			System.out.println(111);
 			
 			cursor = db.rawQuery("select * from user_mess where uname = "+uri.getLastPathSegment(), null);
 			break;	
-		case USERS_MESS_PART:						
-			cursor = db.rawQuery("select uid,uname,sex,tel from user_mess", null);
+		case STUS_MESS:						
+			cursor = db.rawQuery("select * from user_mess", null);
 			break;
 		}
 		return cursor;
@@ -83,6 +87,14 @@ public class DataOperation extends ContentProvider {
 			}
 //			db.execSQL("ÐÞ¸ÄÓï¾ä"); else db.execSQL("²åÈëÓï¾ä"); 
 			break;
+		case STU_ADD:
+			long rowid = db.insert("user_mess","user_login.uid", values);
+			if(rowid>0){
+				uriBack = ContentUris.withAppendedId(uri, rowid);
+//				db.rawQuery("insert into user_mess ", selectionArgs)
+				getContext().getContentResolver().notifyChange(uriBack, null);
+			}
+			break;
 		}
 		return uriBack;
 	}
@@ -96,8 +108,15 @@ public class DataOperation extends ContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		SQLiteDatabase db = data.getWritableDatabase();
+		
+		int row = 0;
+		switch(uriMatch.match(uri)){
+		case STU_UPDATE:
+			row = db.update("user_mess", values, selection, selectionArgs);
+			break;
+		}
+		return row;
 	}
 
 }

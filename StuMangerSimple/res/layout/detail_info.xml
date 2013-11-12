@@ -8,6 +8,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            
+            >
+            <ImageView 
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/people"
+                android:scaleType="fitXY"
+                android:id="@+id/stu_photo"
+                />
+            <Button
+                style="@style/detail_text"
+                android:text="@string/choicePhoto"
+                android:id="@+id/choice_photo"
+                />
+        </LinearLayout>
         <LinearLayout style="@style/detail_line" >
 
             <TextView
@@ -28,51 +47,106 @@
                 android:text="@string/sex" />
 
             <RadioGroup
+                android:id="@+id/add_sex"
                 style="@style/detail_text"
                 android:orientation="horizontal" >
 
-                <RadioButton android:text="@string/sexf" />
+                <RadioButton
+                    android:id="@+id/sex_sexf"
+                    android:text="@string/sexf" />
 
-                <RadioButton android:text="@string/sexm" />
+                <RadioButton
+                    android:id="@+id/sex_sexm"
+                     android:text="@string/sexm" />
             </RadioGroup>
         </LinearLayout>
-        <TextView
-            style="@style/detail_text"
-            android:text="@string/mz" 
-            />
-        <Spinner 
-            style="@style/detail_text"
-            android:layout_weight="1"
-            android:entries=""
-            />
+
         <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:text="@string/mz" />
+
+            <Spinner
+                android:id="@+id/add_mz"
+                style="@style/detail_text"
+                android:layout_weight="1"
+                android:entries="@array/ethnic" />
         </LinearLayout>
 
         <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:text="@string/xh" />
+
+            <EditText
+                android:id="@+id/add_xh"
+                style="@style/detail_text"
+                android:inputType="number"
+                android:hint="10位数字"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:text="@string/sr" />
+
+            <EditText
+                android:id="@+id/add_sr"
+                style="@style/detail_text"
+                android:layout_weight="1"
+                android:editable="false" />
+
+            <Button
+                android:id="@+id/btndate"
+                style="@style/detail_text"
+                android:layout_height="wrap_content"
+                android:text="@string/choice" />
         </LinearLayout>
 
         <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:text="@string/tel" />
+
+            <EditText
+                android:id="@+id/add_tel"
+                style="@style/detail_text"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout style="@style/detail_line" >
+
+            <TextView
+                style="@style/detail_text"
+                android:text="@string/bz" />
+
+            <EditText
+                android:id="@+id/add_bz"
+                style="@style/detail_text"
+                android:layout_weight="1"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
         </LinearLayout>
 
-        <LinearLayout style="@style/detail_line" >
-        </LinearLayout>
+        <LinearLayout
+            style="@style/detail_line"
+            android:gravity="center_horizontal" >
 
-        <LinearLayout style="@style/detail_line" >
-        </LinearLayout>
+            <Button
+                android:id="@+id/add_submit"
+                style="@style/detail_text"
+                android:text="@string/submit" />
 
-        <LinearLayout style="@style/detail_line" >
-        </LinearLayout>
-
-        <LinearLayout style="@style/detail_line" >
-        </LinearLayout>
-
-        <LinearLayout style="@style/detail_line" >
+            <Button
+                android:id="@+id/add_cancel"
+                style="@style/detail_text"
+                android:text="@string/cancel" />
         </LinearLayout>
     </LinearLayout>
 

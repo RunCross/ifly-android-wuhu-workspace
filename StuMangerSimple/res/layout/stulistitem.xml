@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:id="@+id/list" >
 
     <CheckBox
         android:id="@+id/list_chk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
+        style="@style/list_text"
         android:focusable="false"/>
 
     <TextView
         android:id="@+id/list_stu_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/list_text"
         android:layout_weight="2" />
 
     <TextView
         android:id="@+id/list_stu_sex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/list_text"
         android:layout_weight="1" />
 
     <TextView
         android:id="@+id/list_stu_tel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/list_text"
         android:layout_weight="2" />
 
-    <Button
-        android:id="@+id/list_stu_gotel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/go_tel"
-        android:visibility="gone" />
 
-    <Button
+    <ImageButton
+        android:id="@+id/list_stu_gotel"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/go_mess"
+        android:background="@drawable/phone"        
+        android:visibility="gone" />
+    
+    <ImageButton
         android:id="@+id/list_stu_gomess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/go_mess"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="15dp"
+        android:contentDescription="@string/go_mess"
+        android:background="@drawable/message"        
         android:visibility="gone" />
 
 </LinearLayout>

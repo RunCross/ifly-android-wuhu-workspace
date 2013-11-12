@@ -1,8 +1,9 @@
 package com.runcross.stumangersimple.bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class UserInfo {
+public class UserInfo implements Serializable {
 
 	private boolean chk;
 	private int uid;
@@ -10,10 +11,11 @@ public class UserInfo {
 	private String pwd;
 	private String sex;
 	private String mz;
-	private Date birthday;
+	private String birthday;
 	private String stuNum;
 	private String tel;
 	private String cont;
+	private String photo;
 	public int getUid() {
 		return uid;
 	}
@@ -44,11 +46,11 @@ public class UserInfo {
 	public void setMz(String mz) {
 		this.mz = mz;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setBirthday(String string) {
+		this.birthday = string;
 	}
 	public String getStuNum() {
 		return stuNum;
@@ -74,6 +76,13 @@ public class UserInfo {
 	public void setChk(boolean chk) {
 		this.chk = chk;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
 	
 	
 	

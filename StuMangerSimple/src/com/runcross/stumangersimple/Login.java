@@ -1,8 +1,11 @@
 package com.runcross.stumangersimple;
 
+import java.io.File;
+
 import com.runcross.stumangersimple.bean.UserInfo;
-import com.runcross.stumangersimple.control.DataOperation;
 import com.runcross.stumangersimple.session.SESSION;
+import com.runcross.stumangersimple.stu.StuListPre;
+import com.runcross.stumangersimple.tool.BitmapTools;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -45,10 +48,10 @@ public class Login extends Activity implements Callback {
 
 	private static final int LOGIN_FAIL_BLANK = -1;
 	private static final int LOGIN_FAIL_DATA = 0;
-	private static final int LOGIN = 1;
+//	private static final int LOGIN = 1;
 	private static final int REGISTER = 2;
-	private static final int REGISTER_FAIL_EXITS = -2;
-	private static final int REGISTER_FAIL_PWD = -3;
+//	private static final int REGISTER_FAIL_EXITS = -2;
+//	private static final int REGISTER_FAIL_PWD = -3;
 	private static final int OFF = 3;
 
 	private SESSION session = new SESSION();
@@ -57,12 +60,26 @@ public class Login extends Activity implements Callback {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		
+
 		cr = getContentResolver();
 		hand = new Handler(this);
 
 		initSub();
 
+		initPhotoFolder();
+	}
+
+	private void initPhotoFolder() {
+		if (android.os.Environment.getExternalStorageState().equals(
+				android.os.Environment.MEDIA_MOUNTED)) {
+			File photop = new File(BitmapTools.root+"/"+BitmapTools.photoPath);
+			BitmapTools.photofile = BitmapTools.root+"/"+BitmapTools.photoPath;
+			if(!photop.exists()){
+				BitmapTools.photofile = BitmapTools.root+"/"+BitmapTools.photoPath;
+				photop.mkdirs();
+			}
+		} else {
+		}
 	}
 
 	/**
@@ -116,15 +133,15 @@ public class Login extends Activity implements Callback {
 					hand.sendEmptyMessage(LOGIN_FAIL_DATA);
 				} else {
 
-					 UserInfo user = new UserInfo();
-					 user.setUname(name);
-					 session.put("user", user);
-					 getUserInfo(user);
-//					System.out.println("SUCCESS");
-					 upwd.setText("");
-					 Intent intent = new Intent(Login.this, StuListPre.class);
-					 startActivity(intent);
-					 finish();
+					UserInfo user = new UserInfo();
+					user.setUname(name);
+					session.put("user", user);
+					getUserInfo(user);
+					// System.out.println("SUCCESS");
+					upwd.setText("");
+					Intent intent = new Intent(Login.this, StuListPre.class);
+					startActivity(intent);
+					finish();
 				}
 			}
 		});
@@ -146,13 +163,15 @@ public class Login extends Activity implements Callback {
 
 	/**
 	 * 获取用户详细信息
+	 * 
 	 * @param user
 	 */
 	protected boolean getUserInfo(UserInfo user) {
 		ContentResolver cr = getContentResolver();
-		Cursor cursor = cr.query(
-				Uri.parse("content://com.runcross.stumanager.go/get/mess/username/"+user.getUname()), null,
-				null, null, null);
+		Cursor cursor = cr
+				.query(Uri
+						.parse("content://com.runcross.stumanager.go/get/mess/username/"
+								+ user.getUname()), null, null, null, null);
 		if (cursor == null || cursor.getCount() < 1) {
 			// System.out.println("NONE");
 			return false;
@@ -171,16 +190,19 @@ public class Login extends Activity implements Callback {
 	}
 
 	/**
-	 * 登录查询 
-	 * @param name 用户名
-	 * @param pwd 密码
-	 * @return 
+	 * 登录查询
+	 * 
+	 * @param name
+	 *            用户名
+	 * @param pwd
+	 *            密码
+	 * @return
 	 */
 	protected boolean login(String name, String pwd) {
 		ContentResolver cr = getContentResolver();
-		Cursor cursor = cr.query(
-				Uri.parse("content://com.runcross.stumanager.go/login/username/"+name), null,
-				null, null, null);
+		Cursor cursor = cr.query(Uri
+				.parse("content://com.runcross.stumanager.go/login/username/"
+						+ name), null, null, null, null);
 		if (cursor == null || cursor.getCount() < 1) {
 			// System.out.println("NONE");
 			return false;
@@ -188,10 +210,10 @@ public class Login extends Activity implements Callback {
 		}
 		// System.out.println(222);
 
-		while (cursor.moveToNext()) {
-
-			System.out.println("ddddddddddddddddddd " + cursor.getString(0));
-		}
+		// while (cursor.moveToNext()) {
+		//
+		// System.out.println("ddddddddddddddddddd " + cursor.getString(0));
+		// }
 		cursor.close();
 		return true;
 	}
@@ -241,52 +263,63 @@ public class Login extends Activity implements Callback {
 			break;
 		case REGISTER:
 			LayoutInflater inflater = LayoutInflater.from(Login.this);
-			final View view = inflater.inflate(R.layout.registere, null);			
-			final AlertDialog dialogc = dialogBulder
-					.setTitle("用户注册")
-					.setView(view)
-					.create();
+			final View view = inflater.inflate(R.layout.registere, null);
+			final AlertDialog dialogc = dialogBulder.setTitle("用户注册")
+					.setView(view).create();
 			dialogc.show();
-			
+
 			Button btn_conf = (Button) view.findViewById(R.id.register_conf);
-			Button btn_cancel = (Button) view.findViewById(R.id.register_cancel);
-			
+			Button btn_cancel = (Button) view
+					.findViewById(R.id.register_cancel);
+
 			btn_cancel.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					dialogc.dismiss();
 				}
 			});
 			btn_conf.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					String regis_uname = ((EditText) view.findViewById(R.id.regi_uname)).getText().toString();
-					String regis_upwd = ((EditText) view.findViewById(R.id.regi_upwd)).getText().toString();
-					String regis_upwd_conf = ((EditText) view.findViewById(R.id.regi_upwd_conf)).getText().toString();
-					if(regis_uname.length()<1 || regis_upwd.length() <1 || regis_upwd_conf.length()<1){
-						Toast.makeText(Login.this, "信息不完整", Toast.LENGTH_SHORT).show();
-					}else if(!regis_upwd.equals(regis_upwd_conf)){
-						Toast.makeText(Login.this, "密码不一致", Toast.LENGTH_SHORT).show();
-					}else if(!register(regis_uname,regis_upwd)){
-						Toast.makeText(Login.this, "用户已经存在", Toast.LENGTH_SHORT).show();
-					}else{
-						Toast.makeText(Login.this, "注册成功", Toast.LENGTH_SHORT).show();
+					String regis_uname = ((EditText) view
+							.findViewById(R.id.regi_uname)).getText()
+							.toString();
+					String regis_upwd = ((EditText) view
+							.findViewById(R.id.regi_upwd)).getText().toString();
+					String regis_upwd_conf = ((EditText) view
+							.findViewById(R.id.regi_upwd_conf)).getText()
+							.toString();
+					if (regis_uname.length() < 1 || regis_upwd.length() < 1
+							|| regis_upwd_conf.length() < 1) {
+						Toast.makeText(Login.this, "信息不完整", Toast.LENGTH_SHORT)
+								.show();
+					} else if (!regis_upwd.equals(regis_upwd_conf)) {
+						Toast.makeText(Login.this, "密码不一致", Toast.LENGTH_SHORT)
+								.show();
+					} else if (!register(regis_uname, regis_upwd)) {
+						Toast.makeText(Login.this, "用户已经存在", Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						Toast.makeText(Login.this, "注册成功", Toast.LENGTH_SHORT)
+								.show();
 						dialogc.dismiss();
 					}
 				}
-			});										
+			});
 			break;
 		}
 		return false;
 	}
 
-
 	/**
 	 * 注册判断
-	 * @param regis_uname 用户名
-	 * @param regis_upwd 密码
+	 * 
+	 * @param regis_uname
+	 *            用户名
+	 * @param regis_upwd
+	 *            密码
 	 * @return
 	 */
 	protected boolean register(String regis_uname, String regis_upwd) {
@@ -294,16 +327,18 @@ public class Login extends Activity implements Callback {
 		ContentValues values = new ContentValues();
 		values.put("uname", regis_uname);
 		values.put("upwd", regis_upwd);
-		Uri uri = cr.insert(Uri.parse("content://com.runcross.stumanager.go/register"), values);
-		if(uri == null ){
+		Uri uri = cr.insert(
+				Uri.parse("content://com.runcross.stumanager.go/register"),
+				values);
+		if (uri == null) {
 			flag = false;
-		}else{
+		} else {
 			flag = true;
 			uname.setText(regis_uname);
-			
+
 		}
 		return flag;
-		
+
 	}
 
 }
