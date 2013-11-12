@@ -37,7 +37,7 @@ public class PULLCardList {
                 if("user_card".equals(name)){
                     card = new Card();
 //                    card.serialId = parser.getAttributeValue(0);
-                    System.out.println("new "+ i++);
+//                    System.out.println("new "+ i++);
                 }
                 
                 if(card != null){

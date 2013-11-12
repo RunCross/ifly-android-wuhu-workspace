@@ -18,28 +18,28 @@ public class Info {
 		public static int Profile = 1;
 		
 		// user info
-		public static String username = "";
-		public static int ap = 0;
-		public static int bc = 0;
-		public static int apMax = 0;
-		public static  int bcMax = 0;
-		public static int exp = 0;
-		public static int gather = 0;
-		public static int rankPerson = 0;
-		public static int rankGroup = 0;
-		public static int rankGather = 0;
-		public static int lv = 0;
-		public static int cardMax = 0;
-		public static int rewardCount = 0;
-		public static int rewardMax = 0;
-		public static String guildId = "";
-		public static String userId = "";
-		public static int ticket = 0;
-		public static String week = "";
-		public static int pointToAdd = 0;
-		public static int apUp = 0;
-		public static int bcUp = 0;
-		public static long money = 0;
+		public String username = "";
+		public int ap = 0;
+		public int bc = 0;
+		public int apMax = 0;
+		public  int bcMax = 0;
+		public int exp = 0;
+		public int gather = 0;
+		public int rankPerson = 0;
+		public int rankGroup = 0;
+		public int rankGather = 0;
+		public int lv = 0;
+		public int cardMax = 0;
+		public int rewardCount = 0;
+		public int rewardMax = 0;
+		public String guildId = "";
+		public String userId = "";
+		public int ticket = 0;
+		public String week = "";
+		public int pointToAdd = 0;
+		public int apUp = 0;
+		public int bcUp = 0;
+		public long money = 0;
 		
 		/**
 		 * 浼樺厛杩涜濡栫簿鎴�	 */

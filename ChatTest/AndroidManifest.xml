@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.chattest"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity android:name="com.example.chattest.Weixin" >
+        </activity>
+        <activity android:name="com.example.chattest.Address" >
+        </activity>
+        <activity android:name="com.example.chattest.Find" >
+        </activity>
+        <activity android:name="com.example.chattest.Me" >
+        </activity>
+        <activity android:name="com.example.chattest.ChatActivity" >
+        </activity>
+        <activity android:name="com.example.chattest.Setting" >
+        </activity>
+        <activity
+            android:name="com.example.chattest.ExitFromSetting"
+            android:theme="@style/MyDialogStyleBottom" >
+        </activity>
+        <activity
+            android:name="com.example.chattest.Exit"
+            android:theme="@style/MyDialogStyle" >
+        </activity>
+        <activity android:name="com.example.chattest.AddressAdd" >
+        </activity>
+        <activity android:name="com.example.chattest.Shake" >
+        </activity>
+        <activity android:name="com.example.chattest.Bottle" >
+        </activity>
+        <activity android:name="com.example.chattest.Login" >
+        </activity>
+        <activity android:name="com.example.chattest.Register" >
+        </activity>
+        <activity android:name="com.example.chattest.Loading" >
+        </activity>
+        <activity android:name="com.example.chattest.Start" >
+        </activity>
+        <activity android:name="com.example.chattest.Welcome" >
+        </activity>
+        <activity
+            android:name="com.example.chattest.MainWeixin"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

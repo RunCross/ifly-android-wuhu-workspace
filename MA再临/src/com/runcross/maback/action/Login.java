@@ -1,6 +1,7 @@
 package com.runcross.maback.action;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.w3c.dom.Document;
 
@@ -102,9 +103,12 @@ public class Login {
 //			Info.maxbc = Integer.valueOf(xpath.evaluate("//bc/max", doc));
 //			Info.bc = Integer.valueOf(xpath.evaluate("//bc/current", doc));
 			ActionDone.info.userId = xpath.evaluate("//login/user_id", doc);
+			
+			 long time = Calendar.getInstance().getTimeInMillis();
 			ParseUserDataInfo.parse(doc);
 //			ParseCardList.parse(doc);
 			PULLCardList.getCards(result);
+			System.out.println(Calendar.getInstance().getTimeInMillis() - time);
 			
 			ActionDone.info.SetTimeoutByAction(Name);
 			
