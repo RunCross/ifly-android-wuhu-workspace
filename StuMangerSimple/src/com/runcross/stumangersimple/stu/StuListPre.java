@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.runcross.stumangersimple.R;
 import com.runcross.stumangersimple.adapter.StuListPreAdapter;
-import com.runcross.stumangersimple.bean.UserInfo;
+import com.runcross.stumangersimple.bean.StuInfo;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -29,10 +29,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
-public class StuListPre extends Activity implements OnGestureListener ,StuListPreAdapter.GoTel{
+public class StuListPre extends Activity implements StuListPreAdapter.GoTel{
 
 	private ListView stuList;
-	private List<UserInfo> stus;
+	private List<StuInfo> stus;
 	private View header;
 	private CheckBox allChk;
 
@@ -49,23 +49,20 @@ public class StuListPre extends Activity implements OnGestureListener ,StuListPr
 	private View popupWindow;
 	private PopupWindow popWin;
 	
-//	private GestureDetector gdetector ;
-	private float appeatDis = 15;
-
-	@Override
+@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stulist);
+		setContentView(R.layout.stu_list);
 
 //		gdetector = new GestureDetector(StuListPre.this);
 		initTitle();
 		stuList = (ListView) findViewById(R.id.stulist);
-		stus = new ArrayList<UserInfo>();
+		stus = new ArrayList<StuInfo>();
 
 		initAdapter();
 
 		adapter = new StuListPreAdapter(stus, StuListPre.this);
-		header = LayoutInflater.from(this).inflate(R.layout.list_title, null);
+		header = LayoutInflater.from(this).inflate(R.layout.stu_list_title, null);
 		initListTitle();
 		stuList.addHeaderView(header);
 		stuList.setAdapter(adapter);
@@ -97,7 +94,7 @@ public class StuListPre extends Activity implements OnGestureListener ,StuListPr
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
 
-				for (UserInfo stu : stus) {
+				for (StuInfo stu : stus) {
 					stu.setChk(isChecked);
 				}
 				adapter.notifyDataSetChanged();
@@ -234,10 +231,10 @@ public class StuListPre extends Activity implements OnGestureListener ,StuListPr
 		ContentResolver cr = getContentResolver();
 		Cursor cursor = cr
 				.query(Uri
-						.parse("content://com.runcross.stumanager.go/get/mess/users"),
+						.parse("content://com.runcross.stumanager.go/get/mess/stus"),
 						null, null, null, null);
 		while (cursor.moveToNext()) {
-			UserInfo user = new UserInfo();
+			StuInfo user = new StuInfo();
 			user.setUid(cursor.getInt(cursor.getColumnIndex("uid")));
 			user.setUname(cursor.getString(cursor.getColumnIndex("uname")));
 			System.out.println(cursor.getColumnIndex("sex"));
@@ -265,48 +262,19 @@ public class StuListPre extends Activity implements OnGestureListener ,StuListPr
 	}
 
 	@Override
-	public boolean onDown(MotionEvent e) {
-		return false;
-	}
-
-	@Override
-	public void onShowPress(MotionEvent e) {
-		
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		return false;
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		return false;
-	}
-	@Override
-	public void onLongPress(MotionEvent e) {
-		
-	}
-
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		if(e1.getX()-e2.getX() > appeatDis){
-			
+	public void gotel(String telNum,int type) {
+		switch(type){
+		case 1:
+			Uri uriPhone=Uri.parse("tel:"+telNum);
+			Intent intent2 = new Intent(Intent.ACTION_CALL,uriPhone);
+			startActivity(intent2);
+			break;
+		case 2:
+			Uri uriMassage = Uri.parse("smsto:"+telNum);
+			Intent intent3 = new Intent(Intent.ACTION_SENDTO, uriMassage);            
+			startActivity(intent3);
+			break;
 		}
-		return false;
-	}
-
-	@Override
-	public void gotel(String telNum) {
-		Uri uriPhone=Uri.parse("tel:"+telNum);
-		Intent intent2 = new Intent(Intent.ACTION_CALL,uriPhone);
-		startActivity(intent2);
-//		Uri uriMassage = Uri.parse("smsto:"+student.getTxtPhone());
-//		Intent intent3 = new Intent(Intent.ACTION_SENDTO, uriMassage);            
-//		startActivity(intent3);
-
 	}
 	
 }

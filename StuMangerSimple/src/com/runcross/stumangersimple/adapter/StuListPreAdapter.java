@@ -3,7 +3,7 @@ package com.runcross.stumangersimple.adapter;
 import java.util.List;
 
 import com.runcross.stumangersimple.R;
-import com.runcross.stumangersimple.bean.UserInfo;
+import com.runcross.stumangersimple.bean.StuInfo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -23,18 +23,18 @@ import android.widget.TextView;
 public class StuListPreAdapter extends BaseAdapter {
 
 	public interface GoTel {
-		public void gotel(String telNum);
+		public void gotel(String telNum,int type);
 	};
 
 	private float down_x, up_x, move_x;
 	private boolean closeOnclick = false; // ÊÇ·ñ¹Ø±Õonclick¼àÌý false£º·ñ £¬true£ºÊÇ
 	private boolean isOpen = true;
-	private List<UserInfo> stus;
+	private List<StuInfo> stus;
 	private Context context;
 	private LayoutInflater inflater;
 	private float appeatDis = 15;
 
-	public StuListPreAdapter(List<UserInfo> stus, Context context) {
+	public StuListPreAdapter(List<StuInfo> stus, Context context) {
 		super();
 		this.stus = stus;
 		this.context = context;
@@ -59,7 +59,7 @@ public class StuListPreAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		View view = inflater.inflate(R.layout.stulistitem, null);
+		View view = inflater.inflate(R.layout.stu_list_item, null);
 
 		LinearLayout line = (LinearLayout) view.findViewById(R.id.list);
 		CheckBox chk = (CheckBox) view.findViewById(R.id.list_chk);
@@ -83,7 +83,14 @@ public class StuListPreAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				gt.gotel(tel.getText().toString());
+				gt.gotel(tel.getText().toString(),1);
+			}
+		});
+		goMess.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				gt.gotel(tel.getText().toString(),2);
 			}
 		});
 		
@@ -97,46 +104,46 @@ public class StuListPreAdapter extends BaseAdapter {
 				stus.get(pos).setChk(isChecked);
 			}
 		});
-		line.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				int action = event.getAction();
-				System.out.println("action"+action);
-				
-				switch (action) {
-				case MotionEvent.ACTION_DOWN:
-					down_x = event.getX();
-					closeOnclick = false;
-					isOpen = true;
-					return closeOnclick;
-				case MotionEvent.ACTION_UP:
-					up_x = event.getX();
-
-					return closeOnclick;
-				case MotionEvent.ACTION_MOVE:
-					move_x = event.getX();
-					float distance = Math.abs(move_x - down_x);
-					if (distance > appeatDis && isOpen) {
-						sex.setVisibility(View.VISIBLE);
-						tel.setVisibility(View.VISIBLE);
-						goTel.setVisibility(View.GONE);
-						goMess.setVisibility(View.GONE);
-						closeOnclick = true;
-						isOpen = false;
-					} else {
-						sex.setVisibility(View.GONE);
-						tel.setVisibility(View.GONE);
-						goTel.setVisibility(View.VISIBLE);
-						goMess.setVisibility(View.VISIBLE);
-						closeOnclick = true;
-						isOpen = false;
-					}
-					break;
-				}// switch
-				return false;
-			}
-		});
+//		line.setOnTouchListener(new OnTouchListener() {
+//
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				int action = event.getAction();
+////				System.out.println("action"+action);
+//				
+//				switch (action) {
+//				case MotionEvent.ACTION_DOWN:
+//					down_x = event.getX();
+//					closeOnclick = false;
+//					isOpen = true;
+//					return closeOnclick;
+//				case MotionEvent.ACTION_UP:
+//					up_x = event.getX();
+//
+//					return closeOnclick;
+//				case MotionEvent.ACTION_MOVE:
+//					move_x = event.getX();
+//					float distance = Math.abs(move_x - down_x);
+//					if (distance > appeatDis && isOpen) {
+//						sex.setVisibility(View.VISIBLE);
+//						tel.setVisibility(View.VISIBLE);
+//						goTel.setVisibility(View.GONE);
+//						goMess.setVisibility(View.GONE);
+//						closeOnclick = true;
+//						isOpen = false;
+//					} else {
+//						sex.setVisibility(View.GONE);
+//						tel.setVisibility(View.GONE);
+//						goTel.setVisibility(View.VISIBLE);
+//						goMess.setVisibility(View.VISIBLE);
+//						closeOnclick = true;
+//						isOpen = false;
+//					}
+//					break;
+//				}// switch
+//				return false;
+//			}
+//		});
 		return view;
 	}
 

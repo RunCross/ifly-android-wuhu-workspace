@@ -2,6 +2,7 @@ package com.runcross.stumangersimple;
 
 import java.io.File;
 
+import com.runcross.stumangersimple.bean.StuInfo;
 import com.runcross.stumangersimple.bean.UserInfo;
 import com.runcross.stumangersimple.session.SESSION;
 import com.runcross.stumangersimple.stu.StuListPre;
@@ -136,7 +137,7 @@ public class Login extends Activity implements Callback {
 					UserInfo user = new UserInfo();
 					user.setUname(name);
 					session.put("user", user);
-					getUserInfo(user);
+//					getUserInfo(user);
 					// System.out.println("SUCCESS");
 					upwd.setText("");
 					Intent intent = new Intent(Login.this, StuListPre.class);
@@ -166,7 +167,7 @@ public class Login extends Activity implements Callback {
 	 * 
 	 * @param user
 	 */
-	protected boolean getUserInfo(UserInfo user) {
+	protected boolean getUserInfo(StuInfo user) {
 		ContentResolver cr = getContentResolver();
 		Cursor cursor = cr
 				.query(Uri

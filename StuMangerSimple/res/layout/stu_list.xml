@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+     >
     
 <include layout="@layout/title"
     />
@@ -10,6 +12,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/stulist" 
+    android:focusable="true"
+    android:divider="#66ccff"
     >
         
 </ListView>

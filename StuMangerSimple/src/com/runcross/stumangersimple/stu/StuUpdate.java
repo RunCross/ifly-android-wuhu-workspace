@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import com.runcross.stumangersimple.R;
-import com.runcross.stumangersimple.bean.UserInfo;
+import com.runcross.stumangersimple.bean.StuInfo;
 import com.runcross.stumangersimple.session.SESSION;
 import com.runcross.stumangersimple.tool.BitmapTools;
 
@@ -50,7 +50,7 @@ public class StuUpdate extends Activity {
 	private Button submit;
 	private Button cancel;
 	private DatePickerDialog datep;
-	private UserInfo stu;
+	private StuInfo stu;
 	private Button choicePhoto;
 	private ImageView photo;
 	private String photosave;
@@ -68,9 +68,9 @@ public class StuUpdate extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detail_info);
+		setContentView(R.layout.stu_detail_info);
 
-		stu = (UserInfo) getIntent().getExtras().get("stu");
+		stu = (StuInfo) getIntent().getExtras().get("stu");
 
 		getResources().getStringArray(R.array.ethnic);
 
@@ -152,7 +152,7 @@ public class StuUpdate extends Activity {
 					values.put("photo", photosave);
 					ContentResolver cr = getContentResolver();
 					int row = cr.update(
-							Uri.parse("content://com.runcross.stumanager.go/update/user"),							
+							Uri.parse("content://com.runcross.stumanager.go/update/stu"),							
 							values,
 							"uid = ?",
 							new String[]{String.valueOf(stu.getUid())});

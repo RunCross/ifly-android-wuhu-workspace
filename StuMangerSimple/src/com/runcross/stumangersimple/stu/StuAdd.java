@@ -63,7 +63,7 @@ public class StuAdd extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detail_info);
+		setContentView(R.layout.stu_detail_info);
 
 		getResources().getStringArray(R.array.ethnic);
 
@@ -139,7 +139,7 @@ public class StuAdd extends Activity {
 					values.put("photo", photosave);
 					ContentResolver cr = getContentResolver();
 					Uri uri = cr.insert(
-							Uri.parse("content://com.runcross.stumanager.go/add/user"),
+							Uri.parse("content://com.runcross.stumanager.go/add/stu"),
 							values);
 					if (uri != null) {
 						AlertDialog.Builder dialogBulder = new Builder(
