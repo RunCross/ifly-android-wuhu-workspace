@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -64,19 +65,19 @@ public class StuListPreAdapter extends BaseAdapter {
 		LinearLayout line = (LinearLayout) view.findViewById(R.id.list);
 		CheckBox chk = (CheckBox) view.findViewById(R.id.list_chk);
 		TextView name = (TextView) view.findViewById(R.id.list_stu_name);
-		final TextView sex = (TextView) view.findViewById(R.id.list_stu_sex);
+		TextView sex = (TextView) view.findViewById(R.id.list_stu_sex);
 		final TextView tel = (TextView) view.findViewById(R.id.list_stu_tel);
-		final ImageButton goTel = (ImageButton) view
+		Button goTel = (Button) view
 				.findViewById(R.id.list_stu_gotel);
-		final ImageButton goMess = (ImageButton) view
+		Button goMess = (Button) view
 				.findViewById(R.id.list_stu_gomess);
 		name.setText(stus.get(position).getUname());
 		sex.setText(stus.get(position).getSex());
 		tel.setText(stus.get(position).getTel());
 		chk.setChecked(stus.get(position).isChk());
 		
-		goTel.setVisibility(View.VISIBLE);
-		goMess.setVisibility(View.VISIBLE);
+//		goTel.setVisibility(View.VISIBLE);
+//		goMess.setVisibility(View.VISIBLE);
 		
 		final GoTel gt = (GoTel) context;
 		goTel.setOnClickListener(new OnClickListener() {

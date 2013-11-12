@@ -25,23 +25,26 @@
         style="@style/list_text"
         android:layout_weight="2" />
 
-    <ImageButton
+    <Button
         android:id="@+id/list_stu_gotel"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:scaleType="fitXY"
         android:background="@drawable/phone"
         android:contentDescription="@string/go_mess"
         android:focusable="false"
-        android:visibility="visible" />
+        />
 
-    <ImageButton
+    <Button
         android:id="@+id/list_stu_gomess"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:scaleType="fitXY"
         android:layout_marginLeft="15dp"
         android:background="@drawable/message"
         android:contentDescription="@string/go_mess"
         android:focusable="false"
-        android:visibility="visible" />
+        
+         />
 
 </LinearLayout>
