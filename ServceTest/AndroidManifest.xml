@@ -21,7 +21,9 @@
         <service android:name=".MyServices" >
         </service>
 
-        <activity android:name=".BoradServices" >
+        <activity android:name=".BoradServices" 
+            android:launchMode="singleTask"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
