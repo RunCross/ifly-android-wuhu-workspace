@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:descendantFocusability="blocksDescendants"
      >
     
 <include layout="@layout/title"
     />
-<ListView
+<com.runcross.stumangersimple.tool.FilpperListvew
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/stulist" 
@@ -16,6 +15,6 @@
     android:divider="#66ccff"
     >
         
-</ListView>
+</com.runcross.stumangersimple.tool.FilpperListvew>
 
 </LinearLayout>

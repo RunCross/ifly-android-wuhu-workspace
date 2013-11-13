@@ -7,18 +7,14 @@ import com.runcross.stumangersimple.bean.StuInfo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class StuListPreAdapter extends BaseAdapter {
@@ -27,13 +23,9 @@ public class StuListPreAdapter extends BaseAdapter {
 		public void gotel(String telNum,int type);
 	};
 
-	private float down_x, up_x, move_x;
-	private boolean closeOnclick = false; // ÊÇ·ñ¹Ø±Õonclick¼àÌý false£º·ñ £¬true£ºÊÇ
-	private boolean isOpen = true;
 	private List<StuInfo> stus;
 	private Context context;
 	private LayoutInflater inflater;
-	private float appeatDis = 15;
 
 	public StuListPreAdapter(List<StuInfo> stus, Context context) {
 		super();
@@ -58,24 +50,23 @@ public class StuListPreAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 
 		View view = inflater.inflate(R.layout.stu_list_item, null);
 
-		LinearLayout line = (LinearLayout) view.findViewById(R.id.list);
 		CheckBox chk = (CheckBox) view.findViewById(R.id.list_chk);
 		TextView name = (TextView) view.findViewById(R.id.list_stu_name);
-		TextView sex = (TextView) view.findViewById(R.id.list_stu_sex);
-		final TextView tel = (TextView) view.findViewById(R.id.list_stu_tel);
+		TextView stuNum = (TextView) view.findViewById(R.id.list_stu_stuNum);
+		
 		Button goTel = (Button) view
 				.findViewById(R.id.list_stu_gotel);
 		Button goMess = (Button) view
 				.findViewById(R.id.list_stu_gomess);
+		goTel.setVisibility(View.GONE);
+		goMess.setVisibility(View.GONE);
 		name.setText(stus.get(position).getUname());
-		sex.setText(stus.get(position).getSex());
-		tel.setText(stus.get(position).getTel());
-		chk.setChecked(stus.get(position).isChk());
-		
+		stuNum.setText(stus.get(position).getStuNum());
+		chk.setChecked(stus.get(position).isChk());		
 //		goTel.setVisibility(View.VISIBLE);
 //		goMess.setVisibility(View.VISIBLE);
 		
@@ -84,14 +75,14 @@ public class StuListPreAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				gt.gotel(tel.getText().toString(),1);
+				gt.gotel(stus.get(position).getTel(),1);
 			}
 		});
 		goMess.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				gt.gotel(tel.getText().toString(),2);
+				gt.gotel(stus.get(position).getTel(),2);
 			}
 		});
 		

@@ -25,7 +25,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 				                           "stuNum char(12)," +
 				                           "tel char(11)," +
 				                           "cont nvarchar(200)," +
-				                           "photo nvarchar(200))");
+				                           "photo nvarchar(500))");
 		// 触发器，当有新用户注册成功时，自动加入user_mess表
 //		db.execSQL("create trigger fk_login" +
 //				" after insert on user_login " +

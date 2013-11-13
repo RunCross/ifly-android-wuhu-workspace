@@ -15,7 +15,6 @@ public class ManageListAdapter extends BaseAdapter {
 	private List<UserInfo> users;
 	private Context context;
 	private LayoutInflater inflater;
-	private float appeatDis = 15;
 
 	public ManageListAdapter(List<UserInfo> users, Context context) {
 		super();

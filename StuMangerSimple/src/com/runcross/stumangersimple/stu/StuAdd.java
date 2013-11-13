@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import com.runcross.stumangersimple.R;
-import com.runcross.stumangersimple.session.SESSION;
 import com.runcross.stumangersimple.tool.BitmapTools;
 
 import android.app.Activity;

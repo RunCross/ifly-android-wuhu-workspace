@@ -6,8 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        
-         >
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
 
         <ImageView
             android:id="@+id/title_back"
