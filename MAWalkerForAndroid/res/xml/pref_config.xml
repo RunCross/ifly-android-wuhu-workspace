@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_header_login" >
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="LoginID"
+            android:title="@string/login_id" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="LoginPW"
+            android:password="true"
+            android:title="@string/login_pw" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="SessionID"
+            android:title="@string/session_id" />
+        <EditTextPreference
+            android:defaultValue="@string/ua_def"
+            android:key="UserAgent"
+            android:title="@string/user_agent" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_settings" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="one_ap_only"
+            android:title="@string/one_ap_only" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="auto_add_point"
+            android:title="@string/auto_add_point" />
+        <ListPreference android:entries="@array/auto_add_point_to" android:key="auto_add_point_to" android:entryValues="@array/auto_add_point_to" android:title="@string/auto_add_point_to" android:dependency="auto_add_point" android:defaultValue="BC"/><SwitchPreference
+            android:defaultValue="true"
+            android:key="receive_battle_present"
+            android:title="@string/receive_battle_present" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="fairy_battle_first"
+            android:title="@string/fairy_battle_first" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="rare_fairy_use_normal_deck"
+            android:title="@string/rare_fairy_use_normal_deck" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="allow_bc_insuffient"
+            android:summary="@string/allow_bc_insuffient_summary"
+            android:title="@string/allow_bc_insuffient" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="allow_attack_same_fairy"
+            android:title="@string/allow_attack_same_fairy" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="night_mode"
+            android:title="@string/night_mode" />
+
+        <EditTextPreference
+            android:defaultValue="0.51"
+            android:key="guild_battle_percent"
+            android:title="@string/guild_battle_percent" />
+        <EditTextPreference
+            android:defaultValue="8"
+            android:key="keep_guild_battle_tickets"
+            android:title="@string/keep_guild_battle_tickets" />
+        
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_use" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="auto_use_ap"
+            android:title="@string/auto_use_ap" />
+
+        <EditTextPreference
+            android:defaultValue="1"
+            android:dependency="auto_use_ap"
+            android:key="autoApLow"
+            android:title="@string/autoApLow" />
+        <EditTextPreference
+            android:defaultValue="10"
+            android:dependency="auto_use_ap"
+            android:key="autoApFullLow"
+            android:title="@string/autoApFullLow" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="auto_use_ap"
+            android:entries="@array/auto_use_type"
+            android:entryValues="@array/auto_use_type_value"
+            android:key="autoApType"
+            android:title="@string/autoApUseType" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="auto_use_bc"
+            android:title="@string/auto_use_bc" />
+
+        <EditTextPreference
+            android:defaultValue="50"
+            android:dependency="auto_use_bc"
+            android:key="autoBcLow"
+            android:title="@string/autoBcLow" />
+        <EditTextPreference
+            android:defaultValue="10"
+            android:dependency="auto_use_bc"
+            android:key="autoBcFullLow"
+            android:title="@string/autoBcFullLow" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="auto_use_bc"
+            android:entries="@array/auto_use_type"
+            android:entryValues="@array/auto_use_type_value"
+            android:key="autoBcType"
+            android:title="@string/autoBcUseType" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_settings" >
+        <Preference android:summary="0：卡组1；  1：卡组2；  2：卡组3；  3：推荐卡组" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="FairyDeckNo"
+            android:title="@string/FairyDeckNo" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="FairyDeckBc"
+            android:title="@string/FairyDeckBc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="RareFairyDeckNo"
+            android:title="@string/RareFairyDeckNo" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="RareFairyDeckBc"
+            android:title="@string/RareFairyDeckBc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="GuildFairyDeckNo"
+            android:title="@string/GuildFairyDeckNo" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="GuildFairyDeckBc"
+            android:title="@string/GuildFairyDeckBc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="FriendFairyBattleRareNo"
+            android:title="@string/FriendFairyBattleRareNo" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="FriendFairyBattleRareBc"
+            android:title="@string/FriendFairyBattleRareBc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="FriendFairyBattleNormalNo"
+            android:title="@string/FriendFairyBattleNormalNo" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="FriendFairyBattleNormalBc"
+            android:title="@string/FriendFairyBattleNormalBc" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="LowerBCDeckNo"
+            android:title="@string/LowerBCDeckNo" />
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="LowerBCDeckBc"
+            android:title="@string/LowerBCDeckBc" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

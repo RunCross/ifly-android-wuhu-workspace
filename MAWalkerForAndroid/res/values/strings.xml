@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MAWalker for Android</string>
+    <string name="action_settings">设置</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_exit">退出</string>
+    <string name="action_flowcount">流量统计</string>
+
+</resources>

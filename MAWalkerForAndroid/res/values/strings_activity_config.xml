@@ -1,0 +1,70 @@
+<resources>
+
+    <string name="title_activity_config">设置</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_header_login">登陆设置</string>
+    <string name="login_id">登陆ID</string>
+    <string name="login_pw">登陆密码</string>
+    <string name="session_id">SessionID</string>
+    <string name="ua_def">Million/236 (t03gchn; t03gzc; 4.1.2) samsung/t03gzc/t03gchn:4.1.2/JZO54K/N7100ZCDMD3:user/release-keys GooglePlay</string>
+    <string name="user_agent">User-Agent</string>
+    <string name="pref_header_settings">详细设置</string>
+    <string name="one_ap_only">只跑1AP的图</string>
+    <string name="auto_add_point">自动加点</string>
+    <string name="receive_battle_present">自动收集妖精战礼物</string>
+    <string name="fairy_battle_first">优先考虑妖精战</string>
+    <string name="rare_fairy_use_normal_deck">使用NormalDeck来攻击觉醒怪</string>
+    <string name="allow_bc_insuffient">强制跑图</string>
+    <string name="allow_bc_insuffient_summary">不管bc是否充足，默认是当你放的怪死了以后才跑图</string>
+    <string name="allow_attack_same_fairy">允许舔同一个怪</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="guild_battle_percent">"判断外敌战胜利HP的比例(默认0.51) "</string>
+    <string name="keep_guild_battle_tickets">出击书保留数量(默认8张)</string>
+    <string name="pref_header_use">吃药设置</string>
+    <string name="auto_use_ap">自动吃AP药</string>
+    <string name="autoApLow">低于此值吃药(AP)</string>
+    <string name="autoApUseType">吃药类型(AP)</string>
+    <string name="autoApFullLow">保留这点全药(AP)</string>
+
+    <string-array name="auto_use_type">
+        <item>只吃全药</item>
+        <item>只吃半药</item>
+        <item>都吃(先吃半药，再吃全药)</item>
+    </string-array>
+    <string-array name="auto_use_type_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string name="auto_use_bc">自动吃BC药</string>
+    <string name="autoBcLow">低于此值吃药(BC)</string>
+    <string name="autoBcUseType">吃药类型(BC)</string>
+    <string name="autoBcFullLow">保留这点全药(BC)</string>
+    <string name="pref_header_deck">卡组设置</string>
+    <string name="FairyDeckNo">打妖精用卡组编号</string>
+    <string name="FairyDeckBc">打妖精用卡组消耗BC</string>
+
+    <string name="RareFairyDeckNo">打觉醒用卡组编号</string>
+    <string name="RareFairyDeckBc">打觉醒用卡组消耗BC</string>
+    
+    <string name="GuildFairyDeckNo">打外敌用卡组编号</string>
+    <string name="GuildFairyDeckBc">打外敌用卡组消耗BC</string>
+    
+    <string name="FriendFairyBattleRareNo">打好友觉醒用卡组编号</string>
+    <string name="FriendFairyBattleRareBc">打好友觉醒用卡组消耗BC</string>
+    
+    <string name="FriendFairyBattleNormalNo">打好友妖精用卡组编号</string>
+    <string name="FriendFairyBattleNormalBc">打好友妖精用卡组消耗BC</string>
+    
+    <string name="LowerBCDeckNo">舔妖卡组编号</string>
+    <string name="LowerBCDeckBc">舔妖卡组消耗BC</string>
+    <string-array name="auto_add_point_to">
+        <item >AP</item>
+        <item >BC</item>
+    </string-array>
+        <string name="auto_add_point_to">自动加点到</string>
+        <string name="action_clearlog">清除日志</string>
+        <string name="action_partyrank">读取团贡</string>
+</resources>
