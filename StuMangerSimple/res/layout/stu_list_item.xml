@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="100dp"
+   
     android:orientation="horizontal" >
 
     <CheckBox
@@ -18,33 +19,32 @@
     <TextView
         android:id="@+id/list_stu_sex"
         style="@style/list_text"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/list_stu_tel"
         style="@style/list_text"
-        android:layout_weight="2" />
+        android:layout_weight="2"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/list_stu_gotel"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/phone"
         android:contentDescription="@string/go_mess"
         android:focusable="false"
-        />
+        android:scaleType="fitXY" />
 
     <Button
         android:id="@+id/list_stu_gomess"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
         android:background="@drawable/message"
         android:contentDescription="@string/go_mess"
         android:focusable="false"
-        
-         />
+        android:scaleType="fitXY" />
 
 </LinearLayout>

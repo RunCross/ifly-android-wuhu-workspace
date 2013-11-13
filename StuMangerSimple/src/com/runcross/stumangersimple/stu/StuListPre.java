@@ -13,12 +13,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -28,9 +31,17 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
-public class StuListPre extends Activity implements StuListPreAdapter.GoTel{
+public class StuListPre extends Activity implements StuListPreAdapter.GoTel, OnGestureListener {
 
+	
+	private final char FLING_CLICK = 0;
+    private final char FLING_LEFT = 1;
+    private final char FLING_RIGHT = 2;
+    private char flingState = FLING_CLICK;
+    private GestureDetector gd;
+	
 	private ListView stuList;
 	private List<StuInfo> stus;
 	private View header;
@@ -53,7 +64,7 @@ public class StuListPre extends Activity implements StuListPreAdapter.GoTel{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.stu_list);
-
+		 gd = new GestureDetector(this);
 //		gdetector = new GestureDetector(StuListPre.this);
 		initTitle();
 		stuList = (ListView) findViewById(R.id.stulist);
@@ -66,18 +77,45 @@ public class StuListPre extends Activity implements StuListPreAdapter.GoTel{
 		initListTitle();
 		stuList.addHeaderView(header);
 		stuList.setAdapter(adapter);
-		stuList.setOnItemLongClickListener(new OnItemLongClickListener() {
+//		stuList.setOnItemLongClickListener(new OnItemLongClickListener() {
+//
+//			@Override
+//			public boolean onItemLongClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				Bundle bund = new Bundle();
+//				System.out.println("position"+position+" "+stus.get(position-1).getBirthday());
+//				bund.putSerializable("stu", stus.get(position-1));
+//				Intent intent = new Intent(StuListPre.this, StuUpdate.class);
+//				intent.putExtras(bund);
+//				startActivity(intent);
+//				return false;
+//			}
+//		});
+		stuList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Bundle bund = new Bundle();
-				System.out.println("position"+position+" "+stus.get(position-1).getBirthday());
-				bund.putSerializable("stu", stus.get(position-1));
-				Intent intent = new Intent(StuListPre.this, StuUpdate.class);
-				intent.putExtras(bund);
-				startActivity(intent);
-				return false;
+			public void onItemClick(AdapterView<?> parent, View view,
+					int pos, long id) {
+				 switch(flingState) {
+		            // 处理左滑事件
+		            case FLING_LEFT:
+		                        Toast.makeText( StuListPre.this, "Fling Left:"+pos, Toast.LENGTH_SHORT).show();
+		                        flingState = FLING_CLICK;
+		                break;
+		        // 处理右滑事件
+		            case FLING_RIGHT:
+		                        Toast.makeText( StuListPre.this, "Fling Right:"+pos, Toast.LENGTH_SHORT).show();
+		                        flingState = FLING_CLICK;
+		                break;
+		        // 处理点击事件
+		            case FLING_CLICK:
+		                    switch(pos) {
+		                    case 0:break;
+		                    case 1:break;
+		                    }
+		                    Toast.makeText( StuListPre.this, "Click Item:"+pos, Toast.LENGTH_SHORT).show();
+		                    break;
+		            }
 			}
 		});
 
@@ -275,6 +313,63 @@ public class StuListPre extends Activity implements StuListPreAdapter.GoTel{
 			startActivity(intent3);
 			break;
 		}
+	}
+
+	@Override
+	public boolean onDown(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		 
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
+		final int minX = 30 ,maxY = 20, minV = 0;
+        int x1 = (int) e1.getX(), x2 = (int) e2.getX();
+        int y1 = (int) e1.getY(), y2 = (int) e2.getY();
+        
+        if( Math.abs(x1-x2)>minX && Math.abs(y1-y2)<maxY && Math.abs(velocityX)>minV) {
+                if(x1>x2) {
+                        Log.v("MY_TAG", "Fling Left");
+                        flingState = FLING_LEFT;
+                }
+                else {
+                        Log.v("MY_TAG", "Fling Right");
+                        flingState = FLING_RIGHT;
+                }
+        }
+		return false;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		Log.v("MY_TAG", "onTouchEvent");
+        return this.gd.onTouchEvent(event);
 	}
 	
 }
