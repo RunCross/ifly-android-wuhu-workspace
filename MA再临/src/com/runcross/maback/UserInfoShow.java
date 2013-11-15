@@ -19,7 +19,7 @@ public class UserInfoShow extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.userinfo);
+		setContentView(R.layout.user_info);
 		
 		maxbc = (TextView) findViewById(R.id.maxbc);
 		bc = (TextView) findViewById(R.id.bc);

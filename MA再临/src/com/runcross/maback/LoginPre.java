@@ -33,7 +33,7 @@ public class LoginPre extends Activity {
 				// Toast.LENGTH_SHORT).show();
 				// return ;
 				// }
-				Info.LoginId = "15552873330";
+				Info.LoginId = "13652318929";
 				Info.LoginPw = "12345678";
 			
 					new Thread() {

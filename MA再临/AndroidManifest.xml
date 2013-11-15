@@ -39,6 +39,10 @@
         </activity>
         <activity android:name=".Area" >
         </activity>
+        <activity android:name=".EvilBattle" 
+            ></activity>
+        <activity android:name=".PVPBattle" 
+            ></activity>
     </application>
 
 </manifest>

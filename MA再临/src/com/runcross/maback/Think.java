@@ -13,8 +13,8 @@ import com.runcross.maback.data.Info;
 
 public class Think {
 	
-	private static final String AP_HALF = "101";
-	private static final String BC_HALF = "111";
+//	private static final String AP_HALF = "101";
+//	private static final String BC_HALF = "111";
 	private static final String AP_FULL = "1";
 	private static final String BC_FULL = "2";
 	
@@ -107,15 +107,15 @@ public class Think {
 			if (ActionDone.info.ap < Info.autoApLow) {
 				switch (Info.autoApType) {
 				case ALL:
-					if (ActionDone.info.halfApToday > 0 && ActionDone.info.halfAp > 0) {
-						ActionDone.info.toUse = AP_HALF;
-						return USE_PRI;
-					} else {
+//					if (ActionDone.info.halfApToday > 0 && ActionDone.info.halfAp > 0) {
+//						ActionDone.info.toUse = AP_HALF;
+//						return USE_PRI;
+//					} else {
 						if (ActionDone.info.fullAp > Info.autoApFullLow) {
 							ActionDone.info.toUse = AP_FULL;
 							return USE_PRI;
 						}
-					}
+//					}
 					break;
 				case FULL_ONLY:
 					if (ActionDone.info.fullAp > Info.autoApFullLow) {
@@ -124,10 +124,10 @@ public class Think {
 					}
 					break;
 				case HALF_ONLY:
-					if (ActionDone.info.halfApToday > 0 && ActionDone.info.halfAp > 0) {
-						ActionDone.info.toUse = AP_HALF;
-						return USE_PRI;
-					}
+//					if (ActionDone.info.halfApToday > 0 && ActionDone.info.halfAp > 0) {
+//						ActionDone.info.toUse = AP_HALF;
+//						return USE_PRI;
+//					}
 					break;
 				default:
 					break;
@@ -139,15 +139,15 @@ public class Think {
 			if (ActionDone.info.bc < Info.autoBcLow) {
 				switch (Info.autoBcType) {
 				case ALL:
-					if (ActionDone.info.halfBcToday > 0 && ActionDone.info.halfBc > 0) {
-						ActionDone.info.toUse = BC_HALF;
-						return USE_PRI;
-					} else {
+//					if (ActionDone.info.halfBcToday > 0 && ActionDone.info.halfBc > 0) {
+//						ActionDone.info.toUse = BC_HALF;
+//						return USE_PRI;
+//					} else {
 						if (ActionDone.info.fullBc > Info.autoBcFullLow) {
 							ActionDone.info.toUse = BC_FULL;
 							return USE_PRI;
 						}
-					}
+//					}
 					break;
 				case FULL_ONLY:
 					if (ActionDone.info.fullBc > Info.autoBcFullLow) {
@@ -156,10 +156,10 @@ public class Think {
 					}
 					break;
 				case HALF_ONLY:
-					if (ActionDone.info.halfBcToday > 0 && ActionDone.info.halfBc > 0) {
-						ActionDone.info.toUse = BC_HALF;
-						return USE_PRI;
-					}
+//					if (ActionDone.info.halfBcToday > 0 && ActionDone.info.halfBc > 0) {
+//						ActionDone.info.toUse = BC_HALF;
+//						return USE_PRI;
+//					}
 					break;
 				default:
 					break;

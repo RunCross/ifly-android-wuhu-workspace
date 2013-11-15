@@ -25,9 +25,8 @@ public class Done extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.configuration);
+		setContentView(R.layout.main_configuration);
 
 		viewpager = (ViewPager) findViewById(R.id.viewpager);
 		
@@ -60,8 +59,8 @@ public class Done extends Activity {
 		titleList = new ArrayList<String>();// 每个页面的Title数据
 		titleList.add("用户信息");
 		titleList.add("自动跑图");
-		titleList.add("妖精配置");
-		titleList.add("PVP配置");
+		titleList.add("妖精战斗");
+		titleList.add("PVP战斗");
 		titleList.add("杂项配置");
 	}
 
@@ -69,7 +68,6 @@ public class Done extends Activity {
 	 * 初始化用户信息
 	 */
 	private void initDate() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -81,7 +79,11 @@ public class Done extends Activity {
 		Intent intent1 = new Intent(this, UserInfoShow.class);
 		viewList.add(manager.startActivity("用户信息", intent1).getDecorView());
 		Intent intent2 = new Intent(this, Area.class);
-		viewList.add(manager.startActivity("分区导航", intent2).getDecorView());
+		viewList.add(manager.startActivity("自动跑图", intent2).getDecorView());
+		Intent intent3 = new Intent(this, EvilBattle.class);
+		viewList.add(manager.startActivity("妖精战斗", intent3).getDecorView());
+		Intent intent4 = new Intent(this, PVPBattle.class);
+		viewList.add(manager.startActivity("PVP战斗", intent4).getDecorView());
 	}
 	
 }
