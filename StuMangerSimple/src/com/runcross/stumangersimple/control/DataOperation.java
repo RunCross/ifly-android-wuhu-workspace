@@ -39,6 +39,7 @@ public class DataOperation extends ContentProvider {
 	
 	@Override
 	public boolean onCreate() {
+		
 		data = new MyDataBase(this.getContext(), "stumana", null, 1);
 		return false;
 	}

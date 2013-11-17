@@ -13,6 +13,10 @@ public class MyDataBase extends SQLiteOpenHelper {
 		// TODO Auto-generated constructor stub
 	}	
 	
+//	public interface xml2sql{
+//		public InputStream xml2sql();
+//	}
+	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 
@@ -43,9 +47,9 @@ public class MyDataBase extends SQLiteOpenHelper {
 	@Override 
 	public void onOpen(SQLiteDatabase db) {
         super.onOpen(db); 
-        if(!db.isReadOnly()) { 
-              // Enable foreign key constraints 
-        	db.execSQL("PRAGMA foreign_keys=ON;"); 
-     } 
+//        if(!db.isReadOnly()) { 
+//              // Enable foreign key constraints 
+//        	db.execSQL("PRAGMA foreign_keys=ON;"); 
+//     } 
 }
 }

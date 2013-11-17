@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.runcross.servcetest.MainActivity"
+            android:name="com.runcross.servicetest.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,18 +23,21 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyServices" >
+        <service android:name="com.runcross.servicetest.MyServices" >
         </service>
 
-        <activity android:name=".BoradServices" 
+        <activity android:name="com.runcross.servicetest.BoradServices" 
             android:launchMode="singleTask"
             >
             
         </activity>
 
-        <service android:name=".MyBroadCastService" >
+        <service android:name="com.runcross.servicetest.MyBroadCastService" >
+            <intent-filter>
+                <action android:name="com.runcross.serv"/>
+                </intent-filter>
         </service>
-        <service android:name=".MyIntentService"></service>
+        <service android:name="com.runcross.servicetest.MyIntentService"></service>
     </application>
 
 </manifest>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MA再临</string>
+    <string name="app_name">MA再临精简</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="reconnection">断线重连，秒</string>
+    <string name="start">开始</string>
+    <string name="end">结束</string>
     <string name="userName">账  号</string>
     <string name="userNameTishi">请输入账号</string>
     <string name="userPwd">密  码</string>
