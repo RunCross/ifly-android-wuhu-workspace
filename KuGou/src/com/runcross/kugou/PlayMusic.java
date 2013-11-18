@@ -5,6 +5,7 @@ import com.runcross.kugou.bean.Music;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,10 +36,21 @@ public class PlayMusic extends Activity {
 
 	private SeekBar songVolume;
 
-	private int modes[];
+	public static final int modes[];
 	public static int modeFlag ;
+	
+	static{
+		modes = new int[]{R.drawable.ic_player_mode_all_default,
+				R.drawable.ic_player_mode_random_default,
+				R.drawable.ic_player_mode_sequence_default,
+				R.drawable.ic_player_mode_single_default};
+	}
+	
 	private boolean isMore = false;
 
+	private boolean isPlaying;
+	
+	
 	private LinearLayout progress;
 	private LinearLayout operation;
 	
@@ -51,6 +63,8 @@ public class PlayMusic extends Activity {
 
 		music = (Music) getIntent().getExtras().get("music");
 
+		isPlaying = getIntent().getBooleanExtra("isplay", false);
+		
 		initSub();
 
 		initTitle();
@@ -92,22 +106,45 @@ public class PlayMusic extends Activity {
 			if(modeFlag == modes.length){
 				modeFlag = 0;
 			}
-			Intent intentModel = new Intent("com.runcross.kugou.model");
+			Intent intentModel = new Intent("com.runcross.kugou.music.model");
 			intentModel.putExtra("progress", modeFlag);
 			sendBroadcast(intentModel);
 			songModel.setImageResource(modes[modeFlag]);
 			break;
 		case R.id.play_prev:
+			Intent intentPre = new Intent("com.runcross.kugou.music.pre");
+			sendBroadcast(intentPre);
 			break;
 		case R.id.play_music:
+			isPlaying = !isPlaying;
+			if(isPlaying){
+				Intent intentMusic = new Intent("com.runcross.kugou.music.play");
+				sendBroadcast(intentMusic);	
+			}else{
+				Intent intentMusic = new Intent("com.runcross.kugou.music.pause");
+				sendBroadcast(intentMusic);	
+			}
+			
 			break;
 		case R.id.play_next:
+			Intent intentNext = new Intent("com.runcross.kugou.music.next");
+			sendBroadcast(intentNext);
 			break;
 		case R.id.play_more:
+			isMore = !isMore;
+			if(isMore){
+				progress.setVisibility(View.GONE);
+				operation.setVisibility(View.VISIBLE);
+			}else{
+				operation.setVisibility(View.GONE);
+				progress.setVisibility(View.VISIBLE);
+			}
 			break;
 		case R.id.play_title_back:
+			finish();
 			break;
 		case R.id.play_list:
+			
 			break;
 		}
 	}
@@ -172,9 +209,6 @@ public class PlayMusic extends Activity {
 		progress = (LinearLayout) findViewById(R.id.play_progress_linear);
 		operation  = (LinearLayout) findViewById(R.id.play_opera_more);
 		
-		modes = new int[]{R.drawable.ic_player_mode_all_default,
-				R.drawable.ic_player_mode_random_default,
-				R.drawable.ic_player_mode_sequence_default,
-				R.drawable.ic_player_mode_single_default};
+		
 	}
 }
