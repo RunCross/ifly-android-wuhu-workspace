@@ -1,6 +1,5 @@
 package com.runcross.servicetest;
 
-import com.runcross.servcetest.R;
 import com.runcross.servicetest.MyServices.MyBind;
 
 import android.os.Bundle;

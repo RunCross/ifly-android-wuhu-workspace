@@ -1,6 +1,5 @@
 package com.runcross.servicetest;
 
-import com.runcross.servcetest.R;
 
 import android.app.Activity;
 import android.app.Notification;

@@ -54,7 +54,8 @@ public class Network {
 	
 	public byte[] ConnectToServer(String url, List<NameValuePair> content, boolean UseDefaultKey) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, ClientProtocolException, IOException {
 		List<NameValuePair> post = RequestProcess(content,UseDefaultKey);
-		System.out.println(url);
+		UserAgent = DeviecInfo.getUserAgent();
+		System.out.println(url+" "+UserAgent);
 		HttpPost hp = new HttpPost(url);
 		hp.setHeader("User-Agent", UserAgent);
 		hp.setHeader("Accept-Encoding", "gzip, deflate");

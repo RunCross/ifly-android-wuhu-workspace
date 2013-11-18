@@ -21,13 +21,11 @@ public class StuService extends Service {
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
 	}
 	
 	@Override
 	public boolean onUnbind(Intent intent) {
-		// TODO Auto-generated method stub
 		return super.onUnbind(intent);
 	}
 	
@@ -35,7 +33,6 @@ public class StuService extends Service {
 
 		@Override
 		public int getCount() throws RemoteException {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 

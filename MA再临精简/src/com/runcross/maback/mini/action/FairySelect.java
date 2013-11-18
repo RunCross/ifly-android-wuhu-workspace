@@ -15,8 +15,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.util.Xml;
 
-import com.runcross.maback.full.action.ActionDone;
-import com.runcross.maback.full.data.Card;
 import com.runcross.maback.mini.data.HTTPLink;
 import com.runcross.maback.mini.run.Go;
 
@@ -26,12 +24,12 @@ public class FairySelect {
 	private static byte[] response;
 	
 	
-	public static boolean run() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, ClientProtocolException, IOException{
+	public static boolean run() throws Throwable{
 		response = Go.network.ConnectToServer(fairyselect,null, false);
 		
 		
 		
-		return parse(response);;
+		return parse(response);
 	}
 
 	public static boolean parse(byte[] result) throws Throwable{
@@ -62,41 +60,11 @@ public class FairySelect {
             	  
             	  break;
               }
-              if("user".equals(name)){
-                  card = new Card();
-//                  card.serialId = parser.getAttributeValue(0);
-//                  System.out.println("new "+ i++);
-              }
-              
-              if(card != null){
-                  if("serialId".equals(name)){
-                      card.serialId = parser.nextText();
-                  }
-                  if("holography".equals(name)){
-                      card.holo = parser.nextText().equals("0");
-                  }                    
-                  if("lv".equals(name)){
-                      card.lv = Integer.parseInt(parser.nextText());
-                  }
-                  if("lv_max".equals(name)){
-                      card.lvMax = Integer.parseInt(parser.nextText());
-                  }
-                  if("hp".equals(name)){
-                      card.hp = Integer.parseInt(parser.nextText());
-                  }
-                  if("power".equals(name)){
-                      card.atk = Integer.parseInt(parser.nextText());                    }
-                  if("plus_limit_count".equals(name)){
-                      card.plusLimit = Integer.parseInt(parser.nextText());
-                  }
                  
-              }
+              
               break;                
           case XmlPullParser.END_TAG://元素标签结束，END_TAG结束常量
               if("Card".equals(parser.getName())){
-              	card.exist = true;
-              	ActionDone.info.cardList.add(card);
-                  card = null;
               }
               break;
           }
