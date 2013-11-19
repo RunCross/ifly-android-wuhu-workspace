@@ -96,8 +96,7 @@
         android:background="#ff808080"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone"
-         >
+        android:visibility="gone" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -130,6 +129,7 @@
                 style="@style/play_music_more"
                 android:layout_toRightOf="@id/play_share"
                 android:drawableTop="@drawable/ic_player_menu_details"
+                android:onClick="onMusicClick"
                 android:text="@string/details" />
 
             <TextView
@@ -150,12 +150,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
+                android:layout_marginLeft="25dp"
                 android:src="@drawable/ic_player_menu_volume" />
 
             <SeekBar
                 android:id="@+id/play_volume"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" 
+                android:layout_marginRight="25dp"
+                />
         </LinearLayout>
     </LinearLayout>
 

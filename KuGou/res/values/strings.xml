@@ -9,6 +9,10 @@
     <string name="details">信息</string>
     <string name="share">分享</string>
     <string name="search_photo">搜图</string>
+    <string name="name">歌曲名</string>
+    <string name="artist">演唱者</string>
+    <string name="duration">时间</string>
+    <string name="album">专辑</string>
     
 
 </resources>
