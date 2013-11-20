@@ -10,15 +10,20 @@ import com.runcross.kugou.bean.MusicAction;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.TextView;
 
-public class LocalMusicPlay extends Activity implements LocalMusicAdapter.LocalMusicListListener{
+public class LocalMusicPlay extends Activity implements
+		LocalMusicAdapter.LocalMusicListListener {
 
 	private ExpandableListView localMusic;
 
@@ -27,7 +32,7 @@ public class LocalMusicPlay extends Activity implements LocalMusicAdapter.LocalM
 	private TextView title;
 
 	private String path;
-	
+
 	private LocalMusicAdapter adapter;
 
 	private String[] projection = { MediaStore.Audio.AudioColumns._ID,
@@ -67,27 +72,30 @@ public class LocalMusicPlay extends Activity implements LocalMusicAdapter.LocalM
 			mu.setData(cursor.getString(cursor.getColumnIndex(projection[4])));
 			mu.setAlbum(cursor.getString(cursor.getColumnIndex(projection[5])));
 			list.add(mu);
-		}		
-		adapter = new LocalMusicAdapter(list,LocalMusicPlay.this);
+		}
+		adapter = new LocalMusicAdapter(list, LocalMusicPlay.this);
 		localMusic.setAdapter(adapter);
-		//只展开一个group
-		localMusic.setOnGroupExpandListener(new OnGroupExpandListener() {  
-  
-            @Override  
-            public void onGroupExpand(int groupPosition) {  
-                // TODO Auto-generated method stub  
-                for (int i = 0; i < adapter.getGroupCount(); i++) {  
-                    if (groupPosition != i) {  
-                    	localMusic.collapseGroup(i);  
-                    }//if  
-                }  //for
-  
-            }  //method
-  
-        });  
-				
+		// 只展开一个group
+		localMusic.setOnGroupExpandListener(new OnGroupExpandListener() {
+
+			@Override
+			public void onGroupExpand(int groupPosition) {
+				// TODO Auto-generated method stub
+				for (int i = 0; i < adapter.getGroupCount(); i++) {
+					if (groupPosition != i) {
+						localMusic.collapseGroup(i);
+					}// if
+				} // for
+
+			} // method
+
+		});
+
 	}
 
+	/**
+	 * 播放
+	 */
 	@Override
 	public void playLocalMusic(Music music) {
 		Intent intentMusic = new Intent("com.runcross.kugou.music");
@@ -96,9 +104,27 @@ public class LocalMusicPlay extends Activity implements LocalMusicAdapter.LocalM
 		sendBroadcast(intentMusic);
 	}
 
+	
 	@Override
+	/**
+	 * 设置铃声
+	 */
 	public void setLing(Music music) {
-		// TODO Auto-generated method stub
-		
+
+		ContentValues cv = new ContentValues();
+		Uri uri = MediaStore.Audio.Media.getContentUriForPath(music.getData());
+		Cursor cursor = this.getContentResolver().query(uri, null,
+				MediaStore.MediaColumns.DATA + "=?",
+				new String[] { music.getData() }, null);
+		if (cursor.getCount() > 0) {
+			cv.put(MediaStore.Audio.Media.IS_RINGTONE, true);
+			getContentResolver().update(uri, cv,
+					MediaStore.MediaColumns.DATA + "=?",
+					new String[] { music.getData() });
+			Uri newUri = ContentUris.withAppendedId(uri,
+					Long.valueOf(music.getId()));
+			RingtoneManager.setActualDefaultRingtoneUri(this,
+					RingtoneManager.TYPE_RINGTONE, newUri);
+		}
 	}
 }

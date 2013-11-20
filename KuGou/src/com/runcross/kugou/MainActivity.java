@@ -169,6 +169,15 @@ public class MainActivity extends Activity {
 //		super.onBackPressed();
 		moveTaskToBack(false);		
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Intent intentMusic = new Intent("com.runcross.kugou.music");
+		intentMusic.putExtra("model", MusicAction.PLAY_MUSIC_DETAIL);
+		sendBroadcast(intentMusic);
+	}
+	
 	/**
 	 * 内部接收消息
 	 * 

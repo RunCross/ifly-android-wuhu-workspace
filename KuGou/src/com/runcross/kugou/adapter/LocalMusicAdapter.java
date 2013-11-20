@@ -29,6 +29,7 @@ public class LocalMusicAdapter implements ExpandableListAdapter {
 	public interface LocalMusicListListener{
 		public void playLocalMusic(Music music);
 		public void setLing(Music music);
+		
 	}
 	
 	public LocalMusicAdapter(List<Music> musicList,Context context) {
