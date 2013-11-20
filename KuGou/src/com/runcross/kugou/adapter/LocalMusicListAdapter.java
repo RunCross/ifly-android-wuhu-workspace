@@ -3,62 +3,57 @@ package com.runcross.kugou.adapter;
 import java.util.List;
 
 import com.runcross.kugou.R;
-import com.runcross.kugou.bean.Music;
-
+import com.runcross.kugou.bean.LocalMusicItem;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MusicListAdapter extends BaseAdapter {
+public class LocalMusicListAdapter extends BaseAdapter {
 
-	private List<Music> musicList;
+	private List<LocalMusicItem> musicList;
 	private LayoutInflater inflater;
-	private Context context;
 	private ViewHolder holder;
 	
-	public MusicListAdapter(List<Music> musicList, Context context) {
+	public LocalMusicListAdapter(List<LocalMusicItem> musicList, Context context) {
 		super();
 		this.musicList = musicList;
-		this.context = context;
 		inflater = LayoutInflater.from(context);
 	}
-
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return musicList.size();
 	}
 
+
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return musicList.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+		return position;
 	}
-
-	class ViewHolder{
+	static class ViewHolder{
 		TextView list_num;
-		TextView lsit_name;
+		TextView list_name;
+		TextView list_path;
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView == null){
-			convertView = inflater.inflate(R.layout.play_list_item, null); 
+			convertView = inflater.inflate(R.layout.local_list_item, null); 
 		}
 		holder = new ViewHolder();
-		holder.list_num = (TextView) convertView.findViewById(R.id.list_num);
-		holder.lsit_name = (TextView) convertView.findViewById(R.id.list_musci_name);
-		holder.list_num.setText(String.valueOf(position));
-		holder.lsit_name.setText(musicList.get(position).getName());
+		holder.list_num = (TextView) convertView.findViewById(R.id.local_num);
+		holder.list_name = (TextView) convertView.findViewById(R.id.local_name);
+		holder.list_path = (TextView) convertView.findViewById(R.id.local_path);
+		holder.list_num.setText(String.valueOf(musicList.get(position).getNum()));
+		holder.list_name.setText(musicList.get(position).getName());
+		holder.list_path.setText(musicList.get(position).getPath());
 		return convertView;
 	}
 

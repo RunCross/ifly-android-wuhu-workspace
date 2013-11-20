@@ -1,6 +1,8 @@
 package com.runcross.kugou.bean;
 
-public class Music {
+import java.io.Serializable;
+
+public class Music implements Serializable{
 
 	private int id;
 	private String name;

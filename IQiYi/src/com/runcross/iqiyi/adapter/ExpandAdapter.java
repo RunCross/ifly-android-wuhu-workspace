@@ -36,13 +36,11 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
 	
 	@Override
 	public int getGroupCount() {
-		// TODO Auto-generated method stub
 		return datas.size();
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		// TODO Auto-generated method stub
 		return datas.get(groupPosition).getMovieList().size();
 	}
 

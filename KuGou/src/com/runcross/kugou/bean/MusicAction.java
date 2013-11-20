@@ -9,11 +9,15 @@ public class MusicAction {
 	public static final int PLAY_MUSIC_NEW = 1;
 	public static final int PLAY_MUSIC_PAUSE = 2;
 	public static final int PLAY_MUSIC_PREPARE = 6;
+	public static final int PLAY_MUSIC_DETAIL = 7;
+	public static final int PLAY_MUSIC_MODE = 8;
+	public static final int PLAY_MUSIC_INSERT = 9;
+	public static final int PLAY_MUSIC_INSERT_NEW = 10;
 	
 	public static final int MUSIC_DONE = 11;
 	public static final int MUSIC_PRO = 12;
 	public static final int MUSIC_INFO_LENGTH = 13;
 	public static final int MUSIC_NEW = 14;
 	public static final int MUSIC_PREPARE = 15;
-	
+	public static final int MUSIC_PLAYING = 16;
 }

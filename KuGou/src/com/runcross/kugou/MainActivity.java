@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 	private ImageButton play;
 	private ImageButton next;
 	private PlayState receiver;
-//	private static int PlayMusic.currentMusic = -1;
+//	private static int MusicPlay.currentMusic = -1;
 	private boolean isPlaying;
 	private String[] projection = { MediaStore.Audio.AudioColumns._ID,
 			MediaStore.Audio.AudioColumns.ARTIST,
@@ -67,26 +67,9 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				if (PlayMusic.musicList.size() > 0) {
-					Intent intentMusic = new Intent("com.runcross.kugou.music");
-					PlayMusic.preMusic = PlayMusic.currentMusic;
-					PlayMusic.currentMusic++;
-					if (PlayMusic.currentMusic > PlayMusic.musicList.size()) {
-						PlayMusic.currentMusic = 0;
-					}
-					intentMusic.putExtra("model", MusicAction.PLAY_MUSIC_NEW);
-					intentMusic.putExtra("music", PlayMusic.musicList.get(PlayMusic.currentMusic)
-							.getData());
-					intentMusic.putExtra("next", true);
-					sendBroadcast(intentMusic);
-					PlayMusic.pre.push(PlayMusic.musicList.get(PlayMusic.preMusic));
-					isPlaying = false;
-					play.setImageResource(R.drawable.ic_player_pause_default);
-					musicName.setText(PlayMusic.musicList.get(PlayMusic.currentMusic).getName());
-					musicAri.setText(PlayMusic.musicList.get(PlayMusic.currentMusic).getArtist());
-				} else {
-					PlayMusic.currentMusic = -1;
-				}
+				Intent intentMusic = new Intent("com.runcross.kugou.music");
+				intentMusic.putExtra("model", MusicAction.PLAY_MUSIC_NEXT);
+				sendBroadcast(intentMusic);
 			}
 		});
 		play.setOnClickListener(new OnClickListener() {
@@ -114,13 +97,15 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, LocalMusicList.class);
+				startActivity(intent);
 			}
 		});
 		playDetail.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, PlayMusic.class);
+				Intent intent = new Intent(MainActivity.this, PlayMusic.class);				
 				startActivity(intent);
 			}
 		});
@@ -139,7 +124,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void initList() {
-		// PlayMusic.PlayMusic.musicList.add(music);
+		// MusicPlay.MusicPlay.musicList.add(music);
 
 		// 接受系统广播，扫描结束
 //		IntentFilter intentfilter = new IntentFilter(
@@ -172,12 +157,18 @@ public class MainActivity extends Activity {
 					.getColumnIndex(projection[4])));
 			mu.setAlbum(cursor.getString(cursor
 					.getColumnIndex(projection[5])));
-			PlayMusic.musicList.add(mu);
+			MusicPlay.musicList.add(mu);
 			// System.out.println(mu.getId());
 		}// while
-		
+		System.out.println("list刷新");
 	}
 
+	
+	@Override
+	public void onBackPressed() {
+//		super.onBackPressed();
+		moveTaskToBack(false);		
+	}
 	/**
 	 * 内部接收消息
 	 * 
@@ -202,20 +193,21 @@ public class MainActivity extends Activity {
 				
 				break;
 			case MusicAction.MUSIC_NEW:
-				Music temp;
-				if (intent.getBooleanExtra("next", true)) {
-					temp = PlayMusic.musicList.get(PlayMusic.currentMusic);
-				} else {
-					if (PlayMusic.pre.isEmpty()) {
-						break;
-					} else {
-						temp = PlayMusic.pre.pop();
-					}
-				}
+				Music temp = (Music) intent.getSerializableExtra("music");
+//				if (intent.getBooleanExtra("next", true)) {
+//					temp = MusicPlay.musicList.get(MusicPlay.currentMusic);
+//				} else {
+//					if (MusicPlay.pre.isEmpty()) {
+//						break;
+//					} else {
+//						temp = MusicPlay.pre.pop();
+//					}
+//				}
+				musicName.setText(temp.getName());
+				musicAri.setText(temp.getArtist());
 				songProgress.setProgress(0);
 				int length = temp.getDuration();
 				songProgress.setMax(length);
-				int len = length / 1000;
 				break;
 			// case Intent.ACTION_MEDIA_SCANNER_FINISHED:
 
@@ -227,30 +219,30 @@ public class MainActivity extends Activity {
 			// MediaStore.Audio.AudioColumns.ALBUM
 			// break;
 			}
-			if (Intent.ACTION_MEDIA_SCANNER_FINISHED.equals(intent.getAction())) {
-				ContentResolver cr = getContentResolver();
-
-				Cursor cursor = cr.query(
-						MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-						projection, null, null, null);
-				while (cursor.moveToNext()) {
-					Music mu = new Music();
-					mu.setId(cursor.getInt(cursor.getColumnIndex(projection[0])));
-					mu.setArtist(cursor.getString(cursor
-							.getColumnIndex(projection[1])));
-					mu.setName(cursor.getString(cursor
-							.getColumnIndex(projection[2])));
-					mu.setDuration(cursor.getInt(cursor
-							.getColumnIndex(projection[3])));
-					mu.setData(cursor.getString(cursor
-							.getColumnIndex(projection[4])));
-					mu.setAlbum(cursor.getString(cursor
-							.getColumnIndex(projection[5])));
-					PlayMusic.musicList.add(mu);
-					// System.out.println(mu.getId());
-				}// while
-				System.out.println("刷新完成");
-			}// if
+//			if (Intent.ACTION_MEDIA_SCANNER_FINISHED.equals(intent.getAction())) {
+//				ContentResolver cr = getContentResolver();
+//
+//				Cursor cursor = cr.query(
+//						MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+//						projection, null, null, null);
+//				while (cursor.moveToNext()) {
+//					Music mu = new Music();
+//					mu.setId(cursor.getInt(cursor.getColumnIndex(projection[0])));
+//					mu.setArtist(cursor.getString(cursor
+//							.getColumnIndex(projection[1])));
+//					mu.setName(cursor.getString(cursor
+//							.getColumnIndex(projection[2])));
+//					mu.setDuration(cursor.getInt(cursor
+//							.getColumnIndex(projection[3])));
+//					mu.setData(cursor.getString(cursor
+//							.getColumnIndex(projection[4])));
+//					mu.setAlbum(cursor.getString(cursor
+//							.getColumnIndex(projection[5])));
+//					MusicPlay.musicList.add(mu);
+//					// System.out.println(mu.getId());
+//				}// while
+//				System.out.println("刷新完成");
+//			}// if
 
 		}// method
 
