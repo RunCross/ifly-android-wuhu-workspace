@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.runcross.kugou.adapter.LocalMusicListAdapter;
 import com.runcross.kugou.bean.LocalMusicItem;
-import com.runcross.kugou.play.MusicPlay;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -66,6 +65,7 @@ public class LocalMusicList extends Activity {
 				Intent intent = new Intent(LocalMusicList.this, LocalMusicPlay.class);
 				intent.putExtra("music",list.get(position));
 				startActivity(intent);
+//				AllActivity.addView(intent);
 			}
 		});
 	}

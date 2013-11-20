@@ -8,7 +8,7 @@
     <include layout="@layout/title" />
 
     <ExpandableListView
-        android:id="@+id/localmusic"
+        android:id="@+id/localmusic"        
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ExpandableListView>

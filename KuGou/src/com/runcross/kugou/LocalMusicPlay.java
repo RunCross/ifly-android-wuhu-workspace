@@ -44,7 +44,6 @@ public class LocalMusicPlay extends Activity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.local_list_music);
 		title = (TextView) findViewById(R.id.title);
@@ -80,7 +79,6 @@ public class LocalMusicPlay extends Activity implements
 
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				// TODO Auto-generated method stub
 				for (int i = 0; i < adapter.getGroupCount(); i++) {
 					if (groupPosition != i) {
 						localMusic.collapseGroup(i);

@@ -1,11 +1,8 @@
 package com.runcross.kugou.adapter;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import com.runcross.kugou.R;
-import com.runcross.kugou.adapter.LocalMusicListAdapter.ViewHolder;
-import com.runcross.kugou.bean.LocalMusicItem;
 import com.runcross.kugou.bean.Music;
 
 import android.content.Context;
@@ -15,7 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LocalMusicAdapter implements ExpandableListAdapter {
@@ -84,9 +81,9 @@ public class LocalMusicAdapter implements ExpandableListAdapter {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	static class ViewHolderG{		
+	class ViewHolderG{		
 		TextView music_name;	
-		ImageButton play;
+		ImageView play;
 	}	
 	@Override
 	public View getGroupView(final int groupPosition, boolean isExpanded,
@@ -96,7 +93,7 @@ public class LocalMusicAdapter implements ExpandableListAdapter {
 		}
 		holderP = new ViewHolderG();
 		holderP.music_name = (TextView) convertView.findViewById(R.id.local_music);
-		holderP.play = (ImageButton) convertView.findViewById(R.id.local_music_play);
+		holderP.play = (ImageView) convertView.findViewById(R.id.local_music_play);
 		
 		holderP.music_name.setText(musicList.get(groupPosition).getName());
 		listener = (LocalMusicListListener) context;

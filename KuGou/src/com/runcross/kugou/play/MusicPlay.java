@@ -12,7 +12,6 @@ import com.runcross.kugou.R;
 import com.runcross.kugou.bean.Music;
 import com.runcross.kugou.bean.MusicAction;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -22,11 +21,14 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.os.Binder;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.provider.MediaStore;
-import android.view.ActionMode;
 
-public class MusicPlay extends Service {
+public class MusicPlay extends Service{
 
 	// public MusicPlay() {
 	// super("musicplay");
@@ -35,12 +37,12 @@ public class MusicPlay extends Service {
 	// public MusicPlay(String name) {
 	// super(name);
 	// }
-
+	Messenger mess;
 	private static MediaPlayer mp;
-	private int modelFlag;
+//	private int modelFlag;
 	private Timer mTimer;
 	private TimerTask mTimerTask;
-	private Thread proing;
+//	private Thread proing;
 	private PlayMusic receiver;
 
 	public static final int modes[];
@@ -68,6 +70,8 @@ public class MusicPlay extends Service {
 			MediaStore.Audio.AudioColumns.DURATION,
 			MediaStore.Audio.AudioColumns.DATA,
 			MediaStore.Audio.AudioColumns.ALBUM };
+	
+	private MyBind mb;
 
 	@Override
 	public void onCreate() {
@@ -77,9 +81,9 @@ public class MusicPlay extends Service {
 		intentf.addAction("com.runcross.kugou.music");
 		intentf.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
 		registerReceiver(receiver, intentf);
-		proing = new Thread(new prog());
+//		proing = new Thread(new prog());
 		mp = new MediaPlayer();
-
+		mb = new MyBind();
 		mp.setOnCompletionListener(new OnCompletionListener()    
         {   
             public void onCompletion(MediaPlayer arg0)   
@@ -91,20 +95,54 @@ public class MusicPlay extends Service {
         });   
 		
 		pre = new Stack<Music>();
+		flashList();
 		music = musicList.get(currentMusic);
 		
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+	}
+	private void flashList() {
+		ContentResolver cr = getContentResolver();
+
+		Cursor cursor = cr.query(
+				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+				projection, null, null, null);
+		while (cursor.moveToNext()) {
+			Music mu = new Music();
+			mu.setId(cursor.getInt(cursor.getColumnIndex(projection[0])));
+			mu.setArtist(cursor.getString(cursor
+					.getColumnIndex(projection[1])));
+			mu.setName(cursor.getString(cursor
+					.getColumnIndex(projection[2])));
+			mu.setDuration(cursor.getInt(cursor
+					.getColumnIndex(projection[3])));
+			mu.setData(cursor.getString(cursor
+					.getColumnIndex(projection[4])));
+			mu.setAlbum(cursor.getString(cursor
+					.getColumnIndex(projection[5])));
+			MusicPlay.musicList.add(mu);
+			// System.out.println(mu.getId());
+		}// while
+//		System.out.println("listË¢ÐÂ");
+	}
+
+	@Override
 	public IBinder onBind(Intent intent) {
-		return null;
+		mess = intent.getParcelableExtra("mess");
+		
+//		mb.send();
+		return mb;
 	}
 
 	public class PlayMusic extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			System.out.println("service " + intent.getIntExtra("model", 0));
+//			System.out.println("service " + intent.getIntExtra("model", 0));
 			if (Intent.ACTION_MEDIA_SCANNER_FINISHED.equals(intent.getAction())) {
 				 ContentResolver cr = getContentResolver();
 				
@@ -317,6 +355,10 @@ public class MusicPlay extends Service {
 					e.printStackTrace();
 				}
 				mp.start();
+				Intent intentInsert = new Intent("com.runcross.kugou.info");
+				intentInsert.putExtra("model", MusicAction.MUSIC_NEW);
+				intentInsert.putExtra("music", music);
+				sendBroadcast(intentInsert);
 				pre.push(music);
 				break;
 			case MusicAction.PLAY_MUSIC_INSERT_NEW:
@@ -332,25 +374,41 @@ public class MusicPlay extends Service {
 				}
 				mp.start();
 				pre.push(music);
-				
+				Intent intentInsertNew = new Intent("com.runcross.kugou.info");
+				intentInsertNew.putExtra("model", MusicAction.MUSIC_NEW);
+				intentInsertNew.putExtra("music", music);
+				sendBroadcast(intentInsertNew);
 				break;
 			}
 			
 		}
 
 	}
-
-	class prog implements Runnable {
-
-		@Override
-		public void run() {
-			while (mp.isPlaying()) {
-				Intent intents = new Intent("com.runcross.kugou.info");
-				intents.putExtra("model", MusicAction.MUSIC_PRO);
-				intents.putExtra("progress", mp.getCurrentPosition());
-				sendBroadcast(intents);
+	
+	public class MyBind extends Binder{
+		public List<Music> getMusicList(){
+			return musicList;
+		}
+		public int send(){
+			if(!mp.isPlaying()){
+				return 0;
 			}
+			return mp.getCurrentPosition();
+			
 		}
 	}
+
+//	class prog implements Runnable {
+//
+//		@Override
+//		public void run() {
+//			while (mp.isPlaying()) {
+//				Intent intents = new Intent("com.runcross.kugou.info");
+//				intents.putExtra("model", MusicAction.MUSIC_PRO);
+//				intents.putExtra("progress", mp.getCurrentPosition());
+//				sendBroadcast(intents);
+//			}
+//		}
+//	}
 
 }

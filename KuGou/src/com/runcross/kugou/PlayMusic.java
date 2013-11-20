@@ -1,31 +1,33 @@
 package com.runcross.kugou;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Random;
-import java.util.Stack;
 
 import com.runcross.kugou.adapter.MusicListAdapter;
 import com.runcross.kugou.bean.Music;
 import com.runcross.kugou.bean.MusicAction;
 import com.runcross.kugou.play.MusicPlay;
+import com.runcross.kugou.play.MusicPlay.MyBind;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Service;
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.Handler;
+import android.os.Messenger;
+import android.os.Handler.Callback;
+import android.os.IBinder;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,7 +41,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class PlayMusic extends Activity {
+public class PlayMusic extends Activity implements Callback{
 
 	private ImageButton back;
 	// private ImageButton songList;
@@ -57,24 +59,49 @@ public class PlayMusic extends Activity {
 
 	private SeekBar songProgress;
 	private Music music;
+	private List<Music> musicList;
+	private MyBind mySer;
+	private Handler hand;
+	private Messenger mess;
+	private ServiceConnection myConn = new ServiceConnection() {
+		/*
+		 * 解除绑定成功 (non-Javadoc)
+		 * 
+		 * @see
+		 * android.content.ServiceConnection#onServiceDisconnected(android.content
+		 * .ComponentName)
+		 */
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			System.out.println("DisConnect");
+		}
 
+		/*
+		 * 绑定成功 (non-Javadoc)
+		 * 
+		 * @see
+		 * android.content.ServiceConnection#onServiceConnected(android.content
+		 * .ComponentName, android.os.IBinder)
+		 */
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			System.out.println("Connect 2");
+			mySer = (MyBind) service;
+			musicList = mySer.getMusicList();
+			System.out.println("musicList size "+musicList.size());
+			
+		}
+	};
 	private SeekBar songVolume;
 
 	public static final int modes[];
 	public static int modeFlag;
-	// public static List<Music> musicList;
 	static {
 		modes = new int[] { R.drawable.ic_player_mode_all_default,
 				R.drawable.ic_player_mode_random_default,
 				R.drawable.ic_player_mode_sequence_default,
 				R.drawable.ic_player_mode_single_default };
-		// musicList = new ArrayList<Music>();
 	}
-	// public static int currentMusic = 0;
-	// public static int preMusic = 0;
-	// public static Stack<Music> pre;
-	// private static int nextMusic = 0;
-	// private String currentMusicPath;
 	private boolean isMore = false;
 
 	private boolean isPlaying;
@@ -93,28 +120,25 @@ public class PlayMusic extends Activity {
 
 	private PlayState receiver;
 	private AudioManager audio = null; // 音频
-	private String[] projection = { MediaStore.Audio.AudioColumns._ID,
-			MediaStore.Audio.AudioColumns.ARTIST,
-			MediaStore.Audio.AudioColumns.TITLE,
-			MediaStore.Audio.AudioColumns.DURATION,
-			MediaStore.Audio.AudioColumns.DATA,
-			MediaStore.Audio.AudioColumns.ALBUM };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.play_music);
+		//绑定
+		hand = new Handler(this);
+		Intent intents = new Intent(PlayMusic.this, MusicPlay.class);
+		mess = new Messenger(hand);
+		intents.putExtra("mess", mess);
+		bindService(intents, myConn, Service.BIND_AUTO_CREATE);
+		hand.sendEmptyMessageDelayed(1, 1000);
+		
 		//注册接收信息
 		receiver = new PlayState();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("com.runcross.kugou.info");
 		registerReceiver(receiver, filter);
 
-		// pre = new Stack<Music>();
-		// music = musicList.get(currentMusic);
-		// music = (Music) getIntent().getExtras().get("music");
-		// music = new Music(0, "a", 123, "run", "/storage/sdcard0/5.mp3",
-		// "cross");
 
 		isPlaying = getIntent().getBooleanExtra("isplay", false);
 		// 获取正在播放的music
@@ -123,10 +147,9 @@ public class PlayMusic extends Activity {
 		sendBroadcast(intentUpdate);
 
 
-		adapter = new MusicListAdapter(MusicPlay.musicList, PlayMusic.this);
+
 
 		audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		initList();
 		initSub();
 		initTitle();
 
@@ -144,9 +167,9 @@ public class PlayMusic extends Activity {
 	 */
 	private void initVolume() {
 		songVolume.setMax(audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-		System.out.println("max volume "
-				+ audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) + " "
-				+ audio.getStreamVolume(AudioManager.STREAM_MUSIC));
+//		System.out.println("max volume "
+//				+ audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) + " "
+//				+ audio.getStreamVolume(AudioManager.STREAM_MUSIC));
 		songVolume
 				.setProgress(audio.getStreamVolume(AudioManager.STREAM_MUSIC));
 		songVolume.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -252,44 +275,6 @@ public class PlayMusic extends Activity {
 			dialog.show();
 			break;
 		}
-	}
-
-	/**
-	 * 初始化播放列表
-	 */
-	private void initList() {
-		// musicList.add(music);
-
-		// 接受系统广播，扫描结束
-		// IntentFilter intentfilter = new IntentFilter(
-		// Intent.ACTION_MEDIA_SCANNER_STARTED);
-		// intentfilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
-		// intentfilter.addDataScheme("file");
-		// registerReceiver(receiver, intentfilter);
-		//
-		// // 发送广播给系统扫描指定的文件夹，并写入数据库
-		// sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
-		// Uri.parse("file://"
-		// + Environment.getExternalStorageDirectory()
-		// .getAbsolutePath())));
-		// System.out.println("发送广播");
-
-		// ContentResolver cr = getContentResolver();
-		//
-		// Cursor cursor = cr.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-		// projection, null, null, null);
-		// while (cursor.moveToNext()) {
-		// Music mu = new Music();
-		// mu.setId(cursor.getInt(cursor.getColumnIndex(projection[0])));
-		// mu.setArtist(cursor.getString(cursor.getColumnIndex(projection[1])));
-		// mu.setName(cursor.getString(cursor.getColumnIndex(projection[2])));
-		// mu.setDuration(cursor.getInt(cursor.getColumnIndex(projection[3])));
-		// mu.setData(cursor.getString(cursor.getColumnIndex(projection[4])));
-		// mu.setAlbum(cursor.getString(cursor.getColumnIndex(projection[5])));
-		// musicList.add(mu);
-		// System.out.println(mu.getId());
-		// }// while
-		// System.out.println("刷新完成");
 	}
 
 	/**
@@ -401,7 +386,12 @@ public class PlayMusic extends Activity {
 	/**
 	 * 初始化 popWin
 	 */
+	@SuppressWarnings("deprecation")
 	private void initPopuptWindow() {
+	 	musicList = mySer.getMusicList();
+		System.out.println("adapter "+musicList.size());
+		adapter = new MusicListAdapter(musicList, PlayMusic.this); 
+		
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
 		if (popupWindow == null) {
 			popupWindow = layoutInflater.inflate(R.layout.play_list, null);
@@ -431,12 +421,12 @@ public class PlayMusic extends Activity {
 	 * 初始化pop里的监听
 	 */
 	private void initPopLinearListener() {
-		musicListNum.setText("播放队列(" + MusicPlay.musicList.size() + ")");
+		musicListNum.setText("播放队列(" + musicList.size() + ")");
 		musicListDeleteAll.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				MusicPlay.musicList.clear();
+				musicList.clear();
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -543,4 +533,15 @@ public class PlayMusic extends Activity {
 		}// method
 
 	}// receiver
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch(msg.what){
+		case 1:
+			songProgress.setProgress(mySer.send());			
+			hand.sendEmptyMessageDelayed(1, 500);
+			break;
+		}
+		return false;
+	}
 }

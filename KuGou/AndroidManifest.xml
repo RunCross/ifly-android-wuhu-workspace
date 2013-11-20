@@ -40,6 +40,10 @@
         </activity>
         <activity 
             android:name=".LocalMusicPlay"></activity>
+        <activity android:name=".AllActivity">
+            
+            
+        </activity>
     </application>
 
 </manifest>
