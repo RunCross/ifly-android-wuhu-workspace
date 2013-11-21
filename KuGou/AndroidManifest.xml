@@ -36,14 +36,22 @@
         </service>
 
         <activity android:name=".LocalMusicList" >
-            
         </activity>
-        <activity 
-            android:name=".LocalMusicPlay"></activity>
-        <activity android:name=".AllActivity">
-            
-            
+        <activity android:name=".LocalMusicPlay" >
         </activity>
+        <activity android:name=".AllActivity" >
+        </activity>
+        -
+        <!-- <receiver android:name="com.runcross.kugou.weiget.Mp3Wiget" >
+-
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_provider" />
+        </receiver> -->
     </application>
 
 </manifest>

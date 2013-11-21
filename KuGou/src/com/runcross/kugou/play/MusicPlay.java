@@ -23,9 +23,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.Messenger;
-import android.os.RemoteException;
 import android.provider.MediaStore;
 
 public class MusicPlay extends Service{
@@ -47,7 +45,7 @@ public class MusicPlay extends Service{
 
 	public static final int modes[];
 	private  int modeFlag = 0;
-	public static List<Music> musicList;
+	private static List<Music> musicList;
 	static {
 		modes = new int[] { R.drawable.ic_player_mode_all_default,
 				R.drawable.ic_player_mode_random_default,
@@ -55,10 +53,10 @@ public class MusicPlay extends Service{
 				R.drawable.ic_player_mode_single_default };
 		musicList = new ArrayList<Music>();
 	}
-	private int currentMusic = 0;
+	private static int currentMusic = 0;
 	private static Music music;
-	public static int preMusic = 0;
-	public static Stack<Music> pre;
+//	private static int preMusic = 0;
+	private static Stack<Music> pre;
 //	private static int nextMusic = 0;
 //	private String currentMusicPath;
 //	private boolean isMore = false;
@@ -105,6 +103,10 @@ public class MusicPlay extends Service{
 		super.onDestroy();
 		
 	}
+	
+	/**
+	 * 从系统刷新列表
+	 */
 	private void flashList() {
 		ContentResolver cr = getContentResolver();
 
@@ -133,8 +135,6 @@ public class MusicPlay extends Service{
 	@Override
 	public IBinder onBind(Intent intent) {
 		mess = intent.getParcelableExtra("mess");
-		
-//		mb.send();
 		return mb;
 	}
 
@@ -213,30 +213,6 @@ public class MusicPlay extends Service{
 				int postiton = intent.getIntExtra("progress", 0);
 				mp.seekTo(postiton);
 				break;
-//			case MusicAction.PLAY_MUSIC_NEW:
-//				mp.reset();
-//				String path = intent.getStringExtra("music");
-//				try {
-//					mp.setDataSource(path);
-//					mp.prepare();
-//				} catch (IllegalArgumentException e) {
-//					e.printStackTrace();
-//				} catch (SecurityException e) {
-//					e.printStackTrace();
-//				} catch (IllegalStateException e) {
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//
-//				Intent intentl = new Intent("com.runcross.kugou.info");
-//				intentl.putExtra("model", MusicAction.MUSIC_NEW);
-//				intentl.putExtra("next", intent.getBooleanExtra("next", true));
-//				intentl.putExtra("length", mp.getDuration());
-//				sendBroadcast(intentl);
-//				mp.start();
-//				// proing.start();
-//				break;
 			case MusicAction.PLAY_MUSIC_PAUSE:
 				mp.pause();
 				break;

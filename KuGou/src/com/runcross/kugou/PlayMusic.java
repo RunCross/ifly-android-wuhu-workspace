@@ -88,8 +88,8 @@ public class PlayMusic extends Activity implements Callback{
 			System.out.println("Connect 2");
 			mySer = (MyBind) service;
 			musicList = mySer.getMusicList();
-			System.out.println("musicList size "+musicList.size());
-			
+			System.out.println("adapter "+musicList.size());
+			adapter = new MusicListAdapter(musicList, PlayMusic.this);
 		}
 	};
 	private SeekBar songVolume;
@@ -282,16 +282,6 @@ public class PlayMusic extends Activity implements Callback{
 	 */
 	private void initProgress() {
 		timeBegin.setText("0:00");
-		// int length = music.getDuration();
-		// songProgress.setMax(length);
-		// int len = length / 1000;
-		// timeEnd.setText(String.valueOf(len / 60 + ":"
-		// + (len % 60 > 9 ? len % 60 : "0" + len % 60)));
-		// timeEnd.setText(String.valueOf(music.getDuration()
-		// / 60
-		// + ":"
-		// + (music.getDuration() % 60 > 9 ? music.getDuration() % 60
-		// : "0" + music.getDuration() % 60)));
 		songProgress.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 			@Override
@@ -388,9 +378,7 @@ public class PlayMusic extends Activity implements Callback{
 	 */
 	@SuppressWarnings("deprecation")
 	private void initPopuptWindow() {
-	 	musicList = mySer.getMusicList();
-		System.out.println("adapter "+musicList.size());
-		adapter = new MusicListAdapter(musicList, PlayMusic.this); 
+	 	 
 		
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
 		if (popupWindow == null) {
@@ -538,7 +526,11 @@ public class PlayMusic extends Activity implements Callback{
 	public boolean handleMessage(Message msg) {
 		switch(msg.what){
 		case 1:
-			songProgress.setProgress(mySer.send());			
+			int length = mySer.send();
+			songProgress.setProgress(length);	
+			int len = length / 1000;
+			timeBegin.setText(String.valueOf(len / 60 + ":"
+					+ (len % 60 > 9 ? len % 60 : "0" + len % 60)));
 			hand.sendEmptyMessageDelayed(1, 500);
 			break;
 		}
