@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import com.runcross.maback.mini.action.Explore;
 import com.runcross.maback.mini.action.Login;
 import com.runcross.maback.mini.data.Info;
 import com.runcross.maback.mini.util.Network;
@@ -157,6 +158,7 @@ public class Go extends IntentService {
 					}*/
 				break;
 			case EXPLORE:
+				try {
 					if (Explore.run()) {
 //						MainActivity
 //								.log(String
@@ -170,8 +172,17 @@ public class Go extends IntentService {
 					} else {
 
 					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
+				try {
 					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			}
 

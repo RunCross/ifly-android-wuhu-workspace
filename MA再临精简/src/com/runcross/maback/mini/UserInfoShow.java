@@ -80,6 +80,7 @@ public class UserInfoShow extends Activity {
 			public void onClick(View v) {
 				Intent intents = new Intent(UserInfoShow.this, Go.class);
 				stopService(intents);
+				System.exit(0);
 			}
 		});
 

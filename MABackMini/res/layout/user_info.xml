@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/playName" />
+
+        <TextView
+            android:id="@+id/playerName"
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/playLevel" />
+
+        <TextView
+            android:id="@+id/playerLevel"
+            style="@style/userinfoText"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/maxbc" />
+
+        <TextView
+            android:id="@+id/maxbc"
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/currentbc" />
+
+        <TextView
+            android:id="@+id/bc"
+            style="@style/userinfoText"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/maxap" />
+
+        <TextView
+            android:id="@+id/maxap"
+            style="@style/userinfoText"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/currentap" />
+
+        <TextView
+            android:id="@+id/ap"
+            style="@style/userinfoText"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/self"
+            style="@style/userinfoText"
+            android:text="@string/areaFairy" />
+
+        <EditText
+            android:id="@+id/recon"
+            style="@style/userinfoText"
+            android:hint="@string/reconnection" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/start"
+            android:onClick="onClick"
+            android:id="@+id/start" />
+
+        <Button
+            style="@style/userinfoText"
+            android:layout_weight="1"
+            android:text="@string/end"
+            android:onClick="onClick"
+            android:id="@+id/end" />
+    </LinearLayout>
+
+</LinearLayout>

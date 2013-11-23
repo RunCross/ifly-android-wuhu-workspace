@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MA再临精简</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="reconnection">断线重连，秒</string>
+    <string name="start">开始</string>
+    <string name="end">结束</string>
+    <string name="userName">账  号</string>
+    <string name="userNameTishi">请输入账号</string>
+    <string name="userPwd">密  码</string>
+    <string name="userPwdTishi">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="maxbc">最大BC</string>
+    <string name="currentbc">现有BC</string>
+    <string name="maxap">最大AP</string>
+    <string name="currentap">现有AP</string>
+    <string name="playName">角色名</string>
+    <string name="playLevel">等级</string>
+    <string name="areaAutoGo">自动跑图</string>
+    <string name="areaAutoGoNext">自动跑下一图</string>
+    <string name="areaDailyFirst">每日优先</string>
+    <string name="areaGoTime">跑图间隔时间</string>
+    <string name="areaGoTimeSP">秒</string>
+    <string name="areaGoCondition">大于AP跑图</string>
+    <string name="areaAutoYao">自动嗑药</string>
+    <string name="areaFairy">放妖</string>
+    <string name="battle_evil_mini">舔妖</string>
+    <string name="battle_evil_noname">点名</string>
+    <string name="mini_bc">大于bc</string>
+    <string name="wake">觉醒</string>
+    <string name="limited_small">下限</string>
+    <string name="limited_big">上限</string>
+    <string name="choiceCards">选择卡组</string>
+    <string name="app_version">版本号</string>
+
+</resources>

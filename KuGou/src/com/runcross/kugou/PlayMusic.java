@@ -167,9 +167,6 @@ public class PlayMusic extends Activity implements Callback{
 	 */
 	private void initVolume() {
 		songVolume.setMax(audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-//		System.out.println("max volume "
-//				+ audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC) + " "
-//				+ audio.getStreamVolume(AudioManager.STREAM_MUSIC));
 		songVolume
 				.setProgress(audio.getStreamVolume(AudioManager.STREAM_MUSIC));
 		songVolume.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -216,6 +213,7 @@ public class PlayMusic extends Activity implements Callback{
 			intentPre.putExtra("model", MusicAction.PLAY_MUSIC_PRE);
 			intentPre.putExtra("next", false);
 			sendBroadcast(intentPre);
+			hand.sendEmptyMessage(1);
 			break;
 		case R.id.play_music:
 			isPlaying = !isPlaying;
@@ -224,11 +222,13 @@ public class PlayMusic extends Activity implements Callback{
 				Intent intentMusic = new Intent("com.runcross.kugou.music");
 				intentMusic.putExtra("model", MusicAction.PLAY_MUSIC);
 				sendBroadcast(intentMusic);
+				hand.sendEmptyMessageDelayed(1, 500);
 			} else {
 				songMusic.setImageResource(R.drawable.ic_player_play_default);
 				Intent intentMusic = new Intent("com.runcross.kugou.music");
 				intentMusic.putExtra("model", MusicAction.PLAY_MUSIC_PAUSE);
 				sendBroadcast(intentMusic);
+				hand.removeMessages(1);
 			}
 			break;
 		case R.id.play_next:
@@ -236,7 +236,7 @@ public class PlayMusic extends Activity implements Callback{
 			intentMusic.putExtra("model", MusicAction.PLAY_MUSIC_NEXT);
 			sendBroadcast(intentMusic);
 			songMusic.setImageResource(R.drawable.ic_player_pause_default);
-			System.out.println("currentmusic " + music.getName());
+			hand.sendEmptyMessage(1);
 			break;
 		case R.id.play_more:
 			isMore = !isMore;
@@ -299,10 +299,6 @@ public class PlayMusic extends Activity implements Callback{
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-//				Intent intent = new Intent("com.runcross.kugou.music");
-//				intent.putExtra("model", MusicAction.PLAY_MUSIC_SEEK);
-//				intent.putExtra("progress", progress);
-//				sendBroadcast(intent);
 			}
 		});
 	}
@@ -463,21 +459,11 @@ public class PlayMusic extends Activity implements Callback{
 			System.out.println("activity " + intent.getIntExtra("model", 0));
 			switch (intent.getIntExtra("model", 0)) {
 			case MusicAction.MUSIC_PRO:
-				System.out.println("prog " + intent.getIntExtra("progress", 0));
 				songProgress.setProgress(intent.getIntExtra("progress", 0));
 				break;
 
 			case MusicAction.MUSIC_NEW:
 				music = (Music) intent.getSerializableExtra("music");
-				// if (intent.getBooleanExtra("next", true)) {
-				// temp = musicList.get(currentMusic);
-				// } else {
-				// if (pre.isEmpty()) {
-				// break;
-				// } else {
-				// temp = pre.pop();
-				// }
-				// }
 				songTitle.setText(music.getName());
 				songSonger.setText(music.getArtist());
 				songProgress.setProgress(0);
@@ -491,32 +477,6 @@ public class PlayMusic extends Activity implements Callback{
 				isPlaying = true;
 				break;
 			}
-			// if
-			// (Intent.ACTION_MEDIA_SCANNER_FINISHED.equals(intent.getAction()))
-			// {
-			// ContentResolver cr = getContentResolver();
-			//
-			// Cursor cursor = cr.query(
-			// MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-			// projection, null, null, null);
-			// while (cursor.moveToNext()) {
-			// Music mu = new Music();
-			// mu.setId(cursor.getInt(cursor.getColumnIndex(projection[0])));
-			// mu.setArtist(cursor.getString(cursor
-			// .getColumnIndex(projection[1])));
-			// mu.setName(cursor.getString(cursor
-			// .getColumnIndex(projection[2])));
-			// mu.setDuration(cursor.getInt(cursor
-			// .getColumnIndex(projection[3])));
-			// mu.setData(cursor.getString(cursor
-			// .getColumnIndex(projection[4])));
-			// mu.setAlbum(cursor.getString(cursor
-			// .getColumnIndex(projection[5])));
-			// musicList.add(mu);
-			// // System.out.println(mu.getId());
-			// }// while
-			// System.out.println("Ë¢ÐÂÍê³É");
-			// }// if
 
 		}// method
 

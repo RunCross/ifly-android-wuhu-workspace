@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/login_title"
+        layout="@layout/title" />
+
+    <LinearLayout
+        android:id="@+id/loginNameLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp" >
+
+        <TextView
+            style="@style/loginText"
+            android:text="@string/userName" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/uid"
+            style="@style/loginTextInput"
+            android:hint="@string/userNameTishi" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loginPwdLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginNameLine"
+        android:layout_marginTop="20sp" >
+
+        <TextView
+            style="@style/loginText"
+            android:text="@string/userPwd" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/pwd"
+            style="@style/loginTextInput"
+            android:hint="@string/userPwdTishi" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginPwdLine"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20sp" >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="一区" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="二区" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="三区" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/app_version"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/world"
+        android:inputType="number" />
+
+    <CheckBox
+        android:id="@+id/app_version_choice"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@id/app_version"
+        android:layout_toRightOf="@id/app_version"
+        android:checked="false"
+        android:text="@string/app_version" />
+
+    <Button
+        android:id="@+id/login"
+        style="@style/loginText"
+        android:layout_alignBottom="@id/world"
+        android:layout_alignParentRight="true"
+        android:text="@string/login" >
+    </Button>
+
+</RelativeLayout>
