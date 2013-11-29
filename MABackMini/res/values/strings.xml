@@ -26,6 +26,7 @@
     <string name="areaGoCondition">大于AP跑图</string>
     <string name="areaAutoYao">自动嗑药</string>
     <string name="areaFairy">放妖</string>
+    <string name="stoprun">遇妖停</string>
     <string name="battle_evil_mini">舔妖</string>
     <string name="battle_evil_noname">点名</string>
     <string name="mini_bc">大于bc</string>

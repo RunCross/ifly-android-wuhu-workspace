@@ -4,12 +4,12 @@ import android.os.Build;
 
 public class DeviecInfo {
 
-	//版本号
+	//锟芥本锟斤拷
 	public static String app_version = "101";
 
 	
 	/**
-	 * 获取useragent
+	 * 鑾峰彇UserAgent
 	 * @return
 	 */
 	public static String getUserAgent() {

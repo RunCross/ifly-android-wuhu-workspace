@@ -18,8 +18,10 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginPre"
-            android:label="@string/app_name" >
-            <intent-filter>
+            android:label="@string/app_name" 
+            android:launchMode="singleTask"
+            >
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,6 +31,7 @@
             android:name=".UserInfoShow"
             android:launchMode="singleTask" >
         </activity>
+        
     </application>
 
 </manifest>

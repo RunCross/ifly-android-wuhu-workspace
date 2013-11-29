@@ -1,21 +1,13 @@
 package com.runcross.maback.mini;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import com.runcross.maback.mini.start.Info;
 
-import com.runcross.maback.mini.action.Login;
-import com.runcross.maback.mini.data.ActionRegistry;
-import com.runcross.maback.mini.data.Fairy;
-import com.runcross.maback.mini.data.Info;
-import com.runcross.maback.mini.util.Network;
+import net.Process;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,36 +20,18 @@ public class UserInfoShow extends Activity {
 	private TextView name;
 	private TextView level;
 	private CheckBox isSelf;
+	private CheckBox isStop;
 	private EditText reCon;
 
-	// «∑Ò∑≈◊‘º∫—˝æ´
-	private static boolean self;
-	//∂œœﬂ÷ÿ¡¨ ±º‰
 	private static int reconTime;
-	
-	private Thread run;
-	
-	//æˆ≤ﬂ
-	public static Stack<Integer> action;
-	//—˝æ´¡–±Ì
-	public static List<Fairy> fairyList;
-	//Õ¯¬Á¡¨Ω”
-	public static Network network ;
-	//
-	public static Info info;
-	static{
-		action = new Stack<Integer>();
-		fairyList = new ArrayList<Fairy>();
-		network = new Network();
-		info = new Info();
-	}
+
+	// private Process proc;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
 
-		
-		
 		maxbc = (TextView) findViewById(R.id.maxbc);
 		bc = (TextView) findViewById(R.id.bc);
 		maxap = (TextView) findViewById(R.id.maxap);
@@ -65,102 +39,66 @@ public class UserInfoShow extends Activity {
 		name = (TextView) findViewById(R.id.playerName);
 		level = (TextView) findViewById(R.id.playerLevel);
 		isSelf = (CheckBox) findViewById(R.id.self);
+		isStop = (CheckBox) findViewById(R.id.stopRun);
 		reCon = (EditText) findViewById(R.id.recon);
 
-		maxbc.setText(String.valueOf(info.bcMax));
-		maxap.setText(String.valueOf(info.apMax));
-		bc.setText(String.valueOf(info.bc));
-		ap.setText(String.valueOf(info.ap));
-		name.setText(String.valueOf(info.username));
-		level.setText(String.valueOf(info.lv));
+		maxbc.setText(String.valueOf(Info.bcMax));
+		maxap.setText(String.valueOf(Info.apMax));
+		bc.setText(String.valueOf(Info.bcCurrent));
+		ap.setText(String.valueOf(Info.apCurrent));
+		name.setText(String.valueOf(Info.userName));
+		level.setText(String.valueOf(Info.userLv));
 
-		run = new Thread(UserInfoShow);
-		
-		
-		isSelf.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		// proc = new Process();
 
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				self = isChecked;
-			}
-		});
+		// isSelf.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		//
+		// @Override
+		// public void onCheckedChanged(CompoundButton buttonView,
+		// boolean isChecked) {
+		// self = isChecked;
+		// }
+		// });
 
 	}
-	
-	public void onClick(View view){
-		switch (view.getId()){
-		//ø™ º÷¥––
+
+	public void onClick(View view) {
+		switch (view.getId()) {
 		case R.id.start:
-			 //…Ë÷√Button ∫Õ checkBox EditText≤ªø…—°
-			 findViewById(R.id.start).setEnabled(false);
-			 isSelf.setEnabled(false);
-			 reCon.setEnabled(false);
-			 //ªÒ»°∂œœﬂ÷ÿ¡¨ ±º‰
-			 reconTime = Integer.parseInt(reCon.getText().toString());
-			 Toast.makeText(UserInfoShow.this, "ø™ º‘À––", Toast.LENGTH_SHORT).show();
-			run.start();			
+			findViewById(R.id.start).setEnabled(false);
+			isSelf.setEnabled(false);
+			isStop.setEnabled(false);
+			reCon.setEnabled(false);
+			reconTime = Integer.parseInt(reCon.getText().toString());
+			Toast.makeText(UserInfoShow.this, "ÂºÄÂßãËøêË°å", Toast.LENGTH_SHORT)
+					.show();
+
+			Info.hasPrivateFairyStopRun = isStop.isChecked() ? 1 : 0;
+			Info.sleepTime = reconTime;
+			Info.isRun = "1";
+			Info.isBattlePrivateFariy = isSelf.isChecked() ? "1" : "0";
+			// System.out.println("run-0");
+			//
+			// System.out.println(Info.hasPrivateFairyStopRun+"-"+Info.isBattlePrivateFariy);
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					System.out.println("run");
+					Process proc = new Process();
+					while (true) {
+						proc.start();
+					}
+				}
+			}).start();
 			break;
-		//Ω· ¯÷¥––≤¢ÕÀ≥ˆ
 		case R.id.end:
-			run.interrupt();
 			System.exit(0);
 			break;
-			
+
 		}
 	}
-	//æˆ≤ﬂ÷¥––
-	private Runnable UserInfoShow = new Runnable() {
-		
-		@Override
-		public void run() {
-			while(true){
-				if(action.isEmpty()){
-					action.push(ActionRegistry.NOTHING);
-				}
-				switch(action.pop()){
-				
-				case ActionRegistry.NOTHING:	
-					sleep(3000);
-					break;
-				case ActionRegistry.LOGIN:
-					sleep(reconTime);
-					try {
-						Login.run();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					break;
-				case ActionRegistry.AREA_ADD:
-					break;
-				case ActionRegistry.AREA_ADD_FLOOR:
-					break;
-				case ActionRegistry.AREA_GO:
-					break;
-					
-				case ActionRegistry.FAIRY_LIST:
-					
-					break;
-					
-				case ActionRegistry.FAIRY_BATTLE:
-					sleep(5000);
-					break;
-				}				
-				
-			}
-		}
-	};
-	
-	//–›√ﬂ ±º‰øÿ÷∆
-	private void sleep(int time){
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
+
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(false);

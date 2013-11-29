@@ -94,9 +94,14 @@
             style="@style/userinfoText"
             android:text="@string/areaFairy" />
 
+        <CheckBox
+            android:id="@+id/stopRun"
+            style="@style/userinfoText"
+            android:text="@string/stoprun" />
         <EditText
             android:id="@+id/recon"
             style="@style/userinfoText"
+            android:inputType="number"
             android:hint="@string/reconnection" />
     </LinearLayout>
 
