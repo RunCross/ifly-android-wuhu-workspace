@@ -144,6 +144,7 @@ public class LoginPre extends Activity implements Callback {
 //								Info.LoginServer = HTTPLink.getHost();
 								
 								startActivity(intent);
+								finish();
 							}
 						} catch (Exception e) {
 							e.printStackTrace();

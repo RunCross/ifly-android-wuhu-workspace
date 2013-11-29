@@ -110,6 +110,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
+        <CheckBox
+            android:id="@+id/everyArea"
+            style="@style/userinfoText"
+            android:text="@string/everyArea" />
+
+        <CheckBox
+            android:id="@+id/isArea"
+            style="@style/userinfoText"
+            android:text="@string/isRun" />        
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
         <Button
             style="@style/userinfoText"
             android:layout_weight="1"
