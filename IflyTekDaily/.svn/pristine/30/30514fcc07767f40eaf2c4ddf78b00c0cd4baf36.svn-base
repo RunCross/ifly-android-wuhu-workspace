@@ -1,0 +1,292 @@
+package com.firstgroup.iflytekdaily.main;
+
+import org.json.JSONException;
+
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
+
+import android.widget.Toast;
+
+import android.widget.TableLayout;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.PagerViewAdapter;
+import com.firstgroup.iflytekdaily.work.EmailUpdate;
+
+public class YiDailyMainActivity extends FragmentActivity implements Callback {
+
+	private RadioGroup navigationGroup;
+	private ViewPager viewPager;
+
+	private Handler handler = new Handler(this);
+	private boolean exitFalg = false;
+	private TextView pass;
+	private TextView receiver;
+	private TextView about;
+	private TextView menuEmail;
+
+	AlertDialog menuDialog;// menu菜单Dialog
+	TableLayout menuGrid;
+	View menuView;
+
+	// private RadioButton homeBtn, sendedBtn, receivedBtn;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.daily_main_layout);
+		initMenu();
+		viewPager = (ViewPager) findViewById(R.id.viewpager11);
+
+		navigationGroup = (RadioGroup) findViewById(R.id.navigation_radioGroup);
+		navigationGroup.setOnCheckedChangeListener(radioGroupListener);
+		navigationGroup.check(R.id.navigation_home);
+		FragmentPagerAdapter adapter = new PagerViewAdapter(
+				getSupportFragmentManager());
+		viewPager.setAdapter(adapter);
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+			}
+
+			@Override
+			public void onPageSelected(int arg0) {
+				switch (arg0) {
+				case 0:
+					navigationGroup.check(R.id.navigation_home);
+					break;
+				case 1:
+					navigationGroup.check(R.id.navigation_sended);
+					break;
+				case 2:
+					navigationGroup.check(R.id.navigation_received);
+					break;
+				default:
+					break;
+				}
+			}
+
+		});
+	}
+
+	private void initMenu() {
+		menuView = View.inflate(this, R.layout.menu, null);
+		pass = (TextView) menuView.findViewById(R.id.menu_pass);
+		receiver = (TextView) menuView.findViewById(R.id.menu_receiver);
+		about = (TextView) menuView.findViewById(R.id.menu_about);
+		menuEmail = (TextView) menuView.findViewById(R.id.menu_email);
+		pass.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(YiDailyMainActivity.this,
+						ChangePassword.class);
+				startActivity(intent);
+				menuDialog.dismiss();
+			}
+		});
+		receiver.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(YiDailyMainActivity.this,
+						ReportReceiver.class);
+				startActivity(intent);
+				menuDialog.dismiss();
+			}
+		});
+		about.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder dialogBulder = new Builder(
+						YiDailyMainActivity.this);
+				AlertDialog dialog = dialogBulder
+						.setTitle("信息")
+						.setMessage(
+								"开发小组：\n  科大讯飞安卓班第一组\n 组员：\n  阮广杰 王爱爱 柴意意 陶辉辉 \n    2013-11-27")
+						.setPositiveButton("确认", null).create();
+				dialog.show();
+				menuDialog.dismiss();
+			}
+		});
+		menuEmail.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// LayoutInflater inflater =
+				// LayoutInflater.from(YiDailyMainActivity.this);
+				// View view = inflater.inflate(R.layout.email, null);
+				final EditText email = new EditText(YiDailyMainActivity.this);
+				try {
+					email.setText(EmailUpdate.getMessage());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//
+				AlertDialog.Builder dialogBulder = new Builder(
+						YiDailyMainActivity.this);
+				AlertDialog innerdialog = dialogBulder
+						.setTitle("Email")
+						.setView(email)
+						.setPositiveButton("提交",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+										try {
+											String mess = EmailUpdate.updateEmail(email
+													.getText().toString());
+											Toast.makeText(YiDailyMainActivity.this, mess, Toast.LENGTH_SHORT).show();
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										dialog.dismiss();
+										menuDialog.dismiss();
+									}
+								}).setNegativeButton("取消", null).create();
+				innerdialog.show();
+			}
+		});
+
+		// 创建AlertDialog
+		menuDialog = new AlertDialog.Builder(this).create();
+		menuDialog.setView(menuView);
+		menuDialog.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(DialogInterface dialog, int keyCode,
+					KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_MENU)// 监听按键
+					dialog.dismiss();
+				return false;
+			}
+		});
+
+	}
+
+	private OnCheckedChangeListener radioGroupListener = new OnCheckedChangeListener() {
+
+		@Override
+		public void onCheckedChanged(RadioGroup group, int checkedId) {
+			switch (checkedId) {
+			case R.id.navigation_home:
+
+				viewPager.setCurrentItem(0);
+
+				break;
+			case R.id.navigation_sended:
+
+				viewPager.setCurrentItem(1);
+				break;
+			case R.id.navigation_received:
+
+				viewPager.setCurrentItem(2);
+				break;
+
+			default:
+				break;
+			}
+
+		}
+	};
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// MenuInflater mi = new MenuInflater(YiDailyMainActivity.this);
+		// mi.inflate(R.menu.menu, menu);
+		menu.add("menu");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		if (menuDialog == null) {
+			menuDialog = new AlertDialog.Builder(this).setView(menuView).show();
+		} else {
+			menuDialog.show();
+		}
+		return false;// 返回为true 则显示系统menu
+	}
+
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// Intent intent=null;
+	// switch(item.getItemId()){
+	// case R.id.pass_chang:
+	// intent = new Intent(YiDailyMainActivity.this, ChangePassword.class);
+	// startActivity(intent);
+	// break;
+	// case R.id.receiver_set:
+	// intent = new Intent(YiDailyMainActivity.this, ReportReceiver.class);
+	// startActivity(intent);
+	// break;
+	// }
+	// return super.onOptionsItemSelected(item);
+	// }
+
+	// public void onMenuClick(View view) {
+	// switch (view.getId()) {
+	// case R.id.menu_pass:
+	// System.out.println("ddddd");
+	// break;
+	// }
+	// }
+
+	/**
+	 * 按两次返回键退出
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (exitFalg) {
+				YiDailyMainActivity.this.finish();
+			} else {
+				exitFalg = true;
+				handler.sendEmptyMessageDelayed(0, 3500);
+				Toast.makeText(YiDailyMainActivity.this, "再按一次返回键退出",
+						Toast.LENGTH_LONG).show();
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		exitFalg = false;
+		return true;
+	}
+
+}

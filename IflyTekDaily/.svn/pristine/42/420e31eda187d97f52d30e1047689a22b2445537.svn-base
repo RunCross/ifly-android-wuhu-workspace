@@ -1,0 +1,87 @@
+package com.firstgroup.iflytekdaily.util;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.Looper;
+
+public class HttpClientUtil {
+
+	// 创建HttpClient对象
+	public static HttpClient httpClient = new DefaultHttpClient();
+	public static final String USER_URL = "http://61.191.191.151:8025/webservice.aspx";
+	private static List<Map<String, String>> list = new ArrayList<Map<String, String>>();  
+	private static Map<String, String> map = null;
+
+	public static String getLoginUser(final String massage) throws Exception {
+				
+		FutureTask<String> task = new FutureTask<String>(
+				new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+						String result="";
+						HttpGet get = new HttpGet(USER_URL+massage);
+						// 执行get请求,并且接收response的请求
+						HttpResponse response = httpClient.execute(get);
+						// 获取返回结果，首先判断状态
+						if (response.getStatusLine().getStatusCode() == 200) {
+							// 200代表请求成功,getEntity指返回的内容
+							HttpEntity entity = response.getEntity();
+							if (entity != null) {
+						
+								BufferedReader buff = new BufferedReader(
+										new InputStreamReader(entity.getContent()));
+								String line = null;
+								StringBuffer strBuff = new StringBuffer();
+								while ((line = buff.readLine()) != null) {
+									strBuff.append(line);		
+								}
+								buff.close();								
+								Looper.prepare();
+								result=strBuff.toString();
+								System.out.println("result------"+result);
+								Looper.loop();
+								
+							}
+							
+						}
+						return result;
+					}
+				});
+		new Thread(task).start();
+		return task.get();
+
+	}
+	public static List<Map<String, String>> turnToJSon(String str) throws JSONException{
+		//数据直接为一个数组形式，所以可以直接 用android提供的框架JSONArray读取JSON数据，转换成Array
+		JSONArray jsonArray = new JSONArray(str);   
+		//每条记录又由几个Object对象组成 
+        for (int i = 0; i < jsonArray.length(); i++) {  
+            JSONObject item = jsonArray.getJSONObject(i);   
+            int stateCode = item.getInt("StateCode");     // 获取对象对应的值  
+            String message = item.getString("Message");  
+
+            map = new HashMap<String, String>(); // 存放到MAP里面  
+            map.put("StateCode", stateCode + "");  
+            map.put("Message", message);  
+            list.add(map); 
+        }
+        System.out.println("list------"+list);
+		return list;
+	}
+}

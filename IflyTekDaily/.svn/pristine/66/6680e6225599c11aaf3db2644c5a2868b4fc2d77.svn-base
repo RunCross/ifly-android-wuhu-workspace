@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/contact_search_line"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <EditText
+            android:id="@+id/searchCont"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/search"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/search_button" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_below="@id/contact_search_line"
+        android:id="@+id/contact_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+<!-- <com.firstgroup.iflytekdaily.adapter.SideBar
+    android:layout_below="@id/contact_search_line"
+    android:id = "@+id/sideBar"  
+    android:layout_height="fill_parent"  
+    android:layout_width="22px"  
+    android:layout_alignParentRight="true"  
+/>   -->
+</RelativeLayout>

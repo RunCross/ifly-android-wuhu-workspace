@@ -1,0 +1,272 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+import com.iflytek.speech.RecognizerResult;
+import com.iflytek.speech.SpeechError;
+import com.iflytek.speech.SpeechConfig.RATE;
+import com.iflytek.ui.RecognizerDialog;
+import com.iflytek.ui.RecognizerDialogListener;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Toast;
+/**
+ * 填写日报界面，可以填写、修改今日日报，补填未填日报
+ * @author Administrator
+ *
+ */
+public class DailyWriteActivity extends Activity {
+	private EditText todayJob;//今日工作
+	private EditText needCoordinate;//待协调工作
+	private ImageButton voiceButton;
+	private ImageButton voiceButton2;
+	private TextView receiveNameText;//接收人
+	private Button confirmBtn;//确定
+	private Button cancelBtn;//取消
+	private String isHadWrite;
+	private String dateStr;
+	private Intent intent;
+	private String todayStr;
+	private int talkFalg = 0;
+	 RecognizerDialog iatDialog;
+	RecognizerDialogListener recognizerDialogListener = new RecognizerDialogListener() {
+			String text="";
+			@Override
+			public void onEnd(SpeechError arg0) {
+				if (talkFalg==0) {
+					todayJob.setText(todayJob.getText().toString()+text);
+					text="";
+				}else if (talkFalg==1) {
+					needCoordinate.setText(needCoordinate.getText().toString()+text);
+					text="";
+				}
+			}
+			@Override
+			public void onResults(ArrayList<RecognizerResult> arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+				text+=arg0.get(0).text.toString();
+			}
+		};
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.dailywritelayout);
+		todayJob=(EditText) findViewById(R.id.todayJob);
+		needCoordinate=(EditText) findViewById(R.id.needCoordinate);
+		receiveNameText=(TextView) findViewById(R.id.receiveNameText);
+		cancelBtn=(Button) findViewById(R.id.cancelBtn);
+		confirmBtn=(Button) findViewById(R.id.confirmBtn);
+		cancelBtn.setOnClickListener(onClickListener);
+		confirmBtn.setOnClickListener(onClickListener);
+		iatDialog = new RecognizerDialog( DailyWriteActivity.this, "appid=4df84c47,server_url=demo.voicecloud.cn/index.htm" );
+		  //iatDialog.setEngine("nurse", null, null);
+		  iatDialog.setEngine("sms", null, null);
+		  iatDialog.setSampleRate(RATE.rate16k);
+		  iatDialog.setListener(recognizerDialogListener);
+
+		  voiceButton=(ImageButton)findViewById(R.id.voiceButton);
+		  voiceButton2=(ImageButton)findViewById(R.id.voiceButton2);
+		  voiceButton.setOnClickListener(talkClick);
+		  voiceButton2.setOnClickListener(talkClick);
+		  
+		initText();
+	}
+	private OnClickListener talkClick = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			iatDialog.show();
+			if (v.getId()==R.id.voiceButton) {
+				talkFalg = 0;
+			}else if (v.getId()==R.id.voiceButton2) {
+				talkFalg = 1;
+			}
+			
+		}
+	};
+
+	/**
+	 * 初始化EditText，今日工作和待协调工作的文本内容
+	 */
+	private void initText(){
+		intent=getIntent();
+		//获取今天日期
+		Calendar calendar=Calendar.getInstance();
+		todayStr = calendar.get(Calendar.YEAR) + "-"
+				+ (calendar.get(Calendar.MONTH) + 1) + "-"
+				+ calendar.get(Calendar.DAY_OF_MONTH);
+		isHadWrite=intent.getStringExtra("IsHadWrite");
+		dateStr=intent.getStringExtra("Date");
+		if(!"1".equals(isHadWrite)){
+		todayJob.setText(intent.getStringExtra("TodayJob").toString());
+		needCoordinate.setText(intent.getStringExtra("NeedCoordinate").toString());
+		}
+		
+		String receiveNames=getReceiveName();
+		receiveNameText.setText(receiveNames);
+		
+	}
+	
+	/**
+	 * 按钮点击监听事件
+	 */
+	OnClickListener onClickListener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.cancelBtn:
+				//退出
+				Intent intent=new Intent();
+				intent.putExtra("code",1);
+				DailyWriteActivity.this.setResult(0, intent);
+				DailyWriteActivity.this.finish();
+				break;
+            case R.id.confirmBtn:
+            	if(todayStr.equals(dateStr)){
+				writeTodayDaily();
+
+            	}else{
+            		writeOtherDayDaily();
+        
+            	}  
+				break;
+			default:
+				break;
+			}
+			
+		}
+	};
+	
+	/**
+	 * 补填其他天未填日报
+	 */
+	private void writeOtherDayDaily(){
+		String todayJobText = null;
+		String needCoordinateText =null;
+		try {
+			todayJobText = URLEncoder.encode(todayJob.getText().toString(),"gb2312");
+			needCoordinateText= URLEncoder.encode(needCoordinate.getText().toString(),"gb2312");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String username = (String) Session.get("username");
+		
+		String key = (String) Session.get("key");
+		String message = "?funID=" + 9 + "&username=" + username
+				+ "&text=" + todayJobText + "&other=" + needCoordinateText +"&dailyDate="+dateStr+"&key="
+				+ key;
+		try {
+			String result=HttpClientUtil.getLoginUser(message);
+			Map<String, String> map=HttpClientUtil.turnToJSon(result);
+			if("0".equals(map.get("StateCode"))){
+				Intent intent=new Intent();
+				intent.putExtra("code",1);
+				DailyWriteActivity.this.setResult(0, intent);
+				DailyWriteActivity.this.finish();
+				Toast.makeText(DailyWriteActivity.this,"填写成功！",200).show();
+			}else{
+				Toast.makeText(DailyWriteActivity.this,"提交失败！",200).show();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 填写今日日报
+	 */
+	private void writeTodayDaily(){
+		String todayJobText = null;
+		String needCoordinateText =null;
+		try {
+			todayJobText = URLEncoder.encode(todayJob.getText().toString(),"gb2312");
+			needCoordinateText= URLEncoder.encode(needCoordinate.getText().toString(),"gb2312");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String username = (String) Session.get("username");
+		String key = (String) Session.get("key");
+		String message = "?funID=" + 2 + "&username=" + username
+				+ "&text=" + todayJobText + "&other=" + needCoordinateText + "&key="
+				+ key;
+		try {
+			String result=HttpClientUtil.getLoginUser(message);
+			System.out.println("message------>"+message);
+			Map<String, String> map=HttpClientUtil.turnToJSon(result);
+			if("0".equals(map.get("StateCode"))){
+				Intent intent=new Intent();
+				intent.putExtra("code",0);
+				DailyWriteActivity.this.setResult(0, intent);
+				DailyWriteActivity.this.finish();
+				Toast.makeText(DailyWriteActivity.this,"填写成功！",200).show();
+			}else{
+				Toast.makeText(DailyWriteActivity.this,"提交失败！",200).show();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	/**
+	 * 获取接收人姓名
+	 * @return 接收人
+	 */
+	private String getReceiveName(){
+		String names="接收人：";
+		String username = (String) Session.get("username");
+		String key = (String) Session.get("key");
+		String message = "?funID=" + 1 + "&username=" + username + "&key="+ key;
+		try {
+			String result=HttpClientUtil.getLoginUser(message);
+			List<Map<String,String>> list=new ArrayList<Map<String,String>>();
+			list=HttpClientUtil.receiverTurnToJSon(result);
+			//若存在接收人
+			if(list.size()>0){
+				for(Map<String,String> receiveMap:list){
+					 names=names+receiveMap.get("ReceiveName")+"、";
+				}
+             names=names.substring(0,names.length()-1);
+		    }else{
+		    	names="请设置接收人";
+		    }
+		
+		    
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return names;
+		
+		
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode==KeyEvent.KEYCODE_BACK){}
+		return false;
+	}
+}

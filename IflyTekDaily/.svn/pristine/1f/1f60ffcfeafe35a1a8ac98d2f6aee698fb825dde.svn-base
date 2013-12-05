@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="250dp" >
+
+    <ImageButton
+        android:id="@+id/go_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="#00000000"
+        android:contentDescription="@null"
+        android:src="@drawable/phone" />
+
+
+<View
+        android:id="@+id/go_blank"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/go_phone"        
+        android:layout_centerHorizontal="true"
+        android:background="#00000000"
+ />
+    <ImageButton
+        android:id="@+id/go_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/go_phone"
+        android:layout_toLeftOf="@id/go_blank"
+        android:background="#00000000"
+        android:contentDescription="@null"
+        android:src="@drawable/message" />
+    <ImageButton
+        android:id="@+id/go_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/go_phone"
+        android:layout_toRightOf="@id/go_blank"
+        android:background="#00000000"
+        android:contentDescription="@null"
+        android:src="@drawable/email" />
+
+</RelativeLayout>

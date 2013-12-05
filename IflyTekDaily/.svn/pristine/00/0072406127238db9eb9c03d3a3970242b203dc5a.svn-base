@@ -1,0 +1,258 @@
+package com.firstgroup.iflytekdaily.util;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.content.Context;
+import android.os.Looper;
+import android.widget.Toast;
+
+public class HttpClientUtil {
+
+	// 创建HttpClient对象
+	public static HttpClient httpClient = new DefaultHttpClient();
+	public static final String USER_URL = "http://61.191.191.151:8025/webservice.aspx"; 
+	private static Map<String, String> map = null;
+    private static List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+	/*
+	 * 向服务端发送请求，用FutureTask<String>获取发送请求后得到的响应
+	 * @auther wang522
+	 */
+	public static String getLoginUser(final String massage) throws Exception {
+				
+		FutureTask<String> task = new FutureTask<String>(
+				new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+						String result="";
+						HttpGet get = new HttpGet(USER_URL+massage);
+						// 执行get请求,并且接收response的请求
+						HttpResponse response = httpClient.execute(get);
+						// 获取返回结果，首先判断状态
+						if (response.getStatusLine().getStatusCode() == 200) {
+							// 200代表请求成功,getEntity指返回的内容
+							HttpEntity entity = response.getEntity();
+							if (entity != null) {
+						
+								BufferedReader buff = new BufferedReader(
+										new InputStreamReader(entity.getContent()));
+								String line = null;
+								StringBuffer strBuff = new StringBuffer();
+								while ((line = buff.readLine()) != null) {
+									strBuff.append(line);		
+								}
+								buff.close();								
+								Looper.prepare();
+								result=strBuff.toString();								
+							}							
+						}
+						return result;
+					}
+				});
+		new Thread(task).start();
+		return task.get();
+
+	}
+	/*
+	 * 将从服务端得到的只有stateCode和message的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+	 * @auther wang522
+	 */
+	public static Map<String, String> turnToJSon(String str) throws JSONException{
+		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+		JSONObject jsonObject = new JSONObject(str);
+		// 每条记录又由几个Object对象组成
+
+		int stateCode = jsonObject.getInt("StateCode"); // 获取对象对应的值
+		String message = jsonObject.getString("Message");
+
+		map = new HashMap<String, String>(); // 存放到MAP里面
+		map.put("StateCode", stateCode + "");
+		map.put("Message", message);
+		
+		return map;
+	}
+	/*
+	 * 将从服务端得到的接收人的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+	 * @auther wang522
+	 */
+	public static Map<String, String> receiverTurnToJSon(String str) throws JSONException{
+		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+		JSONObject jsonObject = new JSONObject(str);
+		// 每条记录又由几个Object对象组成
+		String objectId=jsonObject.getString("ObjectID"); 
+		String message = jsonObject.getString("Message");
+		String empName=jsonObject.getString("EmpName");
+		String empAccount=jsonObject.getString("EmpAccount");
+		String receiveName=jsonObject.getString("ReceiveName");
+		String receiveAccount=jsonObject.getString("ReceiveAccount");
+		String receivePersonId=jsonObject.getString("ReceivePersonId");
+
+		map = new HashMap<String, String>(); // 存放到MAP里面
+		map.put("ObjectID", objectId);
+		map.put("Message", message);
+		map.put("EmpName",empName);
+		map.put("EmpAccount",empAccount);
+		map.put("ReceiveName",receiveName);
+		map.put("ReceiveAccount",receiveAccount);
+		map.put("ReceivePersonId",receivePersonId);
+				
+		return map;
+	}
+	/*
+	 * 将从服务端得到的今日日报的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+	 * @auther wang522
+	 */
+	public static Map<String, String> dairyTurnToJSon(String str) throws JSONException{
+		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+		JSONObject jsonObject = new JSONObject(str);
+				
+		String objectId=jsonObject.getString("ObjectID"); 
+		String sendTime=jsonObject.getString("SendTime");
+		String writerName=jsonObject.getString("WriterName");
+		String writerAccount=jsonObject.getString("WriterAccount");
+		
+		String todayJob=jsonObject.getString("TodayJob");
+		String tomorrowPlan=jsonObject.getString("TomorrowPlan");
+		String needCoordinate=jsonObject.getString("NeedCoordinate");
+		int isHadWrite=jsonObject.getInt("IsHadWrite");
+		
+		String dailyReportTime=jsonObject.getString("DailyReportTime");
+		String receiveName=jsonObject.getString("ReceiveName");
+		String receiveAccount=jsonObject.getString("ReceiveAccount");
+		String receivePersonId=jsonObject.getString("ReceivePersonId");
+
+		map = new HashMap<String, String>(); // 存放到MAP里面
+		map.put("ObjectID", objectId);
+		map.put("SendTime",sendTime);
+		map.put("WriterName",writerName);
+		map.put("WriterAccount",writerAccount);
+		
+		map.put("TodayJob",todayJob);
+		map.put("TomorrowPlan",tomorrowPlan);
+		map.put("NeedCoordinate",needCoordinate);
+		map.put("IsHadWrite",isHadWrite+"");
+		
+		map.put("DailyReportTime",dailyReportTime);
+		map.put("ReceiveName",receiveName);
+		map.put("ReceiveAccount",receiveAccount);
+		map.put("ReceivePersonId",receivePersonId);
+		
+		return map;
+	}
+	/*
+	 * 获得状态集合的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+	 * @auther wang522
+	 */
+	public static Map<String, String> stateTurnToJSon(String str) throws JSONException{
+		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+		JSONArray jsonArray = new JSONArray(str);
+		map = new HashMap<String, String>(); 
+		
+		for (int i = 0; i < jsonArray.length(); i++) {  
+            JSONObject item = jsonArray.getJSONObject(i);
+		// 每条记录又由几个Object对象组成
+		String date=item.getString("Date"); 
+		int state = item.getInt("State");
+
+		map.put(date,state+"");
+		}
+		return map;
+		
+	}	
+	/*
+	 * 根据姓名查询的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+	 * @auther wang522
+	 */
+	public static Map<String, String> searchNameTurnToJSon(String str) throws JSONException{
+		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+		JSONObject jsonObject = new JSONObject(str);
+		// 每条记录又由几个Object对象组成
+		String id=jsonObject.getString("Id"); 
+		String name=jsonObject.getString("Name");
+		String account=jsonObject.getString("Account");
+
+		map = new HashMap<String, String>(); // 存放到MAP里面
+		map.put("Id", id);
+		map.put("Name", name);
+		map.put("Account",account);
+		
+		return map;
+	}
+	/*
+	 * 获取我的信息的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+	 * @auther wang522
+	 */
+	public static Map<String, String> myInformTurnToJSon(String str) throws JSONException{
+		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+		JSONObject jsonObject = new JSONObject(str);
+		// 每条记录又由几个Object对象组成
+		String objectId=jsonObject.getString("ObjectID"); 
+		String name=jsonObject.getString("Name");
+		String account=jsonObject.getString("Account");
+		String email=jsonObject.getString("Email");
+		boolean isNeedWrite=jsonObject.getBoolean("IsNeedWrite");
+
+		map = new HashMap<String, String>(); // 存放到MAP里面
+		map.put("ObjectID", objectId);
+		map.put("Name", name);
+		map.put("Account",account);
+		map.put("Email",email);
+		map.put("IsNeedWrite",isNeedWrite+"");
+		
+		return map;
+	}
+	/*
+	 * 根据状态码stateCode，向用户输出对应的内容
+	 * @auther wang522
+	 */
+	public static void showStateCode(int stateCode,Context context){
+		switch(stateCode){
+        case -2:
+        	Toast.makeText(context,"未知异常!",Toast.LENGTH_SHORT).show();
+        	break;
+        case -1:
+        	Toast.makeText(context,"系统未初始化!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 0:
+        	Toast.makeText(context,"执行成功!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 1:
+        	Toast.makeText(context,"无效的FunID!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 2:
+        	Toast.makeText(context,"参数无效!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 3:
+        	Toast.makeText(context,"您无权进入系统!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 4:
+        	Toast.makeText(context,"用户名或密码错误!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 5:
+        	Toast.makeText(context,"无效的Key!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 6:
+        	Toast.makeText(context,"接收人不能为空!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 7:
+        	Toast.makeText(context,"原始密码提供错误!",Toast.LENGTH_SHORT).show();
+        	break;
+        case 8:
+        	Toast.makeText(context,"密码修改失败!",Toast.LENGTH_SHORT).show();
+        	break;
+        }
+	}
+}

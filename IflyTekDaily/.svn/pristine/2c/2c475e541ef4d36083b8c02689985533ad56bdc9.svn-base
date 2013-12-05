@@ -1,0 +1,135 @@
+package com.firstgroup.iflytekdaily.services;
+
+import java.util.Calendar;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.main.SendTimedActivity;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+import com.firstgroup.iflytekdaily.work.CommitDailyUtil;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+
+public class AutoSendServices extends Service {
+	private String dailyText = "";
+	private String cooditeText = "";
+	private String userName = "",key = "";
+	private Binder sendBinder;
+private Context context ;
+	@Override
+	public void onCreate() {
+
+		super.onCreate();
+		sendBinder = new autoBinder();
+	}
+/**
+ * 当重新进入服务时  就是想要自动填写日报  
+ * 当今天的日报已填写 就不再自动发送   如果今天的日报为空 就自动发送设定的日报
+ * @return
+ */
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		//
+		if (judgeToday()) {
+			autoSend();
+		}else {
+			notifyUser("今天日报已填写","您已经填写了今天的日报，所以没有自动给您发送！");
+		}
+		return super.onStartCommand(intent, flags, startId);
+
+	}
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		userName =(String) Session.get("username");
+		key = (String) Session.get("key");
+		return sendBinder;
+	}
+	public class autoBinder extends Binder {
+	public void setDaily(String daText, String coodText){
+			dailyText = daText;
+			cooditeText = coodText;
+		}
+	    public void getContext(Context context2) {
+		     context = context2;
+	}
+	}
+/**
+ * 调用发送日报的函数  自动发送
+ * @author yi1992
+ */
+	private void autoSend() {
+
+		Calendar calendar = Calendar.getInstance();
+		
+		if ("".endsWith(dailyText)&&"".endsWith(cooditeText)) {
+			//提示日报内容为空  发送失败
+		}else {
+			if (calendar.get(calendar.DAY_OF_WEEK)==1||calendar.get(calendar.DAY_OF_WEEK)==7) {
+				String notifTilte = "周末不用发日报！";
+				String datile = "今天是周末，不用发送日报";
+				notifyUser(notifTilte, datile);
+			}
+			String resultFalg = CommitDailyUtil.commitTadayDaily(dailyText, cooditeText, userName, key);
+			if ("0".endsWith(resultFalg)) {
+				//提示发送成功
+				String notifTilte = "日报发送成功！";
+				String datile = "成功发送日报，点击查看详细！";
+				notifyUser(notifTilte, datile);
+			}else {
+				String notifTilte = "日报发送失败！";
+				String datile = "发送日报失败，点击查看详细！";
+				notifyUser(notifTilte, datile);
+			}
+			
+		}
+	}
+	private void notifyUser(String title,String datil) {
+		 String ns = Context.NOTIFICATION_SERVICE;
+	        NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+	        //定义通知栏展现的内容信息
+	        int icon = R.drawable.message;
+	        CharSequence tickerText = title;
+	        long when = System.currentTimeMillis();
+	        Notification notification = new Notification(icon, tickerText, when);
+	         
+	        //定义下拉通知栏时要展现的内容信息
+	        Context context = getApplicationContext();
+	        CharSequence contentTitle = title;
+	        CharSequence contentText = datil;
+	        Intent notificationIntent = new Intent(this, SendTimedActivity.class);
+	        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+	                notificationIntent, 0);
+	        notification.setLatestEventInfo(context, contentTitle, contentText,
+	                contentIntent);
+	         
+	        //用mNotificationManager的notify方法通知用户生成标题栏消息通知
+	        mNotificationManager.notify(1, notification);
+		
+	}
+	private boolean judgeToday() {
+		String parmess = "?funID=4"  + "&username=" + userName  + "&key=" + key;
+				try {
+				String result =	HttpClientUtil.getLoginUser(parmess);
+					String todayJob = HttpClientUtil.dairyTurnToJSon(result).get("TodayJob");
+					if ("".equals(todayJob)||todayJob==null) {
+						return true;
+					}else {
+						return false;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+		return false;
+		
+	}
+}

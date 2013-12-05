@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/button012" >
+
+    <TextView
+        android:id="@+id/parent_show_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:text="2013-11-26"
+        android:textSize="@dimen/show_date_size" />
+    
+    <TextView
+        android:id="@+id/parent_show_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="right"
+        android:layout_marginLeft="10dp"
+        android:text="未知"
+        android:layout_weight="1"
+        android:layout_marginRight="25dp"
+        android:textColor="@color/state_show_color"
+        android:textSize="@dimen/show_date_size" />
+    
+        <!-- <TextView
+            android:id="@+id/parent_show_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="@string/state_help"
+            android:layout_marginRight="5dp"
+            android:textSize="@dimen/show_date_size" /> -->
+
+</LinearLayout>

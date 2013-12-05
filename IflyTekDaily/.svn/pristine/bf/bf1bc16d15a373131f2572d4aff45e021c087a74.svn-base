@@ -1,0 +1,153 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.R.layout;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class DailyWriteActivity extends Activity {
+	private EditText todayJob;
+	private EditText needCoordinate;
+	private Button confirmBtn;//确定
+	private Button cancelBtn;//取消
+	private String isHadWrite;
+	private String dateStr;
+	private Intent intent;
+	private String todayStr;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.dailywritelayout);
+		todayJob=(EditText) findViewById(R.id.todayJob);
+		needCoordinate=(EditText) findViewById(R.id.needCoordinate);
+		cancelBtn=(Button) findViewById(R.id.cancelBtn);
+		confirmBtn=(Button) findViewById(R.id.confirmBtn);
+		cancelBtn.setOnClickListener(onClickListener);
+		confirmBtn.setOnClickListener(onClickListener);
+		initText();
+	}
+
+	/**
+	 * 初始化EditText，今日工作和待协调工作的文本内容
+	 */
+	private void initText(){
+		intent=getIntent();
+		//获取今天日期
+		Calendar calendar=Calendar.getInstance();
+		todayStr = calendar.get(Calendar.YEAR) + "-"
+				+ (calendar.get(Calendar.MONTH) + 1) + "-"
+				+ calendar.get(Calendar.DAY_OF_MONTH);
+		isHadWrite=intent.getStringExtra("IsHadWrite");
+		dateStr=intent.getStringExtra("Date");
+		if(!"1".equals(isHadWrite)){
+		todayJob.setText(intent.getStringExtra("TodayJob").toString());
+		needCoordinate.setText(intent.getStringExtra("NeedCoordinate").toString());
+		}
+	}
+	
+	/**
+	 * 按钮点击监听事件
+	 */
+	OnClickListener onClickListener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.cancelBtn:
+				//退出
+				 DailyWriteActivity.this.finish();
+				break;
+            case R.id.confirmBtn:
+            	if(todayStr.equals(dateStr)){
+				writeTodayDaily();
+            	}else{
+            		writeOtherDayDaily();
+            	}
+				break;
+			default:
+				break;
+			}
+			
+		}
+	};
+	
+	/**
+	 * 补填其他天未填日报
+	 */
+	private void writeOtherDayDaily(){
+		String todayJobText = null;
+		String needCoordinateText =null;
+		try {
+			todayJobText = URLEncoder.encode(todayJob.getText().toString(),"gb2312");
+			needCoordinateText= URLEncoder.encode(needCoordinate.getText().toString(),"gb2312");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String username = (String) Session.get("username");
+		
+		String key = (String) Session.get("key");
+		String message = "?funID=" + 9 + "&username=" + username
+				+ "&text=" + todayJobText + "&other=" + needCoordinateText +"&dailyDate"+dateStr+"&key="
+				+ key;
+		try {
+			String result=HttpClientUtil.getLoginUser(message);
+			Map<String, String> map=HttpClientUtil.turnToJSon(result);
+			if("0".equals(map.get("StateCode"))){
+				DailyWriteActivity.this.finish();
+				Toast.makeText(DailyWriteActivity.this,"填写成功！",200).show();
+			}else{
+				Toast.makeText(DailyWriteActivity.this,"提交失败！",200).show();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 填写今日日报
+	 */
+	private void writeTodayDaily(){
+		String todayJobText = null;
+		String needCoordinateText =null;
+		try {
+			todayJobText = URLEncoder.encode(todayJob.getText().toString(),"gb2312");
+			needCoordinateText= URLEncoder.encode(needCoordinate.getText().toString(),"gb2312");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String username = (String) Session.get("username");
+		String key = (String) Session.get("key");
+		String message = "?funID=" + 2 + "&username=" + username
+				+ "&text=" + todayJobText + "&other=" + needCoordinateText + "&key="
+				+ key;
+		try {
+			String result=HttpClientUtil.getLoginUser(message);
+			Map<String, String> map=HttpClientUtil.turnToJSon(result);
+			if("0".equals(map.get("StateCode"))){
+				DailyWriteActivity.this.finish();
+				Toast.makeText(DailyWriteActivity.this,"填写成功！",200).show();
+			}else{
+				Toast.makeText(DailyWriteActivity.this,"提交失败！",200).show();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+}

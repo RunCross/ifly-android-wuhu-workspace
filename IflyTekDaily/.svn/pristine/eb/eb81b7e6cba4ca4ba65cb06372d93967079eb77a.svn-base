@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66ccff"
+    android:orientation="vertical"
+    android:focusable="true"  
+   android:focusableInTouchMode="true" >
+
+    <LinearLayout
+        style="@style/linear"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/back_old_ver_bg_pressed"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/search_button" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/linear"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/back_old_ver_bg_pressed"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/change_pass_text"
+            android:text="@string/candidate_receiver"
+            android:textSize="20sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical" >
+
+            <TableLayout
+                android:id="@+id/receiver_candidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:collapseColumns="3" >
+            </TableLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/add_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/add_receiver" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/linear"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+         android:layout_marginBottom="20dp"
+        android:background="@drawable/back_old_ver_bg_pressed"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/change_pass_text"
+            android:text="@string/chosen_receiver"
+            android:textSize="20sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical" >
+
+            <TableLayout
+                android:id="@+id/receiver_chosen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:collapseColumns="3" >
+            </TableLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           
+            android:gravity="right" >
+
+            <Button
+                android:id="@+id/del_receiver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:text="@string/del_receiver" />
+
+            <Button
+                android:id="@+id/submit_receiver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

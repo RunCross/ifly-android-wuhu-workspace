@@ -1,0 +1,246 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.net.URL;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.work.ChangePass;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class ChangePassword extends Activity implements Callback {
+
+	private EditText oldPass;
+	private EditText newPass;
+	private EditText newdPassConfim;
+	
+	private TextView oldWarn;
+	private TextView newWarn;
+	private TextView newWarnConfim;
+	
+	private String oldStr;
+	private String newStr;
+	private String newStrConfim;
+	
+	private Handler hand;
+	
+	private static final int OLD_NULL = 1;
+	private static final int NEW_NULL = 2;
+	private static final int NEW_CONFIM_NULL = 3;
+	private static final int OLD = 4;
+	private static final int NEW = 5;
+	private static final int NEW_CONFIM = 6;
+	
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pass_change);
+		
+		hand = new Handler(this);
+		initSub();
+	}
+	
+	/**
+	 * 初始化组件
+	 */
+	private void initSub() {
+		oldPass = (EditText) findViewById(R.id.old_pass);
+		newPass = (EditText) findViewById(R.id.new_pass);
+		newdPassConfim = (EditText) findViewById(R.id.new_pass_confim);
+		
+		oldWarn = (TextView) findViewById(R.id.hint_old_pass);
+		newWarn = (TextView) findViewById(R.id.hint_new_pass);
+		newWarnConfim = (TextView) findViewById(R.id.hint_new_pass_confim);
+	}
+
+	public void onClick(View view){
+		switch(view.getId()){
+		//提交修改密码
+		case R.id.changepass_submit:
+			//提交
+			MyUpdate update = new MyUpdate();
+			update.execute(1);
+//			if(check()){
+//				AlertDialog.Builder dialogBulder = new Builder(
+//						ChangePassword.this);
+//				AlertDialog dialog = dialogBulder
+//						.setTitle("提示")
+//						.setIcon(R.drawable.ic_launcher)
+//						.setMessage("密码修改成功")
+//						.setPositiveButton("确认",
+//								new DialogInterface.OnClickListener() {
+//
+//									@Override
+//									public void onClick(DialogInterface dialog,
+//											int which) {
+//										finish();
+//									}
+//								}).create();
+//				dialog.show();	
+//			}else{
+//				Toast.makeText(ChangePassword.this, "原始密码不对或新密码不一致", Toast.LENGTH_SHORT).show();
+//			}
+			break;
+		case R.id.changepass_cancel:
+			finish();
+			break;
+		}
+	}
+
+	/**
+	 * 提交
+	 */
+	private boolean check() {
+		//登录返回状态
+		boolean state = false;
+		//填写判断
+		boolean flage = true;
+		
+		oldStr = oldPass.getText().toString();
+		newStr = newPass.getText().toString();
+		newStrConfim = newdPassConfim.getText().toString();
+		
+		
+		if("".equals(oldStr)||oldStr == null){
+//			oldWarn.setVisibility(View.VISIBLE);
+			hand.sendEmptyMessage(OLD_NULL);
+			flage = false;
+		}else{
+//			oldWarn.setVisibility(View.INVISIBLE);
+			hand.sendEmptyMessage(OLD);
+		}
+		
+		if("".equals(newStr)||newStr == null){
+			hand.sendEmptyMessage(NEW_NULL);
+//			newWarn.setVisibility(View.VISIBLE);
+			flage = false;
+		}else{
+//			newWarn.setVisibility(View.INVISIBLE);
+			hand.sendEmptyMessage(NEW);
+		}
+		
+		if("".equals(newStrConfim)||newStrConfim == null){
+			hand.sendEmptyMessage(NEW_CONFIM_NULL);
+//			newWarnConfim.setVisibility(View.VISIBLE);
+			flage = false;
+		}else{
+//			newWarnConfim.setVisibility(View.INVISIBLE);
+			hand.sendEmptyMessage(NEW_CONFIM);
+		}
+		if(!newStr.equals(newStrConfim)){
+			
+			return false;
+		}
+
+		if(flage){
+			state = ChangePass.change(oldStr,newStr);
+		}
+		
+		return state;
+	}
+	
+	
+	class MyUpdate extends AsyncTask<Integer, Integer, String> {
+
+		ProgressDialog pdialog;
+		boolean resu;
+
+		@Override
+		protected String doInBackground(Integer... params) {
+
+			resu = check();
+			return null;
+		}
+
+		/**
+		 * 在任务执行前激活的函数
+		 */
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pdialog = new ProgressDialog(ChangePassword.this);
+			pdialog.setTitle("修改密码");			
+			pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pdialog.setIndeterminate(false);
+			pdialog.show();
+
+		}
+
+		/**
+		 * 当进度改变
+		 */
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			super.onProgressUpdate(values);
+
+		}
+
+		/**
+		 * 当任务执行完
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			pdialog.dismiss();
+			pdialog = null;
+			if(resu){
+				AlertDialog.Builder dialogBulder = new Builder(
+						ChangePassword.this);
+				AlertDialog dialog = dialogBulder
+						.setTitle("提示")
+						.setIcon(R.drawable.ic_launcher)
+						.setMessage("密码修改成功")
+						.setPositiveButton("确认",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										finish();
+									}
+								}).create();
+				dialog.show();	
+			}else{
+				Toast.makeText(ChangePassword.this, "原始密码不对或新密码不一致", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
+
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch(msg.what){
+		case OLD_NULL:
+			oldWarn.setVisibility(View.VISIBLE);
+			break;
+		case NEW_NULL:
+			newWarn.setVisibility(View.VISIBLE);
+			break;
+		case NEW_CONFIM_NULL:
+			newWarnConfim.setVisibility(View.VISIBLE);
+			break;
+		case OLD:
+			oldWarn.setVisibility(View.INVISIBLE);
+			break;
+		case NEW:
+			newWarn.setVisibility(View.INVISIBLE);
+			break;
+		case NEW_CONFIM:
+			newWarnConfim.setVisibility(View.INVISIBLE);
+			break;
+		}
+		return false;
+	}
+}

@@ -1,0 +1,119 @@
+package com.firstgroup.iflytekdaily.main;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.work.ChangePass;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class ChangePassword extends Activity {
+
+	private EditText oldPass;
+	private EditText newPass;
+	private EditText newdPassConfim;
+	
+	private TextView oldWarn;
+	private TextView newWarn;
+	private TextView newWarnConfim;
+	
+	private String oldStr;
+	private String newStr;
+	private String newStrConfim;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pass_change);
+		initSub();
+	}
+	
+	/**
+	 * 初始化组件
+	 */
+	private void initSub() {
+		oldPass = (EditText) findViewById(R.id.old_pass);
+		newPass = (EditText) findViewById(R.id.new_pass);
+		newdPassConfim = (EditText) findViewById(R.id.new_pass_confim);
+		
+		oldWarn = (TextView) findViewById(R.id.hint_old_pass);
+		newWarn = (TextView) findViewById(R.id.hint_new_pass);
+		newWarnConfim = (TextView) findViewById(R.id.hint_new_pass_confim);
+	}
+
+	public void onClick(View view){
+		switch(view.getId()){
+		//提交修改密码
+		case R.id.changepass_submit:
+			//提交
+			if(check()){
+				AlertDialog.Builder dialogBulder = new Builder(
+						ChangePassword.this);
+				AlertDialog dialog = dialogBulder
+						.setTitle("提示")
+						.setIcon(R.drawable.ic_launcher)
+						.setMessage("密码修改成功")
+						.setPositiveButton("确认",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										finish();
+									}
+								}).create();
+				dialog.show();	
+			}
+			break;
+		case R.id.changepass_cancel:
+			finish();
+			break;
+		}
+	}
+
+	/**
+	 * 提交
+	 */
+	private boolean check() {
+		//登录返回状态
+		boolean state = false;
+		//填写判断
+		boolean flage = true;
+		
+		oldStr = oldPass.getText().toString();
+		newStr = newPass.getText().toString();
+		newStrConfim = newdPassConfim.getText().toString();
+		
+		if(oldStr == ""||oldStr == null){
+			oldWarn.setVisibility(View.VISIBLE);
+			flage = false;
+		}else{
+			oldWarn.setVisibility(View.INVISIBLE);
+		}
+		
+		if(newStr == ""||newStr == null){
+			newWarn.setVisibility(View.VISIBLE);
+			flage = false;
+		}else{
+			newWarn.setVisibility(View.INVISIBLE);
+		}
+		
+		if(newStrConfim == ""||newStrConfim == null){
+			newWarnConfim.setVisibility(View.VISIBLE);
+			flage = false;
+		}else{
+			newWarnConfim.setVisibility(View.INVISIBLE);
+		}
+		
+
+		if(flage){
+			state = ChangePass.change(oldStr,newStr);
+		}
+		
+		return state;
+	}
+}

@@ -1,0 +1,210 @@
+package com.firstgroup.iflytekdaily.adapter;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+
+import android.content.Context;
+import android.database.DataSetObserver;
+import android.os.Handler.Callback;
+import android.os.Handler;
+import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
+import android.widget.TextView;
+
+public class ExpandAdapter implements ExpandableListAdapter,Callback {
+	//private Map<String, Object> timeState = new HashMap<String, Object>(); 
+	private List<String> list = new ArrayList<String>(); 
+	private LayoutInflater inflater;
+	private Context context;
+	private int pagerFlag;
+	private View childView;
+	private Handler handler;
+	private Map<String ,String> map = new HashMap<String, String>();
+
+	public ExpandAdapter(List<String> list, Context context,int pagerFlag) {
+		super();
+		this.list = list;
+		handler = new Handler(this);
+		this.context = context;
+	//	map.put("", value)
+		map.put("TodayJob","");
+		map.put("NeedCoordinate","");
+		map.put("ReceiveName","");
+		
+		inflater = LayoutInflater.from(context);
+		this.pagerFlag = pagerFlag;
+	}
+
+	@Override
+	public void registerDataSetObserver(DataSetObserver observer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void unregisterDataSetObserver(DataSetObserver observer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int getGroupCount() {
+		// TODO Auto-generated method stub
+		return list.size();
+	}
+
+	@Override
+	public int getChildrenCount(int groupPosition) {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+	@Override
+	public Object getGroup(int groupPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getChild(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long getGroupId(int groupPosition) {
+		// TODO Auto-generated method stub
+		return groupPosition;
+	}
+
+	@Override
+	public long getChildId(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public View getGroupView(int groupPosition, boolean isExpanded,
+			View convertView, ViewGroup parent) {
+		//if (pagerFlag==1) {
+		View view = inflater.inflate(R.layout.expand_parent_layout, null);
+		TextView date = (TextView) view.findViewById(R.id.parent_show_date);
+		TextView state = (TextView) view.findViewById(R.id.parent_show_state);
+		String timeState = list.get(groupPosition);
+		String[] strings = timeState.split("#");
+		date.setText(strings[0]);
+		if ("1".equals(strings[1])) {
+			state.setText("未填写");
+		}else if ("2".equals(strings[1])) {
+			state.setText("按时填写");
+		}else if ("2".equals(strings[1])) {
+			state.setText("b补填");
+		}
+		return view;
+	//	}
+		
+	//	return null;
+	}
+/**
+ * 加载日报内容还要写
+ */
+	@Override
+	public View getChildView(int groupPosition, int childPosition,
+			boolean isLastChild, View convertView, ViewGroup parent) {
+		System.out.println("先执行");
+		if (pagerFlag==1) {
+			childView = inflater.inflate(R.layout.expand_child_layout, null);
+			TextView todayWork = (TextView) childView.findViewById(R.id.child_todaywork);
+			
+			return childView;
+			
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isChildSelectable(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean areAllItemsEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onGroupExpanded(int groupPosition) {
+		System.out.println("执行了展开");
+		handler.sendEmptyMessageDelayed(0, 500);
+		String userName = (String)Session.get("username");
+		String key = (String)Session.get("key");
+		String parameters = "?"+"funID=8&"+"username="+userName+"&startDate=2013-11-24"+"&endDate=2013-11-27"+"&count=7"+"&key="+key;
+		System.out.println("par:"+parameters);
+		try {
+			String result = HttpClientUtil.getLoginUser(parameters);
+			Map<String, String> map = HttpClientUtil.dairyTurnToJSon(result);
+			for (String mapKey : map.keySet()) {
+				System.out.println("key:"+mapKey);
+				System.out.println("values"+map.get(mapKey));
+			}
+			System.out.println("大小："+map.size());
+		} catch (JSONException e) {
+			System.out.println("io错误");
+			e.printStackTrace();
+		}catch (Exception e) {
+			System.out.println("http错误");
+		}
+
+	}
+
+	@Override
+	public void onGroupCollapsed(int groupPosition) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public long getCombinedChildId(long groupId, long childId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getCombinedGroupId(long groupId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		System.out.println("最后知悉");
+		return false;
+	}
+
+}

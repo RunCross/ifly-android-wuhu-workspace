@@ -1,0 +1,76 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.ContactPersonAdapter;
+import com.firstgroup.iflytekdaily.bean.Contacts;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
+public class ContactsActivity extends Activity {
+
+	private ListView contactList;
+	private List<Contacts> contacts;
+	private ContactPersonAdapter adapter;
+	View menuView;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.contacts_list);
+		
+		contacts = new ArrayList<Contacts>();
+		initData();
+		
+		contactList = (ListView) findViewById(R.id.contact_list);
+		adapter = new ContactPersonAdapter(contacts, ContactsActivity.this);
+		contactList.setAdapter(adapter);
+		menuView = View.inflate(this, R.layout.contact_go, null);
+		contactList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				AlertDialog.Builder dialogBulder = new Builder(
+						ContactsActivity.this);
+				AlertDialog dialog = dialogBulder
+						.setView(menuView).create();
+				dialog.show();
+			}
+		});
+		
+		
+	}
+	
+	private void initData(){
+		contacts.clear();
+		ContentResolver cr = getContentResolver();
+		Cursor cursor = cr
+				.query(Uri
+						.parse("content://com.firstgroup.iflytekdaily.Contacts/contact"),
+						null, null, null, null);
+		while(cursor.moveToNext()){
+			Contacts con = new Contacts();
+			con.setId(cursor.getInt(0));
+			con.setName(cursor.getString(1));
+			con.setTel(cursor.getString(2));
+			con.setMail(cursor.getString(3));
+			con.setHomephone(cursor.getString(4));
+			con.setRemark(cursor.getString(5));
+			contacts.add(con);			
+		}
+		cursor.close();
+	}
+}

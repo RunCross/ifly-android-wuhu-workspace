@@ -1,0 +1,288 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.services.AutoSendServices;
+import com.firstgroup.iflytekdaily.services.AutoSendServices.autoBinder;
+
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.text.InputType;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+public class SendTimedActivity extends Activity {
+	private Spinner shortCutSpinner, hourSpinner, miuniteSpinner;
+	// private ArrayAdapter<String> minutesAdapter;
+	private Button sureSet, cannelSet, addShortCut, rmShortCut, editButton;
+	private SharedPreferences preferences2;
+	private EditText showText, showNeed, dailyTitle;
+	private Editor editor;
+	private boolean editing = false;
+	private List<String> DailyKeys = new ArrayList<String>();
+	private String[] toSends = { "", "" };
+	private autoBinder toBinder;
+	private Intent intent;
+	private ArrayAdapter<String> keyAdapter;
+	private ServiceConnection autoConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			toBinder = (autoBinder) service;
+
+		}
+	};
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.sendtimedlayout);
+		intent = new Intent(SendTimedActivity.this, AutoSendServices.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		// startService(intent);
+		bindService(intent, autoConnection, BIND_AUTO_CREATE);
+		preferences2 = getSharedPreferences("dailySet",
+				Activity.MODE_WORLD_WRITEABLE);
+		editor = preferences2.edit();
+		editor.putString("今日日报", "哈哈#是这样的");
+		editor.putString("zuotu日报", "哦哦#好的");
+		editor.commit();
+		System.out.println(preferences2.getString("今日日报", "0000"));
+		for (String string : preferences2.getAll().keySet()) {
+			DailyKeys.add(string);
+			System.out.println("string:" + string);
+		}
+
+		shortCutSpinner = (Spinner) findViewById(R.id.shortcur_spinner);
+		hourSpinner = (Spinner) findViewById(R.id.set_time_hour);
+		miuniteSpinner = (Spinner) findViewById(R.id.set_time_minite);
+
+		sureSet = (Button) findViewById(R.id.sure_sendtimed);
+		cannelSet = (Button) findViewById(R.id.cannel_sendtimed);
+
+		rmShortCut = (Button) findViewById(R.id.sub_shortcut);
+		addShortCut = (Button) findViewById(R.id.add_shortcut);
+		editButton = (Button) findViewById(R.id.edit_shortcut);
+
+		showText = (EditText) findViewById(R.id.auto_text);
+		showNeed = (EditText) findViewById(R.id.auto_noodcite);
+		dailyTitle = (EditText) findViewById(R.id.share_title);
+		String[] hours = getResources().getStringArray(R.array.hours);
+		ArrayAdapter<String> hourAdapter = new ArrayAdapter<String>(
+				SendTimedActivity.this, android.R.layout.simple_list_item_1,
+				hours);
+		hourSpinner.setAdapter(hourAdapter);
+		String[] minutes = getResources().getStringArray(R.array.minutes);
+		ArrayAdapter<String> minutesAdapter = new ArrayAdapter<String>(
+				SendTimedActivity.this, android.R.layout.simple_list_item_1,
+				minutes);
+		miuniteSpinner.setAdapter(minutesAdapter);
+		keyAdapter = new ArrayAdapter<String>(SendTimedActivity.this,
+				android.R.layout.simple_list_item_1, DailyKeys);
+		shortCutSpinner.setAdapter(keyAdapter);
+
+		toSends = preferences2.getString(
+				shortCutSpinner.getSelectedItem().toString(), "").split("#");
+		showText.setText(toSends[0]);
+		showNeed.setText(toSends[1]);
+
+		sureSet.setOnClickListener(buttonClick);
+		cannelSet.setOnClickListener(buttonClick);
+		rmShortCut.setOnClickListener(buttonClick);
+		addShortCut.setOnClickListener(buttonClick);
+		editButton.setOnClickListener(buttonClick);
+
+		shortCutSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				toSends = preferences2.getString(
+						shortCutSpinner.getSelectedItem().toString(), "")
+						.split("#");
+				showText.setText(toSends[0]);
+				showNeed.setText(toSends[1]);
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		unbindService(autoConnection);
+	}
+
+	private OnClickListener buttonClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+
+			switch (v.getId()) {
+			// 确定按钮
+			case R.id.sure_sendtimed:
+				if (!editing) {
+
+					Calendar calendar = Calendar.getInstance();
+					System.out.println("时间："
+							+ calendar.get(calendar.HOUR_OF_DAY) + "|||"
+							+ calendar.get(calendar.MINUTE));
+					System.out.println(hourSpinner.getSelectedItem() + ":"
+							+ miuniteSpinner.getSelectedItem());
+					AlarmManager aManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+					System.out.println(showText.getText().toString()+"$$$$"+showNeed.getText().toString());
+								
+					if (toBinder != null) {
+						toBinder.setDaily(showText.getText().toString(),
+								showNeed.getText().toString());
+					}
+					PendingIntent pIntent = PendingIntent.getService(
+							SendTimedActivity.this, 0, intent, 0);
+
+					calendar.setTimeInMillis(System.currentTimeMillis());
+					calendar.set(Calendar.HOUR_OF_DAY,
+							Integer.valueOf(hourSpinner.getSelectedItem().toString()));
+					calendar.set(Calendar.MINUTE, 
+							Integer.valueOf(miuniteSpinner.getSelectedItem().toString()));
+					calendar.set(Calendar.SECOND, 0);
+					calendar.set(Calendar.MILLISECOND, 0);
+					System.out.println("设定的时间：" + calendar.getTimeInMillis());
+					// 我设定的时间
+					Long setTime = calendar.getTimeInMillis();
+					System.out.println("真实的时间：" + System.currentTimeMillis());
+					System.out.println("设定的时间；" + (10*60*60*1000-3*30*1000));
+					 aManager.set(AlarmManager.RTC_WAKEUP, setTime, pIntent);
+
+					/* 设置周期闹 */
+					 aManager.setRepeating(AlarmManager.RTC_WAKEUP,
+					 setTime,(10 * 1000), pIntent);
+					// 24 * 60 * 60 * 1000
+					Toast.makeText(SendTimedActivity.this, "定时发送设置成功！",
+							Toast.LENGTH_LONG).show();
+					SendTimedActivity.this.finish();
+				} else if (editing) {
+					if (!"".equals(dailyTitle.getText().toString())
+							&& !"".equals(showText.getText().toString())) {
+						editor.putString(dailyTitle.getText().toString(),
+								showText.getText().toString() + "#"
+										+ showNeed.getText().toString());
+						editor.commit();
+						Toast.makeText(SendTimedActivity.this, "保存成功！", 200)
+								.show();
+					} else {
+						Toast.makeText(SendTimedActivity.this, "标题或今日工作不能为空！",
+								200).show();
+					}
+
+					dailyTitle.setVisibility(View.GONE);
+					shortCutSpinner.setVisibility(View.VISIBLE);
+
+					showText.setEnabled(false);
+
+					showNeed.setEnabled(false);
+
+					DailyKeys.clear();
+					for (String string : preferences2.getAll().keySet()) {
+						DailyKeys.add(string);
+						System.out.println("string:" + string);
+					}
+					keyAdapter.notifyDataSetChanged();
+
+				}
+				break;
+			// 取消按钮的监听
+			case R.id.cannel_sendtimed:
+				if (!editing) {
+					Intent intent2 = new Intent(SendTimedActivity.this, AutoSendServices.class);
+					intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					SendTimedActivity.this.stopService(intent2);
+					Toast.makeText(SendTimedActivity.this, "定时发送取消！",200).show();
+							
+					System.out.println("定时发送取消！");
+				} else if (editing) {
+					dailyTitle.setVisibility(View.GONE);
+					shortCutSpinner.setVisibility(View.VISIBLE);
+
+					showText.setEnabled(false);
+
+					showNeed.setEnabled(false);
+				}
+				break;
+			// 新增按钮的监听
+			case R.id.add_shortcut:
+				editing = true;
+
+				dailyTitle.setVisibility(View.VISIBLE);
+				shortCutSpinner.setVisibility(View.GONE);
+
+				showText.setEnabled(true);
+				showText.setInputType(InputType.TYPE_CLASS_TEXT);
+				showText.setSingleLine(false);
+
+				showNeed.setEnabled(true);
+				showNeed.setInputType(InputType.TYPE_CLASS_TEXT);
+				showNeed.setSingleLine(false);
+				break;
+			// 删除按钮的监听
+			case R.id.sub_shortcut:
+				if (editing) {
+					showText.setText("");
+					showNeed.setText("");
+				} else if (!editing) {
+					editor.remove(shortCutSpinner.getSelectedItem().toString());
+					editor.commit();
+				}
+
+				break;
+			case R.id.edit_shortcut:
+				showText.setEnabled(true);
+				showText.setInputType(InputType.TYPE_CLASS_TEXT);
+				showText.setSingleLine(false);
+
+				showNeed.setEnabled(true);
+				showNeed.setInputType(InputType.TYPE_CLASS_TEXT);
+				showNeed.setSingleLine(false);
+				break;
+
+			default:
+				break;
+			}
+
+		}
+	};
+
+}

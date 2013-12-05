@@ -1,0 +1,48 @@
+package com.firstgroup.iflytekdaily.adapter;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.firstgroup.iflytekdaily.work.DailyMainFragment;
+import com.firstgroup.iflytekdaily.work.ReceivedDaily;
+import com.firstgroup.iflytekdaily.work.SendedDaily;
+
+
+
+public class PagerViewAdapter extends FragmentStatePagerAdapter {
+
+	private Fragment sendedFragment = new SendedDaily(),receiveFragment = new ReceivedDaily();
+	private Fragment calenerFragment = new DailyMainFragment();
+
+	public PagerViewAdapter(FragmentManager fm) {
+		super(fm);
+		
+	}
+	
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return 3;
+	}
+
+	@Override
+	public Fragment getItem(int arg0) {
+//		sendedFragment = new SendedDaily();
+//		receiveFragment = new ReceivedDaily();
+		if (arg0 == 0) {
+			return calenerFragment;
+		} else if (arg0 == 1) {
+			return sendedFragment;
+			
+		} else if (arg0 == 2) {
+			return receiveFragment;
+
+		} else {
+			return new ReceivedDaily();
+		}
+
+	}
+
+}

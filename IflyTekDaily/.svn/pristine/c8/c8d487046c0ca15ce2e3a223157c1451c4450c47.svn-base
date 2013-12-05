@@ -1,0 +1,135 @@
+package com.firstgroup.iflytekdaily.database;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import com.firstgroup.iflytekdaily.R;
+
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Environment;
+
+public class DataOperation extends ContentProvider {
+
+	private static UriMatcher uriMatch ;
+	private static final int CONTACTS = 1;
+	private static final int CONTACT_NAME = 2;
+	private static final int CONTACT_ID = 3;
+	private static final int CONTACT_UPDATE_ID = 3;
+	
+	private String DB_NAME = "teldata.db";// 保存的数据库文件名
+	private String PACKAGE_NAME = "com.firstgroup.iflytekdaily";
+	private String DB_PATH = "/data"
+			+ Environment.getDataDirectory().getAbsolutePath() + "/"
+			+ PACKAGE_NAME; // 在手机里存放数据库的位置
+	private int BUFFER_SIZE = 2048;
+	private File dbfile ;
+	
+	static{
+		uriMatch = new UriMatcher(UriMatcher.NO_MATCH);
+		uriMatch.addURI("com.firstgroup.iflytekdaily.Contacts", "contact", CONTACTS);		
+		uriMatch.addURI("com.firstgroup.iflytekdaily.Contacts", "con/username/*", CONTACT_NAME);
+		uriMatch.addURI("com.firstgroup.iflytekdaily.Contacts", "con/ID/*", CONTACT_ID);
+		uriMatch.addURI("com.firstgroup.iflytekdaily.Contacts", "update", CONTACT_UPDATE_ID);
+	}
+	
+	@Override
+	public boolean onCreate() {
+		
+//		data = new AddressDatabase(this.getContext(), "teldata", null, 1);
+		
+		dbfile = new File(DB_PATH+"/"+DB_NAME);
+		if(!dbfile.exists()){
+		System.out.println(DB_PATH+"/"+DB_NAME);
+		InputStream is = getContext().getResources()
+				.openRawResource(R.raw.teldata);// 欲导入的数据库
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(dbfile);
+			byte[] buffer = new byte[BUFFER_SIZE ];
+			int count = 0;
+			while ((count = is.read(buffer)) > 0) {
+				fos.write(buffer, 0, count);
+			}
+			fos.close();
+			is.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
+		return false;
+	}
+
+	@Override
+	public Cursor query(Uri uri, String[] projection, String selection,
+			String[] selectionArgs, String sortOrder) {
+		
+		SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbfile,
+                null);
+		Cursor cursor = null ;
+		switch(uriMatch.match(uri)){
+		case CONTACT_ID:
+			cursor = db.rawQuery("select * from iflytekconcat where id = "+uri.getLastPathSegment(), null);
+			break;
+		case CONTACT_NAME:						
+			cursor = db.rawQuery("select * from iflytekconcat where name like '%"+uri.getLastPathSegment()+"%'", null);
+//			System.out.println("select * from iflytekconcat where name like '%"+uri.getLastPathSegment()+"%'");
+//			System.out.println("data "+uri.toString());
+			break;
+		case CONTACTS:						
+			System.out.println(111);
+			cursor = db.rawQuery("select * from sqlite_master", null);
+			System.out.println(cursor.getCount());
+			while(cursor.moveToNext()){
+				System.out.println(cursor.getString(cursor.getColumnIndex("name")));
+			}
+			
+			cursor = db.rawQuery("select * from iflytekconcat", null);
+			break;
+		}
+		return cursor;
+	}
+
+	@Override
+	public String getType(Uri uri) {
+		return null;
+	}
+
+	@Override
+	public Uri insert(Uri uri, ContentValues values) {
+		Uri uriBack = null;
+		
+		switch(uriMatch.match(uri)){
+		}
+		return uriBack;
+	}
+
+	@Override
+	public int delete(Uri uri, String selection, String[] selectionArgs) {
+		return 0;
+	}
+
+	@Override
+	public int update(Uri uri, ContentValues values, String selection,
+			String[] selectionArgs) {
+		SQLiteDatabase db = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
+		int row = 0;
+		switch(uriMatch.match(uri)){
+		case CONTACT_UPDATE_ID:
+			row = db.update("iflytekconcat", values, selection, selectionArgs);
+			break;
+		}
+		return row;
+	}
+
+}

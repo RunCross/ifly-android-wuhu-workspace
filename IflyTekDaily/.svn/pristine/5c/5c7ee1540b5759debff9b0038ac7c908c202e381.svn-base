@@ -1,0 +1,124 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.ExpandAdapter;
+
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.DatePicker;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class ReceivedDaily extends Fragment {
+	private List<String> list = new ArrayList<String>();
+	private TextView showBeginRece, showEndRece;
+	private ImageView chooseBeginRece, chooseEndRece;
+	private int yearRece, monthRece, dayRece;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		Calendar calendar = Calendar.getInstance();
+		yearRece = calendar.get(calendar.YEAR);
+		monthRece = calendar.get(calendar.MONTH);
+		dayRece = calendar.get(calendar.DAY_OF_MONTH);
+	}
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+	}
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.sended_daily_layout, null);
+		TextView title = (TextView) view.findViewById(R.id.pager_title);
+		title.setText("已接收的日报");
+		ExpandableListView listView = (ExpandableListView) view
+				.findViewById(R.id.expand_sended_daily);
+		showBeginRece = (TextView) view.findViewById(R.id.bagin_time);
+		showEndRece = (TextView) view.findViewById(R.id.end_time);
+		chooseBeginRece = (ImageView) view.findViewById(R.id.choose_bagin_day);
+		chooseEndRece = (ImageView) view.findViewById(R.id.choose_end_day);
+//		ExpandableListAdapter adapter = new ExpandAdapter(list, getActivity(),2);
+//				
+//		listView.setAdapter(adapter);
+		chooseBeginRece.setOnClickListener(beginOnClickRece);
+		chooseEndRece.setOnClickListener(endOnClickRece);
+		
+		return view;
+	}
+	
+	private OnClickListener beginOnClickRece = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showBeginRece.setText(year + "-" + monthOfYear
+									+ "-" + dayOfMonth);
+
+						}
+					}, yearRece, monthRece, dayRece);
+			dialog.show();
+
+		}
+	};
+	private OnClickListener endOnClickRece = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showEndRece.setText(year + "-" + monthOfYear + "-"
+									+ dayOfMonth);
+							//选定日期  开始更新数据
+							getReceState();
+						}
+					}, yearRece, monthRece, dayRece);
+			dialog.show();
+
+		}
+	};
+	/**
+	 * 访问网络  来获得日期和日报填写状态
+	 */
+	private void getReceState() {
+		
+	}
+
+}

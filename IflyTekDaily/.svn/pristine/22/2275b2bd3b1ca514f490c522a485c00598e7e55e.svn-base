@@ -1,0 +1,73 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.bean.DailyReceiver;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TableLayout;
+
+/**
+ * 设置日报接收者
+ * @author RunCross
+ *
+ */
+public class ReportReceiver extends Activity {
+
+	private  EditText searchCon;
+	private TableLayout candidate;
+	private TableLayout chosen;
+	
+	private List<DailyReceiver> candidateList;
+	private List<DailyReceiver> chosenList;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.report_receiver);
+		
+		initSub();
+		
+		initData();
+		
+	}
+
+	/**
+	 * 初始化数据
+	 */
+	private void initData() {
+		candidateList = new ArrayList<DailyReceiver>();
+		chosenList = new ArrayList<DailyReceiver>();
+				
+	}
+
+	/**
+	 * 初始化组件
+	 */
+	private void initSub() {
+		searchCon = (EditText) findViewById(R.id.receiver_search_cont);
+		
+		candidate = (TableLayout) findViewById(R.id.receiver_candidate);
+		chosen = (TableLayout) findViewById(R.id.receiver_chosen);			
+		
+	}
+	
+	public void onClike(View view){
+		switch(view.getId()){
+		case R.id.receiver_search:
+			break;
+		case R.id.add_receiver:
+			break;
+		case R.id.del_receiver:
+			break;
+		case R.id.submit_receiver:
+			break;					
+		}
+	}
+	
+}

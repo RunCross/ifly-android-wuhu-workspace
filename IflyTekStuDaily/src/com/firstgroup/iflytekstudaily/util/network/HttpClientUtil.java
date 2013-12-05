@@ -1,0 +1,415 @@
+package com.firstgroup.iflytekstudaily.util.network;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
+
+import com.firstgroup.iflytekstudaily.bean.Daily;
+
+import android.content.Context;
+import android.widget.Toast;
+
+public class HttpClientUtil {
+
+	//命名空间
+	private static final String SERVICE_NS = "http://iflysse.com/";
+	//URL
+	private static final String SERVICE_URL = "http://tool.iflysse.com/DailyReport.asmx";
+	
+	/**
+	 * 网络连接方法
+	 * @param methodName 方法名称
+	 * @param parameters 参数集合
+	 * @return
+	 */
+	public static String netResponse(String methodName,HashMap<String, Object>parameters){
+		String result = null;
+		
+		// 投递信封的类
+				HttpTransportSE ht = new HttpTransportSE(SERVICE_URL);
+				// 定义信封
+				final SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+						SoapEnvelope.VER11);
+				// 服务器端的书写语言
+				envelope.dotNet = true;
+				// 构建要用的方法
+				SoapObject soapObject = new SoapObject(SERVICE_NS, methodName);
+				// 传参
+				if(parameters != null){
+					Set<String> keys = parameters.keySet();
+					for(String key:keys){
+						soapObject.addProperty(key,parameters.get(key));
+					}
+				}
+				// 信封设置body 类似outputStream
+				envelope.bodyOut = soapObject;
+
+				try {
+					ht.call(SERVICE_NS + methodName, envelope);
+					if (envelope.getResponse() != null) {
+						// JSONObject temp = (JSONObject) envelope.bodyIn;
+						SoapObject response = (SoapObject) envelope.bodyIn;
+						System.out.println(response.toString());
+						System.out.println(response.getPropertyCount());
+						result = response.getProperty(0).toString();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (XmlPullParserException e) {
+					e.printStackTrace();
+				}
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	// 创建HttpClient对象
+//	public static HttpClient httpClient = new DefaultHttpClient();
+//	public static final String USER_URL = "http://tool.iflysse.com/DailyService/WebService.aspx"; 
+////	private static List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+////	private static Map<String, String> map= null ;
+//    
+//	/*
+//	 * 向服务端发送请求，用FutureTask<String>获取发送请求后得到的响应
+//	 * @auther wang522
+//	 */
+//	public static String getLoginUser(final String massage) throws Exception {
+//				
+//		FutureTask<String> task = new FutureTask<String>(
+//				new Callable<String>() {
+//					@Override
+//					public String call() throws Exception {
+//						String result="";
+//						
+//						
+//						HttpGet get = new HttpGet(USER_URL+massage);
+//						// 执行get请求,并且接收response的请求
+//						HttpResponse response = httpClient.execute(get);
+//						
+//						// 获取返回结果，首先判断状态
+//						if (response.getStatusLine().getStatusCode() == 200) {
+//							// 200代表请求成功,getEntity指返回的内容
+//							HttpEntity entity = response.getEntity();
+//							if (entity != null) {
+//												
+//								result = EntityUtils.toString(entity,"gb2312");
+//								get.abort();
+//								entity.consumeContent();
+//							}							
+//						}
+////						else if(response.getStatusLine().getStatusCode() == 500){
+////							Toast.makeText(context, "服务器连接失败!",Toast.LENGTH_SHORT).show();
+////						}
+//						return result;
+//					}
+//				});
+//		new Thread(task).start();
+//		return task.get();
+//
+//	}
+//	/*
+//	 * 将从服务端得到的只有stateCode和message的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static Map<String, String> turnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		Map<String, String> map= new HashMap<String, String>();
+//		JSONObject jsonObject = new JSONObject(str);
+//		// 每条记录又由几个Object对象组成
+//
+//		int stateCode = jsonObject.getInt("StateCode"); // 获取对象对应的值
+//		String message = jsonObject.getString("Message");
+//
+//		 // 存放到MAP里面
+//		map.put("StateCode", stateCode + "");
+//		map.put("Message", message);
+//		
+//		return map;
+//	}
+//	/*
+//	 * 将从服务端得到的接收人的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static List<Map<String, String>> receiverTurnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+//		JSONArray jsonArray = new JSONArray(str);
+//		for (int i = 0; i < jsonArray.length(); i++) {  
+//            JSONObject item = jsonArray.getJSONObject(i);
+//		Map<String, String> map= new HashMap<String, String>();
+//            
+//		// 每条记录又由几个Object对象组成
+//		String objectId=item.getString("ObjectID"); 
+//		String empName=item.getString("EmpName");
+//		String empAccount=item.getString("EmpAccount");
+//		String receiveName=item.getString("ReceiveName");
+//		String receiveAccount=item.getString("ReceiveAccount");
+//		String receivePersonId=item.getString("ReceivePersonId");
+//
+//		
+//		map = new HashMap<String, String>(); // 存放到MAP里面
+//		map.put("ObjectID", objectId);
+//		map.put("EmpName",empName);
+//		map.put("EmpAccount",empAccount);
+//		map.put("ReceiveName",receiveName);
+//		map.put("ReceiveAccount",receiveAccount);
+//		map.put("ReceivePersonId",receivePersonId);
+//		list.add(map);
+//		}
+//		return list;
+//	}
+//	/*
+//	 * 将从服务端得到的今日日报的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static Map<String, String> dairyTurnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		JSONObject jsonObject = new JSONObject(str);
+//		Map<String, String> map= new HashMap<String, String>();
+//        if(!jsonObject.has("StateCode")){	
+//		String objectId=jsonObject.getString("ObjectID"); 
+//		String sendTime=jsonObject.getString("SendTime");
+//		String writerName=jsonObject.getString("WriterName");
+//		String writerAccount=jsonObject.getString("WriterAccount");
+//		
+//		String todayJob=jsonObject.getString("TodayJob");
+//		String tomorrowPlan=jsonObject.getString("TomorrowPlan");
+//		String needCoordinate=jsonObject.getString("NeedCoordinate");
+//		int isHadWrite=jsonObject.getInt("IsHadWrite");
+//		
+//		String dailyReportTime=jsonObject.getString("DailyReportTime");
+//		String receiveName=jsonObject.getString("ReceiveNames");
+//		String receiveAccount=jsonObject.getString("ReceiveAccount");
+//		String receivePersonId=jsonObject.getString("ReceivePersonIDs");
+//        
+//		map.put("ObjectID", objectId);
+//		map.put("SendTime",sendTime);
+//		map.put("WriterName",writerName);
+//		map.put("WriterAccount",writerAccount);
+//		
+//		map.put("TodayJob",todayJob);
+//		map.put("TomorrowPlan",tomorrowPlan);
+//		map.put("NeedCoordinate",needCoordinate);
+//		map.put("IsHadWrite",isHadWrite+"");
+//		
+//		map.put("DailyReportTime",dailyReportTime);
+//		map.put("ReceiveName",receiveName);
+//		map.put("ReceiveAccount",receiveAccount);
+//		map.put("ReceivePersonId",receivePersonId);
+//        }
+//		return map;
+//	}
+//	/*
+//	 * 获得状态集合的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static Map<String, String> stateTurnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		JSONArray jsonArray = new JSONArray(str);
+//		Map<String, String> map= new HashMap<String, String>();
+//		
+//		for (int i = 0; i < jsonArray.length(); i++) {  
+//            JSONObject item = jsonArray.getJSONObject(i);
+//		// 每条记录又由几个Object对象组成
+//		String date=item.getString("Date"); 
+//		int state = item.getInt("State");
+//		map.put(date,state+"");
+//		}
+//		return map;
+//		
+//	}	
+//	/*
+//	 * 根据姓名查询的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static Map<String, String> searchNameTurnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		JSONObject jsonObject = new JSONObject(str);
+//		// 每条记录又由几个Object对象组成
+//		String id=jsonObject.getString("Id"); 
+//		String name=jsonObject.getString("Name");
+//		String account=jsonObject.getString("Account");
+//
+//		Map<String, String> map= new HashMap<String, String>(); // 存放到MAP里面
+//		map.put("Id", id);
+//		map.put("Name", name);
+//		map.put("Account",account);
+//		
+//		return map;
+//	}
+//	/*
+//	 * 获取我的信息的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static Map<String, String> myInformTurnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		JSONObject jsonObject = new JSONObject(str);
+//		// 每条记录又由几个Object对象组成
+//		String objectId=jsonObject.getString("ObjectID"); 
+//		String name=jsonObject.getString("Name");
+//		String account=jsonObject.getString("Account");
+//		String email=jsonObject.getString("Email");
+//		boolean isNeedWrite=jsonObject.getBoolean("IsNeedWrite");
+//
+//		Map<String, String> map= new HashMap<String, String>(); // 存放到MAP里面
+//		map.put("ObjectID", objectId);
+//		map.put("Name", name);
+//		map.put("Account",account);
+//		map.put("Email",email);
+//		map.put("IsNeedWrite",isNeedWrite+"");
+//		
+//		return map;
+//	}
+//	/*
+//	 * 获取日报的集合的JSon字符串转换为JSon对象，获取"对象形式"的JSON数据
+//	 * @auther wang522
+//	 */
+//	public static List<Daily> dairyReportSetTurnToJSon(String str) throws JSONException{
+//		// 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
+//		List<Daily> list = new ArrayList<Daily>();
+//		JSONArray jsonArray = new JSONArray(str);
+//		
+//		for (int i = 0; i < jsonArray.length(); i++) {  
+//				              	
+//	    JSONObject item  = jsonArray.getJSONObject(i);
+////		Map<String, String> map= new HashMap<String, String>(); // 存放到MAP里面
+//		Daily daily = new Daily();
+//		// 每条记录又由几个Object对象组成
+////		String objectId=item.getString("ObjectID"); 
+////		String sendTime=item.getString("SendTime");
+////		String writerName=item.getString("WriterName");
+////		String writerAccount=item.getString("WriterAccount");
+////		
+////		String todayJob=item.getString("TodayJob");
+////		String tomorrowPlan=item.getString("TomorrowPlan");
+////		String needCoordinate=item.getString("NeedCoordinate");
+////		int isHadWrite=item.getInt("IsHadWrite");
+////		
+////		String dailyReportTime=item.getString("DailyReportTime");
+////		String receiveName=item.getString("ReceiveNames");
+////		String receiveAccount=item.getString("ReceiveAccount");
+////		String receivePersonId=item.getString("ReceivePersonIDs");
+//		
+//		
+//		daily.setObjectID(item.getString("ObjectID"));
+//		daily.setIsHadWrite(item.getInt("IsHadWrite"));
+//		daily.setNeedCoordinate(item.getString("NeedCoordinate"));
+//		daily.setDailyReportTime(item.getString("DailyReportTime"));
+//		daily.setReceiveAccount(item.getString("ReceiveAccount"));
+//		daily.setReceiveNames(item.getString("ReceiveNames"));
+//		daily.setReceivePersonIDs(item.getString("ReceivePersonIDs"));
+//		daily.setSendTime(item.getString("SendTime"));
+//		daily.setTodayJob(item.getString("TodayJob"));
+//		daily.setTomorrowPlan(item.getString("TomorrowPlan"));
+//		daily.setWriterAccount(item.getString("WriterAccount"));
+//		daily.setWriterName(item.getString("WriterName"));
+//		
+//		
+//		
+//		
+////		map.put("ObjectID", objectId);
+////		map.put("SendTime",sendTime);
+////		map.put("WriterName",writerName);
+////		map.put("WriterAccount",writerAccount);
+////		
+////		map.put("TodayJob",todayJob);
+////		map.put("TomorrowPlan",tomorrowPlan);
+////		map.put("NeedCoordinate",needCoordinate);
+////		map.put("IsHadWrite",isHadWrite+"");
+////		
+////		map.put("DailyReportTime",dailyReportTime);
+////		map.put("ReceiveNames",receiveName);
+////		map.put("ReceiveAccount",receiveAccount);
+////		map.put("ReceivePersonIDs",receivePersonId);
+////		list.add(map);
+//		list.add(daily);
+//		
+//		}
+//		
+//		return list;
+//	}	
+//	
+//	/*
+//	 * 根据状态码stateCode，向用户输出对应的内容
+//	 * @auther wang522
+//	 */
+//	public static void showStateCode(int stateCode,Context context){
+//		switch(stateCode){
+//        case -2:
+//        	Toast.makeText(context,"未知异常!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case -1:
+//        	Toast.makeText(context,"系统未初始化!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 0:
+//        	Toast.makeText(context,"登录成功!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 1:
+//        	Toast.makeText(context,"无效的FunID!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 2:
+//        	Toast.makeText(context,"参数无效!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 3:
+//        	Toast.makeText(context,"您无权进入系统!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 4:
+//        	Toast.makeText(context,"用户名或密码错误!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 5:
+//        	Toast.makeText(context,"无效的Key!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 6:
+//        	Toast.makeText(context,"接收人不能为空!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 7:
+//        	Toast.makeText(context,"原始密码提供错误!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        case 8:
+//        	Toast.makeText(context,"密码修改失败!",Toast.LENGTH_SHORT).show();
+//        	break;
+//        }
+//	}
+}

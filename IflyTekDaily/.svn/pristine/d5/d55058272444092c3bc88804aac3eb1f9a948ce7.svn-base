@@ -1,0 +1,75 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.util.List;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class LoginMainActivity extends Activity {
+	private EditText editUser;
+	private EditText editPassword;
+	private Button btnLogin;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
+	private List<Map<String, String>> list;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.loginlayout);
+    	
+    	preferences=getSharedPreferences("userLogin",MODE_WORLD_READABLE);
+    	editor=preferences.edit();
+    	
+    	editUser=(EditText)findViewById(R.id.editUser);
+		editPassword=(EditText)findViewById(R.id.editPassword);
+		btnLogin=(Button)findViewById(R.id.btnLogin);
+		 
+		btnLogin.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int userId=0;
+				String userName=editUser.getText().toString();
+				String userPassword=editPassword.getText().toString();
+				String massage="?"+"funID="+userId+'&'+"username="+userName+'&'+"password="+userPassword;
+				
+				try {					
+					String result=HttpClientUtil.getLoginUser(massage);
+					System.out.println("result2-----"+result);
+					
+					list=HttpClientUtil.turnToJSon(result);
+					System.out.println("list2------"+list);
+					for (Map<String, String> list2 : list) {  
+			            String stateCode = list2.get("StateCode");  
+			            String message = list2.get("Message");  
+			            System.out.println("StateCode:"+stateCode+",Message:"+message);
+			        }  
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//loginSharePreferences(userName, userPassword);				
+			}
+		});
+    }
+//    public void writeSharePreferences(String userName,String userPassword){
+//    	editor.putString("userName",userName);
+//    	editor.putString("userPassword",userPassword);
+//    	editor.commit();
+//    }
+//    public void readSharePreferences(){
+//    	String name=preferences.getString("userName",null);
+//    	String password=preferences.getString("userPassword",null);    	
+//    }
+}

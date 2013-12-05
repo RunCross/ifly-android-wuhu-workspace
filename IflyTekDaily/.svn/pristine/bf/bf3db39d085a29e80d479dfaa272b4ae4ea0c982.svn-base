@@ -1,0 +1,130 @@
+package com.firstgroup.iflytekdaily.adapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+
+import android.content.Context;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
+
+public class ExpandListAdapter extends BaseExpandableListAdapter {
+	private List<String> list = new ArrayList<String>(); 
+	private LayoutInflater inflater;
+	private Context context;
+	private int pagerFlag;
+	private View childView;
+	
+	private Map<String ,String> map = new HashMap<String, String>();
+	
+	public ExpandListAdapter(List<String> list, Context context,int pagerFlag,Map<String, String> map) {
+		super();
+		this.list = list;
+		this.context = context;
+	this.map = map;
+		map.put("TodayJob","");
+		map.put("NeedCoordinate","");
+		map.put("ReceiveName","");
+		
+		inflater = LayoutInflater.from(context);
+		this.pagerFlag = pagerFlag;
+	}
+
+	@Override
+	public int getGroupCount() {
+		// TODO Auto-generated method stub
+		return list.size();
+	}
+
+	@Override
+	public int getChildrenCount(int groupPosition) {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+	@Override
+	public Object getGroup(int groupPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getChild(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long getGroupId(int groupPosition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getChildId(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public View getGroupView(int groupPosition, boolean isExpanded,
+			View convertView, ViewGroup parent) {
+		//if (pagerFlag==1) {
+		View view = inflater.inflate(R.layout.expand_parent_layout, null);
+		TextView date = (TextView) view.findViewById(R.id.parent_show_date);
+		TextView state = (TextView) view.findViewById(R.id.parent_show_state);
+		String timeState = list.get(groupPosition);
+		String[] strings = timeState.split("#");
+		date.setText(strings[0]);
+		if ("1".equals(strings[1])) {
+			state.setText("未填写");
+		}else if ("2".equals(strings[1])) {
+			state.setText("按时填写");
+		}else if ("2".equals(strings[1])) {
+			state.setText("b补填");
+		}
+		return view;
+		}
+
+	/**
+	 * 加载日报内容还要写
+	 */
+		@Override
+		public View getChildView(int groupPosition, int childPosition,
+				boolean isLastChild, View convertView, ViewGroup parent) {
+			System.out.println("先执行");
+			if (pagerFlag==1) {
+				childView = inflater.inflate(R.layout.expand_child_layout, null);
+				TextView todayWork = (TextView) childView.findViewById(R.id.child_todaywork);
+				TextView needCond = (TextView) childView.findViewById(R.id.child_needcond);
+				TextView receiver = (TextView) childView.findViewById(R.id.child_receiver);
+				todayWork.setText(map.get("TodayJob"));
+				needCond.setText(map.get("NeedCoordinate"));
+				receiver.setText(map.get("ReceiveName"));
+			
+				
+				return childView;
+				
+			}
+			return null;
+		}
+
+	@Override
+	public boolean isChildSelectable(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/contact_detail_text"
+        android:text="@string/contact_name" />
+
+    <EditText
+        android:id="@+id/contact_detail_name"
+        style="@style/contact_detail_edit"
+        android:editable="false"
+        android:hint="@string/contact_name" />
+
+    <TextView
+        style="@style/contact_detail_text"
+        android:text="@string/contact_tel" />
+
+    <EditText
+        android:id="@+id/contact_detail_tel"
+        style="@style/contact_detail_edit"
+        android:hint="@string/contact_tel"
+        android:inputType="number" />
+
+    <TextView
+        style="@style/contact_detail_text"
+        android:text="@string/contact_email" />
+
+    <EditText
+        android:id="@+id/contact_detail_email"
+        style="@style/contact_detail_edit"
+        android:hint="@string/contact_email"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        style="@style/contact_detail_text"
+        android:text="@string/contact_homephone" />
+
+    <EditText
+        android:id="@+id/contact_detail_homephone"
+        style="@style/contact_detail_edit"
+        android:hint="@string/contact_homephone" />
+
+    <TextView
+        style="@style/contact_detail_text"
+        android:text="@string/contact_remark" />
+
+    <EditText
+        android:id="@+id/contact_detail_remark"
+        style="@style/contact_detail_edit"
+        android:hint="@string/contact_remark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/contact_detail_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/btn_small_hover"
+            android:onClick="onClick"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/contact_detail_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_small_hover"
+            android:onClick="onClick"
+            android:text="@string/submit" />
+    </LinearLayout>
+
+</LinearLayout>

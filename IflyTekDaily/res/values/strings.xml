@@ -1,0 +1,123 @@
+<resources>
+
+    <string name="app_name">讯飞日报</string>
+    <string name="action_settings">Settings</string>
+    <string name="state_witten">已填写</string>
+    <string name="state_help">查看详细</string>
+    <string name="toadaywork">今日工作：</string>
+    <string name="test_todaywork">按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课</string>
+    <string name="needcoordinate">待协调工作：</string>
+    <string name="needcoordwork">回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥</string>
+    <string name="receiver">接收人：</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="submit">提交</string>
+    <string name="cancel">取消</string>
+    <string name="old_pass">原始密码</string>
+    <string name="new_pass">新密码</string>
+    <string name="new_pass_confim">确认新密码</string>
+    <string name="candidate_receiver">待选择</string>
+    <string name="chosen_receiver">已选择</string>
+    <string name="add_receiver">添加</string>
+    <string name="del_receiver">删除</string>
+    <string name="menu_chang_pass">修改密码</string>
+    <string name="menu_chang_receiver">修改接收人</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_email">Email</string>
+    <string name="menu_contact">通讯录</string>
+    <string name="menu_timeTask">定时日报</string>
+    <string name="contact_name">姓名</string>
+    <string name="contact_tel">电话</string>
+    <string name="contact_email">邮件</string>
+    <string name="contact_homephone">家庭号码</string>
+    <string name="contact_remark">注释</string>
+
+    <string-array name="hours">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>00</item>
+    </string-array>
+    <string-array name="minutes">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>00</item>
+    </string-array>
+
+</resources>

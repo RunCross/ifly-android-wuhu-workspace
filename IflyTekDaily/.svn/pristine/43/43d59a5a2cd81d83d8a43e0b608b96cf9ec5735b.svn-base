@@ -1,0 +1,13 @@
+package com.firstgroup.iflytekdaily.main;
+
+import android.app.Activity;
+
+public class ChangePassword extends Activity {
+
+	@Override
+	protected void onChildTitleChanged(Activity childActivity,
+			CharSequence title) {
+		// TODO Auto-generated method stub
+		super.onChildTitleChanged(childActivity, title);
+	}
+}

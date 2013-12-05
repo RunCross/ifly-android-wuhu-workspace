@@ -1,0 +1,296 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
+
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.DatePicker;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.ExpandListAdapter;
+import com.firstgroup.iflytekdaily.bean.Daily;
+import com.firstgroup.iflytekdaily.util.DateUtil;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+
+public class SendedDaily extends Fragment implements Callback {
+	/**
+	 * 存储每天的日报状态的list
+	 */
+	private List<String> list = new ArrayList<String>();
+	private TextView showBegin, showEnd;
+	private ImageView chooseBegin, chooseEnd;
+	private int year, month, day;
+	private BaseExpandableListAdapter adapter;
+	private Daily childDaily = new Daily();
+	private View TimeView;
+	private ExpandableListView listView;
+	private TextView friendlyHint;
+	public static String expandDailyStaste = "";
+	public static String expandDailyDate = "";
+	public static Handler handler;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		Calendar calendar = Calendar.getInstance();
+		year = calendar.get(calendar.YEAR);
+		month = calendar.get(calendar.MONTH);
+		handler = new Handler(this);
+		day = calendar.get(calendar.DAY_OF_MONTH);
+		// mapChild.put("TodayJob", "");
+		// mapChild.put("NeedCoordinate", "");
+		// mapChild.put("ReceiveNames", "");
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+
+	/**
+	 * 发起一次网络访问  实例化list
+	 */
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.sended_daily_layout, null);
+
+		friendlyHint = (TextView) view.findViewById(R.id.friendly_hint);
+		TimeView = view.findViewById(R.id.show_time_layout);
+		listView = (ExpandableListView) view
+				.findViewById(R.id.expand_sended_daily);
+		listView.setGroupIndicator(null);
+		showBegin = (TextView) view.findViewById(R.id.bagin_time);
+
+		int startDay = 1;
+		int rightMonth = month + 1;
+		if (day > 7) {
+			startDay = day - 7;
+			showBegin.setText(year + "-" + rightMonth + "-" + startDay);
+		} else if (day <= 7) {
+			startDay = 21 + day;
+			showBegin.setText(year + "-" + month + "-" + startDay);
+		}
+
+		showEnd = (TextView) view.findViewById(R.id.end_time);
+		showEnd.setText(year + "-" + rightMonth + "-" + day);
+
+		chooseBegin = (ImageView) view.findViewById(R.id.choose_bagin_day);
+		chooseEnd = (ImageView) view.findViewById(R.id.choose_end_day);
+		adapter = new ExpandListAdapter(list, getActivity(), 1, childDaily);
+		listView.setAdapter(adapter);
+		getState();
+		listView.setOnGroupExpandListener(groupExpand);
+		listView.setOnGroupCollapseListener(groupCollapse);
+		chooseBegin.setOnClickListener(beginOnClick);
+		chooseEnd.setOnClickListener(endOnClick);
+
+		return view;
+	}
+
+	private OnClickListener beginOnClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showBegin.setText(year + "-" + monthOfYear + "-"
+									+ dayOfMonth);
+							getState();
+						}
+					}, year, month, day);
+			dialog.show();
+
+		}
+	};
+	/**
+	 * 当选定结束日期之后 只有日期形式符合条件 即会自动访问网络 刷新显示列表
+	 * 
+	 */
+	private OnClickListener endOnClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showEnd.setText(year + "-" + monthOfYear + "-"
+									+ dayOfMonth);
+							// 选定日期之后 开始更新数据 通知适配器更新
+							getState();
+						}
+					}, year, month, day);
+			dialog.show();
+
+		}
+	};
+
+	/**
+	 * 访问网络 来获得日期和日报填写状态集合
+	 * 
+	 * @author yi1992
+	 */
+	private void getState() {
+		String userName = (String) Session.get("username");
+		String key = (String) Session.get("key");
+		String startDate = showBegin.getText().toString();
+		String endDate = showEnd.getText().toString();
+		list.clear();
+		int count = DateUtil.subDays(endDate, startDate);
+		System.out.println("count:" + count);
+		if (count > 0) {
+			String parameters = "?" + "funID=8&" + "username=" + userName
+					+ "&startDate=" + startDate + "&endDate=" + endDate
+					+ "&key=" + key;
+			String result;
+			try {
+				result = HttpClientUtil.getLoginUser(parameters);
+				Map<String, String> map = HttpClientUtil
+						.stateTurnToJSon(result);
+
+				for (String mapKey : map.keySet()) {
+					list.add(mapKey.substring(0, mapKey.indexOf("T")) + "#"
+							+ map.get(mapKey));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			friendlyHint.setVisibility(View.GONE);
+			if (list.size() == 0) {
+				friendlyHint.setVisibility(View.VISIBLE);
+				friendlyHint.setTextColor(Color.RED);
+			}
+		} else {
+			friendlyHint.setVisibility(View.GONE);
+			Toast.makeText(getActivity(), "请选择正确的查看日期", Toast.LENGTH_LONG)
+					.show();
+
+		}
+		adapter.notifyDataSetChanged();
+	}
+
+	private OnGroupCollapseListener groupCollapse = new OnGroupCollapseListener() {
+
+		@Override
+		public void onGroupCollapse(int groupPosition) {
+			TimeView.setVisibility(View.VISIBLE);
+
+		}
+	};
+	/**
+	 * 每次展开都把其他项收缩
+	 * 当列表子项展开时才去访问网络 并把得到的数据传给适配器刷新
+	 */
+	private OnGroupExpandListener groupExpand = new OnGroupExpandListener() {
+
+		@Override
+		public void onGroupExpand(int groupPosition) {
+			// 把展开的位置设置成静态的 为了补填时候提交时间
+
+			String timeState = list.get(groupPosition);
+			String[] strings = timeState.split("#");
+			expandDailyStaste = strings[1];
+			expandDailyDate = strings[0];
+
+			for (int i = 0; i < listView.getCount(); i++) {
+				if (i != groupPosition) {
+					listView.collapseGroup(i);
+				}
+			}
+
+			String userName = (String) Session.get("username");
+			String key = (String) Session.get("key");
+			String startDate = showBegin.getText().toString();
+			String endDate = showEnd.getText().toString();
+			int count2 = DateUtil.subDays(endDate, startDate);
+			String parameters = "?" + "funID=5&" + "username=" + userName
+					+ "&startDate=" + startDate + "&endDate=" + endDate
+					+ "&count=" + count2 + "&key=" + key;
+
+			String result = "";
+			try {
+				result = HttpClientUtil.getLoginUser(parameters);
+				List<Daily> resultList = HttpClientUtil
+						.dairyReportSetTurnToJSon(result);
+				childDaily.setTodayJob(resultList.get(groupPosition)
+						.getTodayJob());
+				childDaily.setReceiveNames(resultList.get(groupPosition)
+						.getReceiveNames());
+				childDaily.setNeedCoordinate(resultList.get(groupPosition)
+						.getNeedCoordinate());
+
+				adapter.notifyDataSetChanged();
+
+			} catch (JSONException e) {
+				Log.i("json错误：", e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e1) {
+				// Log.i("http错误：", e1.getMessage());
+				e1.printStackTrace();
+			}
+			TimeView.setVisibility(View.GONE);
+		}
+	};
+/**
+ * 在列表子项中补填了日报之后  用handler传递消息
+ * 在这里处理  刷新页面显示
+ * @author yi1992
+ */
+	@Override
+	public boolean handleMessage(Message msg) {
+		getState();
+		return false;
+	}
+
+}

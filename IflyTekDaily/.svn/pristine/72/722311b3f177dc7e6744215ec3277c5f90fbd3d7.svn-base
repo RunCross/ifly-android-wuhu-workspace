@@ -1,0 +1,147 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+
+public class ReceiverUtil {
+
+	/**
+	 * 获取已设置的日报接收人
+	 * @return
+	 */
+	public static Map<String,String> getMyReceiver() {
+
+		Map<String,String> chosen = null;
+
+		String message = "?funID=1" + "&username=" + Session.get("username")
+				+ "&key=" + Session.get("key");
+
+		try {
+			String result = HttpClientUtil.getLoginUser(message);
+			chosen = parseGetReceiver(result,"ReceiveName","ReceiveAccount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return chosen;
+	}
+
+	/**
+	 * 解析日报接收人返回数据
+	 * @param result
+	 * @param rname
+	 * @param raccount
+	 * @return
+	 * @throws JSONException
+	 */
+	private static Map<String,String> parseGetReceiver(String result,String rname,String raccount) throws JSONException {
+		JSONArray jsonArray = new JSONArray(result);
+		Map<String,String> receiverList = new HashMap<String,String>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject item = jsonArray.getJSONObject(i);
+//			DailyReceiver receiver = new DailyReceiver();
+			String account = item.getString(raccount);
+			String name = item.getString(rname);
+//			receiver.setAccount(account);
+//			receiver.setName(name);
+			
+			receiverList.put(name, account);
+		}
+		return receiverList;
+	}
+	
+	/**
+	 * 搜索日报接收人
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	public static Map<String,String> getWillReceiver(String cont) throws UnsupportedEncodingException {
+
+		Map<String,String> chosen = null;
+
+		String message = "?funID=10" + "&name=" + URLEncoder.encode(cont,"gb2312")
+				+ "&key=" + Session.get("key");
+		try {
+			String result = HttpClientUtil.getLoginUser(message);
+			chosen = parseGetReceiver(result,"Name","Account");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return chosen;
+	}
+	
+	/**
+	 * 设置接收人
+	 * @param set 待添加
+	 * @param del 待删除
+	 * @throws Exception
+	 */
+	public static Map<String,String> sumit(Map<String,String> set,Map<String,String> del) throws Exception{
+		Map<String,String> map = new HashMap<String, String>();
+		List<String> setAccount = map2List(set,"Account");
+		if(!setAccount.isEmpty()){
+			String message = null;
+			for(int i=0;i<setAccount.size();i++){
+				message = "?funID=11"+
+			              "&username="+Session.get("username")+
+			              "&Account="+setAccount.get(i)+
+			              "&key="+Session.get("key");
+				Map<String, String> temp =HttpClientUtil.turnToJSon(HttpClientUtil.getLoginUser(message));
+				map.put("setCode", (String)temp.get("StateCode"));
+				map.put("setMess",(String)temp.get("Message"));
+			}
+		}
+		List<String> delAccout = map2List(del, "Account");
+		if(!delAccout.isEmpty()){
+			String message = null;
+			for(int i=0;i<delAccout.size();i++){
+				message = "?funID=12"+
+			              "&username="+Session.get("username")+
+			              "&Account="+delAccout.get(i)+
+			              "&key="+Session.get("key");
+				
+				Map<String, String> temp =HttpClientUtil.turnToJSon(HttpClientUtil.getLoginUser(message));
+				map.put("delCode", (String)temp.get("StateCode"));
+				map.put("delMess",(String)temp.get("Message"));
+			}
+		}
+		
+		return map;
+	}
+	
+	
+	/**
+	 * Map转化List
+	 * @param map
+	 * @param type
+	 * @return
+	 */
+	private static List<String> map2List(Map<String, String> map, String type) {
+		List<String> temp = new ArrayList<String>();
+		Iterator<String> it = map.keySet().iterator();		
+		while (it.hasNext()) {
+			String key = it.next().toString();
+			if (type.equals("key")) {
+				temp.add(key);
+			} else {
+				temp.add(map.get(key));
+			}
+		}
+
+		return temp;
+	}
+}

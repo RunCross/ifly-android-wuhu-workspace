@@ -1,0 +1,34 @@
+package com.firstgroup.iflytekdaily.main;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.R.layout;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.EditText;
+
+public class DailyWriteActivity extends Activity {
+	private EditText todayJob;
+	private EditText needCoordinate;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.dailywritelayout);
+		todayJob=(EditText) findViewById(R.id.todayJob);
+		needCoordinate=(EditText) findViewById(R.id.needCoordinate);
+		initText();
+	}
+
+	/**
+	 * 初始化EditText，今日工作和待协调工作的文本内容
+	 */
+	private void initText(){
+		Intent intent=getIntent();
+		String isHadWrite=intent.getStringExtra("IsHadWrite");
+		if(!"1".equals(isHadWrite)){
+		todayJob.setText(intent.getStringExtra("TodayJob").toString());
+		needCoordinate.setText(intent.getStringExtra("NeedCoordinate").toString());
+		}
+	}
+}

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/personactivity_takephoto_icon_bg" >
+
+    <LinearLayout
+        android:id="@+id/linear_old"
+        style="@style/change_pass_linear"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/txt_old"
+            style="@style/change_pass_text"
+            android:text="@string/old_pass" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/old_pass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/old_pass"
+                android:password="true"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/hint_old_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textColor="#f20c00"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_new"
+        style="@style/change_pass_linear"
+        android:layout_below="@id/linear_old"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/txt_new"
+            style="@style/change_pass_text"
+            android:text="@string/new_pass" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/new_pass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/new_pass"
+                android:password="true"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/hint_new_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textColor="#f20c00"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_new_confim"
+        style="@style/change_pass_linear"
+        android:layout_below="@id/linear_new"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/txt_new_confim"
+            style="@style/change_pass_text"
+            android:text="@string/new_pass_confim" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/new_pass_confim"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/new_pass_confim"
+                android:password="true"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/hint_new_pass_confim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="***"
+                android:textColor="#f20c00"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/change_pass_linear"
+        android:layout_below="@id/linear_new_confim"
+        android:layout_marginTop="20dp"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/changepass_submit"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_small_hover"
+            android:onClick="onClick"
+            android:text="@string/submit" />
+
+        <Button
+            android:id="@+id/changepass_cancel"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dip"
+            android:background="@drawable/btn_small_hover"
+            android:onClick="onClick"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+</RelativeLayout>

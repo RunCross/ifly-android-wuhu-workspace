@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/pass_chang"
+        android:title="修改密码">       
+    </item>
+    <item
+        android:id="@+id/none"
+        android:title="待定"/>
+    <item
+        android:id="@+id/receiver_set"
+        android:title="设置接收人"/>
+</menu>

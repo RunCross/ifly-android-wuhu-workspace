@@ -1,0 +1,166 @@
+package com.firstgroup.iflytekdaily.adapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+
+import android.R.color;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class ExpandListAdapter extends BaseExpandableListAdapter {
+	private List<String> list = new ArrayList<String>();
+	private LayoutInflater inflater;
+	private Context context;
+	private int pagerFlag;
+	private View childView;
+	
+private List<String> stateList = new ArrayList<String>();
+	private Map<String, String> map = new HashMap<String, String>();
+
+	public ExpandListAdapter(List<String> list, Context context, int pagerFlag,
+			Map<String, String> map) {
+		super();
+		this.list = list;
+		this.context = context;
+		this.map = map;
+		inflater = LayoutInflater.from(this.context);
+		this.pagerFlag = pagerFlag;
+	}
+
+	@Override
+	public int getGroupCount() {
+		// TODO Auto-generated method stub
+		return list.size();
+	}
+
+	@Override
+	public int getChildrenCount(int groupPosition) {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+	@Override
+	public Object getGroup(int groupPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getChild(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long getGroupId(int groupPosition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getChildId(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public View getGroupView(int groupPosition, boolean isExpanded,
+			View convertView, ViewGroup parent) {
+			View view = inflater.inflate(R.layout.expand_parent_layout, null);
+			TextView date = (TextView) view.findViewById(R.id.parent_show_date);
+			TextView state = (TextView) view
+					.findViewById(R.id.parent_show_state);
+			String timeState = list.get(groupPosition);
+			String[] strings = timeState.split("#");
+			stateList.add(strings[1]);
+			date.setText(strings[0]);
+			if (pagerFlag == 1) {
+				System.out.println("日报状态代码："+strings[1]);
+			     if ("1".equals(strings[1])) {
+			    	 System.out.println("日报状ccccccccccccccccccccdd：");
+				  state.setText("未填写");
+				  state.setTextColor(Color.RED);
+			     } else if ("2".equals(strings[1])) {
+				  state.setText("按时填写");
+			      } else if ("3".equals(strings[1])) {
+				  state.setText("补填");
+			     }
+			}else if (pagerFlag==2) {
+				state.setText("发送人： "+strings[1]);
+			}
+			return view;
+		
+	}
+
+	/**
+	 * 加载日报内容还要写
+	 */
+	@Override
+	public View getChildView(int groupPosition, int childPosition,
+			boolean isLastChild, View convertView, ViewGroup parent) {
+
+			childView = inflater.inflate(R.layout.expand_child_layout, null);
+			View sureCannel = childView.findViewById(R.id.expand_commit_daily);
+			sureCannel.setVisibility(View.GONE);
+			EditText todayWork = (EditText) childView
+					.findViewById(R.id.child_todaywork);
+			EditText needCond = (EditText) childView
+					.findViewById(R.id.child_needcond);
+			EditText receiver = (EditText) childView
+					.findViewById(R.id.child_receiver);
+			if (pagerFlag == 1) {
+				if ("1".equals(stateList.get(groupPosition))) {
+					todayWork.setHint("请补填今天的日报…");
+					todayWork.setInputType(InputType.TYPE_CLASS_TEXT);
+					todayWork.setSingleLine(false);
+					needCond.setInputType(InputType.TYPE_CLASS_TEXT);
+					needCond.setSingleLine(false);
+					sureCannel.setVisibility(View.VISIBLE);
+				}else {
+					todayWork.setEnabled(false);
+					needCond.setEnabled(false);
+					receiver.setEnabled(false);
+					todayWork.setText(map.get("TodayJob"));
+					needCond.setText(map.get("NeedCoordinate"));
+					receiver.setText(map.get("ReceiveNames"));
+				}
+			}else if (pagerFlag==2) {
+				todayWork.setEnabled(false);
+				needCond.setEnabled(false);
+				receiver.setEnabled(false);
+				todayWork.setText(map.get("TodayJob"));
+				needCond.setText(map.get("NeedCoordinate"));
+				receiver.setText(map.get("WriterName"));
+				TextView writerLable = (TextView) childView.findViewById(R.id.child_receiver_lable);
+				writerLable.setText("发送人： ");
+			}
+
+			return childView;
+
+	}
+
+	@Override
+	public boolean isChildSelectable(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

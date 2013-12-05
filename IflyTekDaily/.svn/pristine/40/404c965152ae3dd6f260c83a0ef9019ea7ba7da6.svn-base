@@ -1,0 +1,140 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.util.List;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+
+public class LoginMainActivity extends Activity {
+	private EditText editUser;
+	private EditText editPassword;
+	private String userName;
+	private String userPassword;
+	private CheckBox chkName;
+	private CheckBox chkPassword;
+	private Button btnLogin;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
+	private Map<String, String> map;
+	private int stateCode;
+	private String message;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.loginlayout);
+    	
+    	preferences=getSharedPreferences("userLogin",MODE_WORLD_READABLE);
+    	editor=preferences.edit();
+    	   	
+    	editUser=(EditText)findViewById(R.id.editUser);
+		editPassword=(EditText)findViewById(R.id.editPassword);		
+		chkName=(CheckBox)findViewById(R.id.chkName);
+		chkPassword=(CheckBox)findViewById(R.id.chkPassword);
+		
+		readSharePreferences();
+		
+		btnLogin=(Button)findViewById(R.id.btnLogin);		 
+		btnLogin.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int userId=0;
+				userName=editUser.getText().toString();
+				userPassword=editPassword.getText().toString();
+				String massage="?"+"funID="+userId+'&'+"username="+userName+'&'+"password="+userPassword;				
+				try {					
+					String result=HttpClientUtil.getLoginUser(massage);
+					
+					map=HttpClientUtil.turnToJSon(result);					
+					  
+			            stateCode = Integer.parseInt(map.get("StateCode"));  
+			            message = map.get("Message");  			          
+			         
+					HttpClientUtil.showStateCode(stateCode,LoginMainActivity.this);
+					
+					if(stateCode!=0){
+						chkName.setChecked(false);
+						chkPassword.setChecked(false);
+						writeSharePreferences(null,null,false,false);
+					}
+					else{
+						//登录成功后，在这里跳转
+						
+					}
+					if(chkName.isChecked()==true&!chkPassword.isChecked()){
+					    if(stateCode==0){						
+						    userName=editUser.getText().toString();					
+						    writeSharePreferences(userName,null,true,false);
+					    }
+					}
+					else if(chkName.isChecked()==true&chkPassword.isChecked()){
+						if(stateCode==0){						
+							userName=editUser.getText().toString();
+							userPassword=editPassword.getText().toString();
+							writeSharePreferences(userName,userPassword,true,true);
+						}
+					}
+					else if(chkName.isChecked()!=true){
+						writeSharePreferences(null,null,false,false);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+			}
+		});
+		chkName.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(!isChecked){
+					chkPassword.setChecked(isChecked);				   
+				}
+			}
+		});
+		chkPassword.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					chkName.setChecked(isChecked);					
+				}				
+			}
+		});
+    }
+    public void writeSharePreferences(String userName,String userPassword,boolean nameIsChecked,boolean passIsChecked){
+    	editor.putString("userName",userName);
+    	editor.putString("userPassword",userPassword);
+    	editor.putBoolean("nameIsChecked",nameIsChecked);
+    	editor.putBoolean("passIsChecked",passIsChecked);
+    	editor.commit();
+    }
+    public void readSharePreferences(){
+    	String name=preferences.getString("userName",null);
+    	String password=preferences.getString("userPassword",null);
+    	if(name!=null&password==null){
+    		editUser.setText(name);
+    		chkName.setChecked(true);    	    	   
+    	}
+    	else if(name!=null&password!=null){
+    	   editUser.setText(name);
+    	   editPassword.setText(password);
+    	   chkName.setChecked(true);
+   	       chkPassword.setChecked(true);  		 
+    	}  	
+    }
+}

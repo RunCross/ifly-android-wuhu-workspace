@@ -1,0 +1,208 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
+
+import android.R.interpolator;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.DatePicker;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.ExpandAdapter;
+import com.firstgroup.iflytekdaily.adapter.ExpandListAdapter;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+
+public class SendedDaily extends Fragment {
+	/**
+	 * 存储每天的日报状态的list
+	 */
+	private List<String> list = new ArrayList<String>();
+	private TextView showBegin, showEnd;
+	private ImageView chooseBegin, chooseEnd;
+	private int year, month, day;
+	public static BaseExpandableListAdapter adapter;
+	private Map<String, String> map = new HashMap<String, String>();
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		Calendar calendar = Calendar.getInstance();
+		year = calendar.get(calendar.YEAR);
+		month = calendar.get(calendar.MONTH);
+		month++;
+		day = calendar.get(calendar.DAY_OF_MONTH);
+		map.put("TodayJob","");
+		map.put("NeedCoordinate","");
+		map.put("ReceiveName","");
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+	}
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+
+	/**
+	 * 还要发起一次网络访问 来获得显示日的日报状态 实例化list
+	 */
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.sended_daily_layout, null);
+		ExpandableListView listView = (ExpandableListView) view
+				.findViewById(R.id.expand_sended_daily);
+		showBegin = (TextView) view.findViewById(R.id.bagin_time);
+		int startDay = day-7;
+		showBegin.setText(year+"-"+month+"-"+startDay);
+		showEnd = (TextView) view.findViewById(R.id.end_time);
+		showEnd.setText(year+"-"+month+"-"+day);
+		chooseBegin = (ImageView) view.findViewById(R.id.choose_bagin_day);
+		chooseEnd = (ImageView) view.findViewById(R.id.choose_end_day);
+		getState();
+		adapter = new ExpandListAdapter(list, getActivity(), 1, map);
+		
+		listView.setAdapter(adapter);
+		listView.setOnGroupExpandListener(groupExpand);
+		chooseBegin.setOnClickListener(beginOnClick);
+		chooseEnd.setOnClickListener(endOnClick);
+		
+		return view;
+	}
+
+	private OnClickListener beginOnClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			System.out.println("0000111111111111");
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showBegin.setText(year + "-" + monthOfYear
+									+ "-" + dayOfMonth);
+							//选定日期之后 开始更新数据
+							
+
+						}
+					}, year, month, day);
+			dialog.show();
+			
+		}
+	};
+	private OnClickListener endOnClick = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showEnd.setText(year + "-" + monthOfYear + "-"
+									+ dayOfMonth);
+							getState();
+							System.out.println("0000000000000");
+						}
+					}, year, month, day);
+			dialog.show();
+
+		}
+	};
+	/**
+	 * 访问网络  来获得日期和日报填写状态
+	 */
+	private void getState() {
+		String userName = (String)Session.get("username");
+		String key = (String)Session.get("key");
+		String startDate = showBegin.getText().toString();
+		String endDate = showEnd.getText().toString();
+		String parameters = "?"+"funID=8&"+"username="+userName+"&startDate="+startDate+"&endDate="+endDate+"&key="+key;
+		System.out.println("parmeters:"+parameters);
+		String result;
+		try {
+			result = HttpClientUtil.getLoginUser(parameters);
+			Map<String, String> map = HttpClientUtil.stateTurnToJSon(result);	
+			
+			for (String mapKey : map.keySet()) {
+				System.out.println("key:"+mapKey);
+				System.out.println("values:"+map.get(mapKey));
+				
+				list.add(mapKey.substring(0, mapKey.indexOf("T"))+"#"+map.get(mapKey));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	private OnGroupExpandListener groupExpand = new OnGroupExpandListener() {
+
+		@Override
+		public void onGroupExpand(int groupPosition) {
+
+			System.out.println("执行了展开");
+			
+			String userName = (String)Session.get("username");
+			String key = (String)Session.get("key");
+			String parameters = "?"+"funID=8&"+"username="+userName+"&startDate=2013-11-24"+"&endDate=2013-11-27"+"&count=7"+"&key="+key;
+			System.out.println("par:"+parameters);
+			map.put("ReceiveName", "九三");
+			adapter.notifyDataSetChanged();
+			
+//			try {
+//				String result = HttpClientUtil.getLoginUser(parameters);
+//				Map<String, String> map = HttpClientUtil.dairyTurnToJSon(result);
+//				for (String mapKey : map.keySet()) {
+//					System.out.println("key:"+mapKey);
+//					System.out.println("values"+map.get(mapKey));
+//				}
+//				System.out.println("大小："+map.size());
+//			} catch (JSONException e) {
+//				System.out.println("io错误");
+//				e.printStackTrace();
+//			}catch (Exception e) {
+//				System.out.println("http错误");
+//		}
+			
+			
+		}
+	};
+
+}

@@ -1,0 +1,248 @@
+package com.firstgroup.iflytekdaily.work;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.DatePicker;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.ExpandListAdapter;
+import com.firstgroup.iflytekdaily.util.DateUtil;
+import com.firstgroup.iflytekdaily.util.HttpClientUtil;
+import com.firstgroup.iflytekdaily.util.Session;
+
+public class ReceivedDaily extends Fragment {
+	private List<String> list = new ArrayList<String>();
+	private TextView showBeginRece, showEndRece;
+	private ImageView chooseBeginRece, chooseEndRece, receiveImage;
+	private int yearRece, monthRece, dayRece;
+	private BaseExpandableListAdapter adapter;
+	private Map<String, String> receivedMap = new HashMap<String, String>();
+	private List<Map<String, String>> mapList = new ArrayList<Map<String, String>>();
+	List<Map<String, String>> resultLisrList = new ArrayList<Map<String, String>>();
+	private ExpandableListView listView;
+	private View TimeView;
+	private TextView friendlyHint;
+	private String setDate = "";
+	public static String expandDailyStaste = "";
+	public static String expandDailyDate = "";
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		Calendar calendar = Calendar.getInstance();
+		yearRece = calendar.get(calendar.YEAR);
+		monthRece = calendar.get(calendar.MONTH);
+		// monthRece++;
+		dayRece = calendar.get(calendar.DAY_OF_MONTH);
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.sended_daily_layout, null);
+		TimeView = view.findViewById(R.id.show_time_layout);
+		friendlyHint = (TextView) view.findViewById(R.id.friendly_hint);
+		receiveImage = (ImageView) view.findViewById(R.id.receiveImage);
+		receiveImage.setImageResource(R.drawable.contents_1);
+		TextView title = (TextView) view.findViewById(R.id.pager_title);
+		title.setText("已接收的日报");
+		listView = (ExpandableListView) view
+				.findViewById(R.id.expand_sended_daily);
+		listView.setGroupIndicator(null);
+		showBeginRece = (TextView) view.findViewById(R.id.bagin_time);
+		
+		int startDay = 1;
+		int rightMonth = monthRece + 1;
+		if (dayRece > 7) {
+			startDay = dayRece - 7;
+			showBeginRece.setText(yearRece + "-" + rightMonth + "-" + startDay);
+		}else if (dayRece <= 7) {
+			startDay = 21 + dayRece;
+			showBeginRece.setText(yearRece + "-" + monthRece + "-" + startDay);
+		}
+		
+		
+		showBeginRece.setText(yearRece + "-" + rightMonth + "-" + startDay);
+		
+		
+		showEndRece = (TextView) view.findViewById(R.id.end_time);
+		showEndRece.setText(yearRece + "-" + rightMonth + "-" + dayRece);
+		chooseBeginRece = (ImageView) view.findViewById(R.id.choose_bagin_day);
+		chooseEndRece = (ImageView) view.findViewById(R.id.choose_end_day);
+		adapter = new ExpandListAdapter(list, getActivity(), 2, receivedMap);
+		listView.setAdapter(adapter);
+		getReceState();
+		listView.setOnGroupExpandListener(onGroupExpand);
+		listView.setOnGroupCollapseListener(onGroupCollapse);
+		chooseBeginRece.setOnClickListener(beginOnClickRece);
+		chooseEndRece.setOnClickListener(endOnClickRece);
+
+		return view;
+	}
+
+	private OnClickListener beginOnClickRece = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					new OnDateSetListener() {
+
+						@Override
+						public void onDateSet(DatePicker view, int year,
+								int monthOfYear, int dayOfMonth) {
+							monthOfYear++;
+							showBeginRece.setText(year + "-" + monthOfYear
+									+ "-" + dayOfMonth);
+							getReceState();
+						}
+					}, yearRece, monthRece, dayRece);
+			dialog.show();
+
+		}
+	};
+	private OnClickListener endOnClickRece = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+					dateListener, yearRece, monthRece, dayRece);
+			dialog.show();
+
+		}
+	};
+
+	private OnDateSetListener dateListener = new OnDateSetListener() {
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			monthOfYear++;
+			setDate = year + "-" + monthOfYear + "-" + dayOfMonth;
+			showEndRece.setText(setDate);
+			// 选定日期 开始更新数据
+			getReceState();
+			adapter.notifyDataSetChanged();
+		}
+	};
+
+	/**
+	 * 访问网络 来获得日期和日报填写状态
+	 */
+	private void getReceState() {
+		String userName = (String) Session.get("username");
+		String key = (String) Session.get("key");
+		String startDate = showBeginRece.getText().toString();
+		String endDate = showEndRece.getText().toString();
+		String result = "";
+		String[] strings = {};
+		mapList.clear();
+		list.clear();
+		resultLisrList.clear();
+		int count = DateUtil.subDays(endDate, startDate);
+		if (count > 0) {
+			count = count * 10;
+			String parameters = "?" + "funID=6&" + "username=" + userName
+					+ "&startDate=" + startDate + "&endDate=" + endDate
+					+ "&count=" + count + "&key=" + key;
+			try {
+				result = HttpClientUtil.getLoginUser(parameters);
+
+				resultLisrList = HttpClientUtil
+						.dairyReportSetTurnToJSon(result);
+
+				System.out
+						.println("resultLisrList的大小：" + resultLisrList.size());
+				for (Map<String, String> map2 : resultLisrList) {
+					strings = map2.get("SendTime").split("T");
+					mapList.add(map2);
+					list.add(strings[0] + "#" + map2.get("WriterName"));
+				}
+				friendlyHint.setVisibility(View.GONE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}if (list.size() == 0) {
+				friendlyHint.setVisibility(View.VISIBLE);
+				friendlyHint.setText("这几天没有收到日报");
+				friendlyHint.setTextColor(Color.RED);
+			}
+			
+			
+		} else {
+			friendlyHint.setVisibility(View.GONE);
+			Toast.makeText(getActivity(), "请正确选择显示日期" + count,
+					Toast.LENGTH_LONG).show();
+		}
+		adapter.notifyDataSetChanged();
+	}
+
+	private OnGroupExpandListener onGroupExpand = new OnGroupExpandListener() {
+
+		@Override
+		public void onGroupExpand(int groupPosition) {
+
+			String timeState = list.get(groupPosition);
+			String[] strings = timeState.split("#");
+			expandDailyStaste = strings[1];
+			expandDailyDate = strings[0];
+			for (int i = 0; i < listView.getCount(); i++) {
+				if (i != groupPosition) {
+					listView.collapseGroup(i);
+				}
+			}
+			receivedMap.clear();
+			receivedMap.putAll(mapList.get(groupPosition));
+			adapter.notifyDataSetChanged();
+			TimeView.setVisibility(View.GONE);
+
+		}
+	};
+	private OnGroupCollapseListener onGroupCollapse = new OnGroupCollapseListener() {
+
+		@Override
+		public void onGroupCollapse(int groupPosition) {
+			TimeView.setVisibility(View.VISIBLE);
+
+		}
+	};
+
+}

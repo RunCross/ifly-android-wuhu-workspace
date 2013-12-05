@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/beijing04"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            style="@style/linear"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/my_game_cell"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/receiver_search_cont"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/receiver_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="onClick"
+                android:scaleType="fitXY"
+                android:src="@drawable/search_button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_margin="8dp"
+                android:src="@drawable/icon08" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加接收人"
+                android:textColor="#808080"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/linear"
+            android:layout_weight="1"
+            android:background="@drawable/my_game_cell"
+            android:orientation="vertical" >
+
+            <!--
+             <TextView
+            style="@style/change_pass_text"
+            android:text="@string/candidate_receiver"
+            android:textSize="20sp" />
+            -->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/menu_receiver_high"
+                android:scrollbars="vertical" >
+
+                <TableLayout
+                    android:id="@+id/receiver_candidate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:collapseColumns="3" >
+                </TableLayout>
+            </ScrollView>
+
+            <Button
+                android:id="@+id/add_receiver"
+                android:layout_width="75dp"
+                android:layout_height="45dp"
+                android:layout_gravity="right"
+                android:background="@drawable/button01"
+                android:onClick="onClick"
+                android:text="@string/add_receiver" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_margin="8dp"
+                android:src="@drawable/icon05" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="操作接收人"
+                android:textColor="#808080"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/linear"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/my_game_cell"
+            android:orientation="vertical" >
+
+            <!--
+             <TextView
+            style="@style/change_pass_text"
+            android:text="@string/chosen_receiver"
+            android:textSize="20sp" />
+            -->
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/menu_receiver_high"
+                android:scrollbars="vertical" >
+
+                <TableLayout
+                    android:id="@+id/receiver_chosen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:collapseColumns="3" >
+                </TableLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <Button
+                    android:id="@+id/del_receiver"
+                    android:layout_width="75dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/button01"
+                    android:onClick="onClick"
+                    android:text="@string/del_receiver" />
+
+                <Button
+                    android:id="@+id/submit_receiver"
+                    android:layout_width="75dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/button01"
+                    android:onClick="onClick"
+                    android:text="@string/submit" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

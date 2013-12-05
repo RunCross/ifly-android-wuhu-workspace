@@ -1,0 +1,10 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+<dimen name="menu_receiver_high">100dp</dimen>
+<dimen name="menu_hight">100dp</dimen>
+<dimen name="menu_width">400dp</dimen>
+</resources>

@@ -1,0 +1,314 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.work.ReceiverUtil;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.Toast;
+
+/**
+ * 设置日报接收者
+ * 
+ * @author RunCross
+ * 
+ */
+public class ReportReceiver extends Activity {
+
+	private EditText searchCon;
+	private TableLayout candidate;
+	private TableLayout chosen;
+
+	private Map<String, String> candidateList;
+	private Map<String, String> chosenList;
+	private Map<String, String> setList;
+	private Map<String, String> delList;
+	
+	private int receiverNum =0 ;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.report_receiver);
+
+		initSub();
+
+		initData();
+		// 获取日报接收人
+		getMyReceiver();
+
+	}
+
+	/**
+	 * 初始化数据
+	 */
+	private void initData() {
+		candidateList = new HashMap<String, String>();
+		chosenList = new HashMap<String, String>();
+		setList = new HashMap<String, String>();
+		delList = new HashMap<String, String>();
+	}
+
+	/**
+	 * 初始化组件
+	 */
+	private void initSub() {
+		searchCon = (EditText) findViewById(R.id.receiver_search_cont);
+
+		candidate = (TableLayout) findViewById(R.id.receiver_candidate);
+		chosen = (TableLayout) findViewById(R.id.receiver_chosen);
+
+	}
+
+	public void onClick(View view) throws Exception {
+		switch (view.getId()) {
+		case R.id.receiver_search:
+			candidate.removeAllViews();
+			getWillReceiver(searchCon.getText().toString());
+			break;
+		case R.id.add_receiver:
+			// test(candidate);
+			addReceiver();
+			break;
+		case R.id.del_receiver:
+			delReceiver();
+			break;
+		case R.id.submit_receiver:
+			submitReceiver();
+			finish();
+			break;
+		}
+	}
+
+	/**
+	 * 获取日报接收人
+	 */
+	private void getMyReceiver() {
+		chosenList = ReceiverUtil.getMyReceiver();
+		if (chosenList == null) {
+			return;
+		}
+		// 放入
+		// setList.addAll(chosenList);
+		// List<String>tempList = chosenList.keySet()
+
+		List<String> keyList = map2List(chosenList,"key");
+		receiverNum = keyList.size();
+//		System.out.println("getChosen "+keyList.size());
+		int count = 0;
+		TableRow tableRow = new TableRow(ReportReceiver.this);
+		for (count = 0; count < keyList.size(); count++) {
+//			System.out.println("get "+keyList.get(count));
+			if (count % 3 == 0 && count != 0) {
+				chosen.addView(tableRow);
+				tableRow = new TableRow(ReportReceiver.this);
+			}
+			CheckBox check = new CheckBox(ReportReceiver.this);
+			check.setText(keyList.get(count));
+			check.setChecked(false);
+			tableRow.addView(check);
+		}
+		if (count % 3 != 1) {
+			chosen.addView(tableRow);
+		}
+	}
+
+	/**
+	 * 搜索日报接收人
+	 * 
+	 * @throws UnsupportedEncodingException
+	 */
+	private void getWillReceiver(String cont)
+			throws UnsupportedEncodingException {
+		if ("".equals(cont) || cont == null) {
+			return;
+		}
+		candidateList = ReceiverUtil.getWillReceiver(cont);
+		if (candidateList == null) {
+			return;
+		}
+		int count = 0;
+		
+		List<String> valueList = map2List(candidateList,"key");
+//		System.out.println("getWill "+valueList.size());
+		TableRow tableRow = new TableRow(ReportReceiver.this);
+		for (count = 0; count < valueList.size(); count++) {
+//			System.out.println("get "+valueList.get(count));
+			if (count % 3 == 0 && count != 0) {
+				candidate.addView(tableRow);
+				tableRow = new TableRow(ReportReceiver.this);
+			}
+			CheckBox check = new CheckBox(ReportReceiver.this);
+			check.setText(valueList.get(count));
+			check.setChecked(false);
+
+			tableRow.addView(check);
+		}
+		if (count % 3 != 0) {
+			candidate.addView(tableRow);
+		}
+	}
+
+	/**
+	 * 从chosen删除接收人
+	 */
+	private void delReceiver() {
+		for (int i = 0; i < chosen.getChildCount(); i++) {
+			TableRow row = (TableRow) chosen.getChildAt(i);
+
+			for (int index = 0; index < row.getChildCount(); index++) {
+				CheckBox check = (CheckBox) row.getChildAt(index);
+				if (check.isChecked()) {
+					row.removeView(check);
+					receiverNum--;
+					String key = check.getText().toString();
+					System.out.println("del-"+key);
+					//放入删除map					
+					if(chosenList.get(key) != null){
+						delList.put(key, chosenList.get(key));
+					}else{
+						delList.put(key, candidateList.get(key));
+					}
+					index--;
+				}// if
+			}// for
+		}// for
+	}// method
+
+	/**
+	 * 添加接收人到chosen
+	 */
+	private void addReceiver() {
+		int count = 0;
+		TableRow chosenRow = new TableRow(ReportReceiver.this);
+
+		for (int child = 0; child < candidate.getChildCount(); child++) {
+			TableRow row = (TableRow) candidate.getChildAt(child);
+			// System.out.println("row child count:"+row.getChildCount());
+			for (int index = 0; index < row.getChildCount(); index++) {
+				CheckBox check = (CheckBox) row.getChildAt(index);
+				// System.out.print(check.getText().toString()+" ");
+				if (check.isChecked()) {
+					if(receiverNum>5){
+						Toast.makeText(ReportReceiver.this, "日报接收人达到上限(5)", Toast.LENGTH_SHORT).show();
+						return;
+					}
+					receiverNum++;
+					if (count % 3 == 0 && count != 0) {
+						chosen.addView(chosenRow);
+						chosenRow = new TableRow(ReportReceiver.this);
+					}
+					// CheckBox temp = new CheckBox(ReportReceiver.this);
+					// temp.setText(check.getText());
+					row.removeView(check);
+					check.setChecked(false);
+					chosenRow.addView(check);
+					// 索引回退1
+					index--;
+					// 自增
+					count++;
+				}
+			}
+
+			// System.out.println();
+		}
+		System.out.println("count " + count);
+		// if(count<=3 || count%3!=0){
+		chosen.addView(chosenRow);
+		// }
+		// test(chosen);
+	}
+
+	/**
+	 * 测试用
+	 * 
+	 * @param temp
+	 */
+	private void test(TableLayout temp) {
+		System.out.println("temp child count:" + temp.getChildCount());
+		for (int child = 0; child < temp.getChildCount(); child++) {
+			TableRow row = (TableRow) temp.getChildAt(child);
+			System.out.println("row child count:" + row.getChildCount());
+			for (int index = 0; index < row.getChildCount(); index++) {
+				CheckBox check = (CheckBox) row.getChildAt(index);
+				System.out.print(check.getText().toString() + " ");
+			}
+
+			System.out.println();
+		}
+
+	}
+
+	/**
+	 * 提交最终的接收人
+	 * @throws Exception 
+	 */
+	private void submitReceiver() throws Exception {
+		// 获取chosen的姓名
+		for (int child = 0; child < chosen.getChildCount(); child++) {
+			TableRow row = (TableRow) chosen.getChildAt(child);
+			// System.out.println("row child count:"+row.getChildCount());
+			for (int index = 0; index < row.getChildCount(); index++) {
+				CheckBox check = (CheckBox) row.getChildAt(index);
+				String key = check.getText().toString();
+				System.out.println("sub-"+key);
+				//放入添加map					
+				if(chosenList.get(key) != null){
+					setList.put(key, chosenList.get(key));
+				}else{
+					setList.put(key, candidateList.get(key));
+				}
+				// System.out.print(check.getText().toString()+" ");
+			}
+			// System.out.println();
+		}
+		disRepeat(setList);
+		ReceiverUtil.sumit(setList, delList);
+	}
+
+	/**
+	 * 去除重复接收人
+	 * @param setList2
+	 */
+	private void disRepeat(Map<String, String> map) {
+		List<String> key = map2List(setList,"key");
+		for(int i=0;i<key.size();i++){
+			if(map.containsKey(setList.get(i))){
+				map.remove(key.get(i));				
+			}
+		}
+	}
+
+	/**
+	 * Map转化List
+	 * @param map
+	 * @param type
+	 * @return
+	 */
+	private List<String> map2List(Map<String, String> map, String type) {
+		List<String> temp = new ArrayList<String>();
+		Iterator<String> it = map.keySet().iterator();		
+		while (it.hasNext()) {
+			String key = it.next().toString();
+			if (type.equals("key")) {
+				temp.add(key);
+			} else {
+				temp.add(map.get(key));
+			}
+		}
+
+		return temp;
+	}
+}

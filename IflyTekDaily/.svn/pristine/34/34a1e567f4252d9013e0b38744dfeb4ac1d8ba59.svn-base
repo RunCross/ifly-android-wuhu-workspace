@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/bg_1">
+    <LinearLayout 
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/bg_panel_2"
+        android:orientation="vertical"
+        >
+    <RadioGroup
+        android:id="@+id/navigation_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/edit_mode_head_backgorund"
+        android:gravity="center_vertical">
+
+        <RadioButton
+            android:id="@+id/navigation_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="首  页"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            />
+
+        <RadioButton
+            android:id="@+id/navigation_sended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="已发送"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/navigation_received"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="已接收"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </RadioGroup>
+</LinearLayout>
+    
+
+  <!--   <FrameLayout
+        android:id="@+id/show_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:layout_above="@+id/navigation_radioGroup"
+         > -->
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager11"
+             android:layout_above="@+id/navigation"
+           
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+         </android.support.v4.view.ViewPager> 
+
+   <!--  </FrameLayout> -->
+
+</RelativeLayout>

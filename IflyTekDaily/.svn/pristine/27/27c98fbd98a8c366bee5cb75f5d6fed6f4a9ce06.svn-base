@@ -1,0 +1,29 @@
+
+<resources>
+
+    <string name="app_name">IflyTekDaily</string>
+    <string name="action_settings">Settings</string>
+    <string name="state_witten">已填写</string>
+    <string name="state_help">查看详细</string>
+    <string name="toadaywork">今日工作：</string>
+    <string name="test_todaywork">按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课按计划在芜湖授课</string>
+    <string name="needcoordinate">待协调工作：</string>
+    <string name="needcoordwork">回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥回合肥</string>
+    <string name="receiver">接收人：</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="submit">提交</string>
+    <string name="cancel">取消</string>
+    <string name="old_pass">原始密码</string>
+    <string name="new_pass">新密码</string>
+	<string name="new_pass_confim">确认新密码</string>
+	<string name="candidate_receiver">待选择</string>
+	<string name="chosen_receiver">已选择</string>
+	<string name="add_receiver">添加</string>
+	<string name="del_receiver">删除</string>
+	<string name="menu_chang_pass">修改密码</string>
+	<string name="menu_chang_receiver">修改接收人</string>
+	<string name="menu_about">关于</string>
+	<string name="menu_email">Email</string>
+	<string name="menu_contact">通讯录</string>
+ 
+</resources>

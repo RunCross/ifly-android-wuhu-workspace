@@ -1,0 +1,48 @@
+package com.firstgroup.iflytekdaily.main;
+
+import com.firstgroup.iflytekdaily.R;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+
+public class SendTimedActivity extends Activity {
+	private Spinner shortCutSpinner,hourSpinner,miuniteSpinner;
+	//private ArrayAdapter<String> minutesAdapter;
+	private Button sureSet,cannelSet;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.sendtimedlayout);
+		shortCutSpinner = (Spinner) findViewById(R.id.shortcur_spinner);
+		hourSpinner = (Spinner) findViewById(R.id.set_time_hour);
+		miuniteSpinner = (Spinner) findViewById(R.id.set_time_minite);
+		sureSet = (Button) findViewById(R.id.sure_sendtimed);
+		cannelSet = (Button) findViewById(R.id.cannel_sendtimed);
+		String[] hours = getResources().getStringArray(R.array.hours);
+		ArrayAdapter<String> hourAdapter = new ArrayAdapter<String>(
+				SendTimedActivity.this, android.R.layout.simple_list_item_1,hours);
+		hourSpinner.setAdapter(hourAdapter);
+		String[] minutes = getResources().getStringArray(R.array.minutes);
+		ArrayAdapter<String> minutesAdapter = new ArrayAdapter<String>(
+				SendTimedActivity.this, android.R.layout.simple_list_item_1,minutes);
+		miuniteSpinner.setAdapter(minutesAdapter);
+		sureSet.setOnClickListener(buttonClick);
+	}
+	private OnClickListener buttonClick = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			if (v.getId()== sureSet.getId()) {
+				System.out.println(hourSpinner.getSelectedItem()+":"+miuniteSpinner.getSelectedItem());
+			}
+			
+		}
+	}; 
+
+}

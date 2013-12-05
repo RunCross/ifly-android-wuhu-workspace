@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <LinearLayout
+        android:id="@+id/header_show_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#5599cc00"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@drawable/male" />
+
+        <TextView
+            android:id="@+id/userNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="欢迎您："
+            android:textColor="#999999" />
+        <View android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="12dp"/>
+
+        <TextView
+            android:id="@+id/show_today_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2013/11/20"
+            android:layout_marginRight="8dp"
+            android:textColor="#999999" />
+
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/lastMouthBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/left" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2013-11-26"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/nextMouthBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/right" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.firstgroup.iflytekdaily.work.CalendarView
+            android:id="@+id/myGridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#66ffffff"
+            >
+            <TextView
+                android:id="@+id/linkText" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你今天还未填日报哦！点击这里填写"
+                android:layout_margin="10dp"
+                />
+        </LinearLayout>
+
+</LinearLayout>

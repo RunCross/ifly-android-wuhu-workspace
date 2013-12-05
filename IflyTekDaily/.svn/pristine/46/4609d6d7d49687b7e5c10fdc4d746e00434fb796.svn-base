@@ -1,0 +1,125 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.adapter.PagerViewAdapter;
+import com.firstgroup.iflytekdaily.work.ReceivedDaily;
+import com.firstgroup.iflytekdaily.work.SendedDaily;
+
+public class DailyMainActivity extends FragmentActivity {
+	private RadioGroup navigationGroup;
+	private ViewPager viewPager;
+	private Fragment sendedFragment;
+//	private RadioButton homeBtn, sendedBtn, receivedBtn;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.daily_main_layout);
+		viewPager = (ViewPager) findViewById(R.id.viewpager11);
+		sendedFragment = new SendedDaily();
+		
+
+		navigationGroup = (RadioGroup) findViewById(R.id.navigation_radioGroup);
+
+		navigationGroup.setOnCheckedChangeListener(radioGroupListener);
+		navigationGroup.check(R.id.navigation_home);
+		FragmentPagerAdapter adapter = new PagerViewAdapter(getSupportFragmentManager());
+		viewPager.setAdapter(adapter);
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+			}
+
+			@Override
+			public void onPageSelected(int arg0) {
+				switch (arg0) {
+				case 0:
+					navigationGroup.check(R.id.navigation_home);
+					break;
+				case 1:
+					navigationGroup.check(R.id.navigation_sended);
+					break;
+				case 2:
+					navigationGroup.check(R.id.navigation_received);
+					break;
+				default:
+					break;
+				}
+			}
+
+		});
+	}
+
+	private OnCheckedChangeListener radioGroupListener = new OnCheckedChangeListener() {
+
+		@Override
+		public void onCheckedChanged(RadioGroup group, int checkedId) {
+			switch (checkedId) {
+			case R.id.navigation_home:
+				
+				viewPager.setCurrentItem(0);
+
+				break;
+			case R.id.navigation_sended:
+				
+				viewPager.setCurrentItem(1);
+				break;
+			case R.id.navigation_received:
+				
+				viewPager.setCurrentItem(2);
+				break;
+
+			default:
+				break;
+			}
+
+		}
+	};
+
+//	 FragmentPagerAdapter adapter11 = new FragmentPagerAdapter(
+//				getSupportFragmentManager()) {
+//			@Override
+//			public int getCount() {
+//				// TODO Auto-generated method stub
+//				return 3;
+//			}
+//
+//			@Override
+//			public Fragment getItem(int arg0) {
+//				if (arg0 == 0) {
+//					return new SendedDaily();
+//				} else if (arg0 == 1) {
+//					
+//					return new SendedDaily();
+//				} else if (arg0 == 2) {
+//
+//					return new ReceivedDaily();
+//				} else {
+//					return new ReceivedDaily();
+//				}
+//
+//			}
+//		};
+
+}

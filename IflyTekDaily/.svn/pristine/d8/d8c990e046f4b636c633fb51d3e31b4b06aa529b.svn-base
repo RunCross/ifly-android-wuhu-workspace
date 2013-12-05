@@ -1,0 +1,42 @@
+package com.firstgroup.iflytekdaily.main;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.firstgroup.iflytekdaily.R;
+import com.firstgroup.iflytekdaily.R.id;
+import com.firstgroup.iflytekdaily.R.layout;
+import com.firstgroup.iflytekdaily.adapter.DailyMainFragment;
+import com.firstgroup.iflytekdaily.work.CalendarView;
+import com.firstgroup.iflytekdaily.work.CalendarView.OnItemClickListener;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class DailyMainActivity extends FragmentActivity {
+
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.dailylayout_main);
+		DailyMainFragment fragment=new DailyMainFragment();
+		LinearLayout layout=(LinearLayout) findViewById(R.id.layout1);
+		getSupportFragmentManager().beginTransaction().replace(R.id.layout1, fragment).commit();
+		
+	}
+	
+
+}

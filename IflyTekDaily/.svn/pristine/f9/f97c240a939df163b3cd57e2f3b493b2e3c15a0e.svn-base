@@ -1,0 +1,15 @@
+package com.firstgroup.iflytekdaily.main;
+
+import com.firstgroup.iflytekdaily.R;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class ReportReceiver extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.report_receiver);
+	}
+}

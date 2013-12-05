@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/menu_width"
+    android:layout_height="@dimen/menu_hight"
+    android:background="#999999"
+    android:collapseColumns="3"
+    android:stretchColumns="0,1,2"
+     >
+
+    <TableRow
+        android:layout_margin="5dp"
+        android:layout_width="@dimen/menu_width"
+        android:layout_height="wrap_content" >
+        <TextView 
+            android:id="@+id/menu_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/key"
+            android:text="@string/menu_chang_pass"
+            android:layout_gravity="center_horizontal"
+            />
+        
+        <TextView 
+            android:id="@+id/menu_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/personal"
+            android:text="@string/menu_chang_receiver"
+            android:layout_gravity="center_horizontal"
+            />
+        <TextView 
+            android:id="@+id/menu_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/about"
+            android:text="@string/menu_about"
+            android:layout_gravity="center_horizontal"
+            />
+    </TableRow>
+
+</TableLayout>
