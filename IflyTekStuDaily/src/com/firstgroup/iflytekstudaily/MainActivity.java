@@ -65,6 +65,8 @@ public class MainActivity extends Activity implements Callback{
 	public boolean handleMessage(Message msg) {
 		img.setImageBitmap(bmp);
 		System.out.println(img.getWidth()+"-"+img.getHeight());
+		System.out.println(Img2Str.code(bmp));
+		
 		return false;
 	}
 	

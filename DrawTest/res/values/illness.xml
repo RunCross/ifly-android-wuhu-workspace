@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MainActivity">
+        <attr name="pointx" format="dimension"/>
+        <attr name="pointy" format="dimension"/>
+        <attr name="temperature" format="integer"/>
+        <attr name="pulse" format="integer"/>
+        <attr name="columnWidth" format="integer"/>
+    </declare-styleable>
+</resources>
