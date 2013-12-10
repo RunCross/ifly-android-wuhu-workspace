@@ -5,6 +5,6 @@
         <attr name="pointy" format="dimension"/>
         <attr name="temperature" format="integer"/>
         <attr name="pulse" format="integer"/>
-        <attr name="columnWidth" format="integer"/>
+        <attr name="columnWidth" format="integer" />
     </declare-styleable>
 </resources>

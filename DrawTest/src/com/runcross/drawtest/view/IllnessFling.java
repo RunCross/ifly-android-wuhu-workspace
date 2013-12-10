@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,7 +19,7 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Illness extends View implements OnGestureListener{
+public class IllnessFling extends View implements OnGestureListener{
 
 	/**
 	 * 每行标题
@@ -28,6 +29,9 @@ public class Illness extends View implements OnGestureListener{
 	private static int rightMar = 20;
 
 	private GestureDetector ges;
+	
+	private Bitmap leftBit;
+	private Bitmap rightBit;
 	
 	/**
 	 * 总宽度
@@ -103,7 +107,7 @@ public class Illness extends View implements OnGestureListener{
 	 */
 	private IllnessInfo ill;
 
-	public Illness(Context context, AttributeSet attrs) {
+	public IllnessFling(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		// 获取属性集合
@@ -126,7 +130,7 @@ public class Illness extends View implements OnGestureListener{
 	// // TODO Auto-generated constructor stub
 	// }
 
-	public Illness(Context context, int width, int height) {
+	public IllnessFling(Context context, int width, int height) {
 		super(context);
 		this.width = width;
 		this.height = height;
@@ -184,14 +188,14 @@ public class Illness extends View implements OnGestureListener{
 			canvas.drawText(String.valueOf(beginNum2 - line), NUM_SPACE,
 					topMar, paint);
 			System.out.println(beginNum1);
-			if (beginNum1 == 160) {
-				paint.setColor(Color.BLUE);
-				canvas.drawLine(columnWidth, topMar, columnWidth
-						+ (int) (timeWeight * 2.5), topMar, paint);
-				canvas.drawLine(columnWidth + (int) (timeWeight * 2.5), topMar,
-						width, topMar - 20, paint);
-				paint.setColor(Color.BLACK);
-			}
+//			if (beginNum1 == 160) {
+//				paint.setColor(Color.BLUE);
+//				canvas.drawLine(columnWidth, topMar, columnWidth
+//						+ (int) (timeWeight * 2.5), topMar, paint);
+//				canvas.drawLine(columnWidth + (int) (timeWeight * 2.5), topMar,
+//						width, topMar - 20, paint);
+//				paint.setColor(Color.BLACK);
+//			}
 		}
 		topMar = LINETOP * lineHeight + marginTop;
 		// 再次计算顶部距离
@@ -212,8 +216,11 @@ public class Illness extends View implements OnGestureListener{
 		// 列分割线
 		canvas.drawLine(columnWidth, 0, columnWidth, height, paint);
 
+		rightBit = Bitmap.createBitmap(width-columnWidth,height, Bitmap.Config.ARGB_8888);
+		leftBit = Bitmap.createBitmap(width-columnWidth,height, Bitmap.Config.ARGB_8888);
 		// 数据
-		IllnessInfo ill = new IllnessInfo();
+		IllnessInfo illLeft = new IllnessInfo();
+		IllnessInfo illRight = new IllnessInfo();
 
 		// 重新计算
 		topMar = marginTop + lineHeight - TEXT_MARGIN_BOTTOM;
