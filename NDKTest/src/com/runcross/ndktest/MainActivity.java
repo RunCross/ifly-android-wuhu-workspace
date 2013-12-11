@@ -2,8 +2,6 @@ package com.runcross.ndktest;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -17,7 +15,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		JNIWriter writer = new JNIWriter();
 		String st = writer.write("Test");
-		System.out.println("sss");
 		System.out.println("return--"+st);
 		
 	}

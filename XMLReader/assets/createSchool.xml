@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<School test="test">
+  <Student examId="23">
+    <Name>香香</Name>
+    <Num>1006010066</Num>
+    <Classes>眼视光5</Classes>
+    <Address>浙江温州</Address>
+    <Tel>123890</Tel>
+  </Student>
+  <Student examId="24">
+    <Name>香香1</Name>
+    <Num>1006010066</Num>
+    <Classes>眼视光5</Classes>
+    <Address>浙江温州</Address>
+    <Tel>123890</Tel>
+  </Student>
+</School>
+

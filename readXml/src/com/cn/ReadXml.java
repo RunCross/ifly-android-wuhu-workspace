@@ -36,7 +36,7 @@ public class ReadXml extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try {
-					 in=getResources().getAssets().open("river.xml");
+					 in=getResources().getAssets().open("books.xml");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
