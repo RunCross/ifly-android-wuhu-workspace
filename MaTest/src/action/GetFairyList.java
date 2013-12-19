@@ -27,7 +27,7 @@ public class GetFairyList {
 		ArrayList<NameValuePair> al = new ArrayList<NameValuePair>();
 		try {
 			result = Process.connect.connectToServer(URL_FAIRY_LIST, al);
-			System.out.println(new String(result));
+//			System.out.println(new String(result));
 		} catch (Exception ex) {
 			throw ex;
 		}

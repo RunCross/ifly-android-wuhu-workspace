@@ -57,7 +57,7 @@ public class GetAreaInfo {
             NodeList list = (NodeList)xpath.evaluate("//exploration_area/area_info_list/area_info", doc, XPathConstants.NODESET);
 			FloorInfo floorInfo = null;
 			List<FloorInfo> floorInfos = new ArrayList<FloorInfo>();
-			System.out.println("list node "+list.getLength());
+//			System.out.println("list node "+list.getLength());
 			if(list.getLength() > 0){
 				for (int i = 0; i < list.getLength(); i++) {
 					Node f = list.item(i).getFirstChild();
