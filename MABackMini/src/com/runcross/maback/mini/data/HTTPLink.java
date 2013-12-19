@@ -4,10 +4,10 @@ public class HTTPLink {
 
 	public static int world = 1;
 	
-	public static String host = "http://game"+world+"-cbt.ma.sdo.com:10001";
+	public static String host = "http://game"+world+"-CBT.ma.sdo.com:10001";
 	
 	public static String getHost(){
-		return "http://game"+world+"-cbt.ma.sdo.com:10001";
+		return "http://game"+world+"-CBT.ma.sdo.com:10001";
 	}
 	
 	public static void init(int world,int country){

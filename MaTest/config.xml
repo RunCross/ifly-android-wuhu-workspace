@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-	<username></username>  <!-- 手机号 -->
-	<password></password>  <!-- 密码 -->
-	<user_agent>101</user_agent>  <!-- 版本号，游戏更新改动这里就可以了 -->
+	<username>15552873330</username>  <!-- 手机号 -->
+	<password>12345678</password>  <!-- 密码 -->
+	<user_agent>102</user_agent>  <!-- 版本号，游戏更新改动这里就可以了 -->
 	<server>1</server>   <!-- 游戏区，1区填1，2区填2，3区填3，以后有4区理论上填4就行了…… -->
 	<sleep>60</sleep>   <!-- 掉线重连时间，单位为秒，因为不提供卖卡等功能，设置掉线重连时间可以方便卡快满的时候用手机卖下卡，免得满卡挂不了机 -->
 	<wait_time>5</wait_time>  <!-- 扫列表频率，单位为秒 -->

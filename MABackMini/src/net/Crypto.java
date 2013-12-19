@@ -9,7 +9,9 @@ import com.runcross.maback.mini.start.Info;
 
 
 public class Crypto {
+//	aAbcdefghijklmn
 	private static final String BaseSecretKey = "rBwj1MIAivVN222b";
+//	private static final String BaseSecretKey = "Fwe3;$84@kl3221554*G(|d@";
 	//private static final String UnusedSecretKey = "A1dPUcrvur2CRQyl";	
 	
 	private static String GetSecretKey(boolean useLoginId) {

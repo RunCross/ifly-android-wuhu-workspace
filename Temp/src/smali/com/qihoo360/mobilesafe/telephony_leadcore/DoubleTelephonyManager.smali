@@ -1,0 +1,1266 @@
+.class public Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;
+.super Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface;
+
+
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;
+    }
+.end annotation
+
+
+# static fields
+.field private static b:Ljava/util/ArrayList; = null
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/ArrayList",
+            "<",
+            "Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+.field private static synthetic g:[I = null
+
+.field public static final sysCallColumnName:Ljava/lang/String; = "sim_id"
+
+.field public static final sysSMSColumnName:Ljava/lang/String; = "sim_id"
+
+
+# instance fields
+.field public final a:Landroid/content/Context;
+
+.field private final c:Landroid/telephony/TelephonyManager;
+
+.field private final d:[Ljava/lang/Class;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "[",
+            "Ljava/lang/Class",
+            "<*>;"
+        }
+    .end annotation
+.end field
+
+.field private final e:[Ljava/lang/Class;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "[",
+            "Ljava/lang/Class",
+            "<*>;"
+        }
+    .end annotation
+.end field
+
+.field private final f:Ljava/util/Map;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/Map",
+            "<",
+            "Lh;",
+            "Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, Ljava/util/ArrayList;
+
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+    sput-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->b:Ljava/util/ArrayList;
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/content/Context;)V
+    .locals 5
+
+    const/4 v4, 0x1
+
+    const/4 v3, 0x0
+
+    invoke-direct {p0}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface;-><init>()V
+
+    new-array v0, v4, [Ljava/lang/Class;
+
+    sget-object v1, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v1, v0, v3
+
+    iput-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->d:[Ljava/lang/Class;
+
+    const/4 v0, 0x3
+
+    new-array v0, v0, [Ljava/lang/Class;
+
+    sget-object v1, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v1, v0, v3
+
+    const-class v1, Ljava/lang/String;
+
+    aput-object v1, v0, v4
+
+    const/4 v1, 0x2
+
+    sget-object v2, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v2, v0, v1
+
+    iput-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->e:[Ljava/lang/Class;
+
+    new-instance v0, Ljava/util/HashMap;
+
+    invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
+
+    iput-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->f:Ljava/util/Map;
+
+    iput-object p1, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a:Landroid/content/Context;
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->b:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clear()V
+
+    new-instance v0, Ls;
+
+    invoke-direct {v0, v3, p0}, Ls;-><init>(ILcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;)V
+
+    new-instance v1, Ls;
+
+    invoke-direct {v1, v4, p0}, Ls;-><init>(ILcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;)V
+
+    sget-object v2, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->b:Ljava/util/ArrayList;
+
+    invoke-virtual {v2, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->b:Ljava/util/ArrayList;
+
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    iget-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a:Landroid/content/Context;
+
+    const-string v1, "phone"
+
+    invoke-virtual {v0, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/telephony/TelephonyManager;
+
+    iput-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->c:Landroid/telephony/TelephonyManager;
+
+    return-void
+.end method
+
+.method static synthetic a()[I
+    .locals 3
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->g:[I
+
+    if-eqz v0, :cond_0
+
+    :goto_0
+    return-object v0
+
+    :cond_0
+    invoke-static {}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->values()[Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;
+
+    move-result-object v0
+
+    array-length v0, v0
+
+    new-array v0, v0, [I
+
+    :try_start_0
+    sget-object v1, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->CALL:Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;
+
+    invoke-virtual {v1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x1
+
+    aput v2, v0, v1
+    :try_end_0
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_0 .. :try_end_0} :catch_2
+
+    :goto_1
+    :try_start_1
+    sget-object v1, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->MMS:Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;
+
+    invoke-virtual {v1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x3
+
+    aput v2, v0, v1
+    :try_end_1
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_1 .. :try_end_1} :catch_1
+
+    :goto_2
+    :try_start_2
+    sget-object v1, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->SMS:Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;
+
+    invoke-virtual {v1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x2
+
+    aput v2, v0, v1
+    :try_end_2
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_2 .. :try_end_2} :catch_0
+
+    :goto_3
+    sput-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->g:[I
+
+    goto :goto_0
+
+    :catch_0
+    move-exception v1
+
+    goto :goto_3
+
+    :catch_1
+    move-exception v1
+
+    goto :goto_2
+
+    :catch_2
+    move-exception v1
+
+    goto :goto_1
+.end method
+
+
+# virtual methods
+.method public addSimIdColumnToProjection(Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;[Ljava/lang/String;)[Ljava/lang/String;
+    .locals 3
+
+    if-nez p2, :cond_0
+
+    const/4 v0, 0x0
+
+    :goto_0
+    return-object v0
+
+    :cond_0
+    array-length v0, p2
+
+    add-int/lit8 v0, v0, 0x1
+
+    new-array v1, v0, [Ljava/lang/String;
+
+    const/4 v0, 0x0
+
+    :goto_1
+    array-length v2, p2
+
+    if-lt v0, v2, :cond_1
+
+    invoke-static {}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a()[I
+
+    move-result-object v0
+
+    invoke-virtual {p1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v2
+
+    aget v0, v0, v2
+
+    packed-switch v0, :pswitch_data_0
+
+    :goto_2
+    move-object v0, v1
+
+    goto :goto_0
+
+    :cond_1
+    aget-object v2, p2, v0
+
+    aput-object v2, v1, v0
+
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_1
+
+    :pswitch_0
+    array-length v0, v1
+
+    add-int/lit8 v0, v0, -0x1
+
+    const-string v2, "sim_id"
+
+    aput-object v2, v1, v0
+
+    goto :goto_2
+
+    :pswitch_1
+    array-length v0, v1
+
+    add-int/lit8 v0, v0, -0x1
+
+    const-string v2, "sim_id"
+
+    aput-object v2, v1, v0
+
+    goto :goto_2
+
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_0
+        :pswitch_1
+        :pswitch_1
+    .end packed-switch
+.end method
+
+.method public beginMMSConnectivity(Landroid/content/Context;I)I
+    .locals 7
+
+    const/4 v6, 0x0
+
+    const-string v0, "connectivity"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/net/ConnectivityManager;
+
+    const-string v1, "startUsingNetworkFeatureMSMS"
+
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    iget-object v3, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->e:[Ljava/lang/Class;
+
+    const/4 v4, 0x3
+
+    new-array v4, v4, [Ljava/lang/Object;
+
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v5
+
+    aput-object v5, v4, v6
+
+    const/4 v5, 0x1
+
+    const-string v6, "enableMMS"
+
+    aput-object v6, v4, v5
+
+    const/4 v5, 0x2
+
+    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v6
+
+    aput-object v6, v4, v5
+
+    invoke-static {v0, v1, v2, v3, v4}, Lm;->a(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Integer;
+
+    invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public endMMSConnectivity(Landroid/content/Context;I)V
+    .locals 7
+
+    const/4 v6, 0x0
+
+    const-string v0, "connectivity"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/net/ConnectivityManager;
+
+    const-string v1, "stopUsingNetworkFeatureMSMS"
+
+    const/4 v2, 0x0
+
+    iget-object v3, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->e:[Ljava/lang/Class;
+
+    const/4 v4, 0x3
+
+    new-array v4, v4, [Ljava/lang/Object;
+
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v5
+
+    aput-object v5, v4, v6
+
+    const/4 v5, 0x1
+
+    const-string v6, "enableMMS"
+
+    aput-object v6, v4, v5
+
+    const/4 v5, 0x2
+
+    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v6
+
+    aput-object v6, v4, v5
+
+    invoke-static {v0, v1, v2, v3, v4}, Lm;->a(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    return-void
+.end method
+
+.method public getConnectActionCardId(Landroid/content/Intent;)I
+    .locals 2
+
+    const-string v0, "linkID"
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public getCurrentMobileState(Landroid/content/Context;)I
+    .locals 6
+
+    const/4 v2, 0x0
+
+    const/4 v1, 0x1
+
+    :try_start_0
+    invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v0
+
+    const-string v3, "mobile_data"
+
+    invoke-static {v0, v3}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;)I
+    :try_end_0
+    .catch Landroid/provider/Settings$SettingNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-result v0
+
+    if-ne v0, v1, :cond_0
+
+    move v0, v1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    move v0, v2
+
+    goto :goto_0
+
+    :catch_0
+    move-exception v0
+
+    const-string v0, "connectivity"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/net/ConnectivityManager;
+
+    const-class v3, Landroid/net/ConnectivityManager;
+
+    :try_start_1
+    const-string v4, "getMobileDataEnabled"
+
+    const/4 v5, 0x0
+
+    invoke-virtual {v3, v4, v5}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+
+    move-result-object v3
+
+    const/4 v4, 0x1
+
+    invoke-virtual {v3, v4}, Ljava/lang/reflect/Method;->setAccessible(Z)V
+
+    const/4 v4, 0x0
+
+    invoke-virtual {v3, v0, v4}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Boolean;
+
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+    :try_end_1
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_1
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    :goto_1
+    move v0, v1
+
+    goto :goto_0
+
+    :cond_1
+    move v1, v2
+
+    goto :goto_1
+
+    :catch_1
+    move-exception v0
+
+    const/4 v0, -0x1
+
+    goto :goto_0
+.end method
+
+.method public getCurrentNetCard(Landroid/content/Context;)I
+    .locals 9
+
+    const/4 v8, 0x2
+
+    const/4 v1, 0x1
+
+    const/4 v2, 0x0
+
+    iget-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->c:Landroid/telephony/TelephonyManager;
+
+    const-string v3, "getDataStateMSMS"
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v4
+
+    iget-object v5, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->d:[Ljava/lang/Class;
+
+    new-array v6, v1, [Ljava/lang/Object;
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v7
+
+    aput-object v7, v6, v2
+
+    invoke-static {v0, v3, v4, v5, v6}, Lm;->a(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Integer;
+
+    invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
+
+    move-result v0
+
+    if-ne v8, v0, :cond_0
+
+    move v0, v1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    iget-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->c:Landroid/telephony/TelephonyManager;
+
+    const-string v3, "getDataStateMSMS"
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v4
+
+    iget-object v5, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->d:[Ljava/lang/Class;
+
+    new-array v6, v1, [Ljava/lang/Object;
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v7
+
+    aput-object v7, v6, v2
+
+    invoke-static {v0, v3, v4, v5, v6}, Lm;->a(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Integer;
+
+    invoke-virtual {v0}, Ljava/lang/Integer;->intValue()I
+
+    move-result v0
+
+    if-ne v8, v0, :cond_1
+
+    move v0, v2
+
+    goto :goto_0
+
+    :cond_1
+    invoke-virtual {p0}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->getPhoneCardsList()Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;
+
+    invoke-virtual {v0}, Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;->isAvailable()Z
+
+    move-result v0
+
+    invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v3
+
+    invoke-virtual {p0}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->getPhoneCardsList()Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;
+
+    invoke-virtual {v0}, Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;->isAvailable()Z
+
+    move-result v0
+
+    invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v0
+
+    invoke-virtual {v3}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result v4
+
+    if-eqz v4, :cond_2
+
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result v4
+
+    if-nez v4, :cond_2
+
+    move v0, v2
+
+    goto :goto_0
+
+    :cond_2
+    invoke-virtual {v3}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result v2
+
+    if-nez v2, :cond_3
+
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_3
+
+    move v0, v1
+
+    goto :goto_0
+
+    :cond_3
+    const/4 v0, -0x1
+
+    goto :goto_0
+.end method
+
+.method public getDefaultTelephonyService()Lcom/android/internal/telephony/ITelephony;
+    .locals 1
+
+    const-string v0, "phone"
+
+    invoke-static {v0}, Landroid/os/ServiceManager;->checkService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v0
+
+    invoke-static {v0}, Lcom/android/internal/telephony/ITelephony$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ITelephony;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public getPhoneCardsList()Ljava/util/ArrayList;
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Ljava/util/ArrayList",
+            "<",
+            "Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;",
+            ">;"
+        }
+    .end annotation
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->b:Ljava/util/ArrayList;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clone()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/util/ArrayList;
+
+    return-object v0
+.end method
+
+.method public getSimId(Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;Landroid/database/Cursor;)I
+    .locals 4
+
+    const/4 v1, 0x1
+
+    const/4 v0, 0x0
+
+    invoke-static {}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a()[I
+
+    move-result-object v2
+
+    invoke-virtual {p1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v3
+
+    aget v2, v2, v3
+
+    packed-switch v2, :pswitch_data_0
+
+    :cond_0
+    :goto_0
+    return v0
+
+    :pswitch_0
+    const-string v2, "sim_id"
+
+    invoke-interface {p2, v2}, Landroid/database/Cursor;->getColumnIndex(Ljava/lang/String;)I
+
+    move-result v2
+
+    invoke-interface {p2, v2}, Landroid/database/Cursor;->getInt(I)I
+
+    move-result v2
+
+    add-int/lit8 v2, v2, -0x1
+
+    if-eqz v2, :cond_0
+
+    move v0, v1
+
+    goto :goto_0
+
+    :pswitch_1
+    const-string v2, "sim_id"
+
+    invoke-interface {p2, v2}, Landroid/database/Cursor;->getColumnIndex(Ljava/lang/String;)I
+
+    move-result v2
+
+    invoke-interface {p2, v2}, Landroid/database/Cursor;->getInt(I)I
+
+    move-result v2
+
+    add-int/lit8 v2, v2, -0x1
+
+    if-nez v2, :cond_0
+
+    move v0, v1
+
+    goto :goto_0
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_0
+        :pswitch_1
+        :pswitch_1
+    .end packed-switch
+.end method
+
+.method public getSimId(Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;Landroid/database/Cursor;I)I
+    .locals 4
+
+    const/4 v1, 0x1
+
+    const/4 v0, 0x0
+
+    invoke-static {}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a()[I
+
+    move-result-object v2
+
+    invoke-virtual {p1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v3
+
+    aget v2, v2, v3
+
+    packed-switch v2, :pswitch_data_0
+
+    :cond_0
+    :goto_0
+    return v0
+
+    :pswitch_0
+    invoke-interface {p2, p3}, Landroid/database/Cursor;->getInt(I)I
+
+    move-result v2
+
+    add-int/lit8 v2, v2, -0x1
+
+    if-eqz v2, :cond_0
+
+    move v0, v1
+
+    goto :goto_0
+
+    :pswitch_1
+    invoke-interface {p2, p3}, Landroid/database/Cursor;->getInt(I)I
+
+    move-result v2
+
+    add-int/lit8 v2, v2, -0x1
+
+    if-nez v2, :cond_0
+
+    move v0, v1
+
+    goto :goto_0
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_0
+        :pswitch_1
+        :pswitch_1
+    .end packed-switch
+.end method
+
+.method public getSimIdFromIntent(Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;Landroid/content/Intent;)I
+    .locals 3
+
+    const/4 v0, 0x0
+
+    invoke-static {}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a()[I
+
+    move-result-object v1
+
+    invoke-virtual {p1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v2
+
+    aget v1, v1, v2
+
+    packed-switch v1, :pswitch_data_0
+
+    :goto_0
+    return v0
+
+    :pswitch_0
+    const-string v1, "linkID"
+
+    invoke-virtual {p2, v1, v0}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
+
+    move-result v0
+
+    goto :goto_0
+
+    :pswitch_1
+    const-string v1, "linkID"
+
+    invoke-virtual {p2, v1, v0}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
+
+    move-result v0
+
+    goto :goto_0
+
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_0
+        :pswitch_1
+        :pswitch_1
+    .end packed-switch
+.end method
+
+.method public getSmsFragmentText(Ljava/lang/String;)Ljava/lang/Object;
+    .locals 1
+
+    invoke-static {}, Landroid/telephony/SmsManager;->getDefault()Landroid/telephony/SmsManager;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p1}, Landroid/telephony/SmsManager;->divideMessage(Ljava/lang/String;)Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->clone()Ljava/lang/Object;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public listen(Lh;I)V
+    .locals 3
+
+    iget-object v0, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->f:Ljava/util/Map;
+
+    invoke-interface {v0, p1}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;
+
+    if-nez v0, :cond_1
+
+    new-instance v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;
+
+    invoke-direct {v0, p0, p1, p2}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;-><init>(Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;Lh;I)V
+
+    iget-object v1, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->f:Ljava/util/Map;
+
+    invoke-interface {v1, p1, v0}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-object v1, v0
+
+    :goto_0
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->b:Ljava/util/ArrayList;
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;
+
+    iget-object v1, v1, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;->a:Lcom/qihoo360/mobilesafe/telephony_leadcore/PhoneStateListenerProxy;
+
+    invoke-virtual {v0, v1, p2}, Lcom/qihoo360/mobilesafe/telephonyInterface/PhoneCardInterface;->listen(Landroid/telephony/PhoneStateListener;I)V
+
+    :cond_0
+    return-void
+
+    :cond_1
+    if-nez p2, :cond_2
+
+    iget-object v1, p0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->f:Ljava/util/Map;
+
+    invoke-interface {v1, p1}, Ljava/util/Map;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+
+    :cond_2
+    iget v1, v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;->b:I
+
+    if-eq p2, v1, :cond_0
+
+    iput p2, v0, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager$a;->b:I
+
+    move-object v1, v0
+
+    goto :goto_0
+.end method
+
+.method public requestRouteToHost(Landroid/content/Context;III)V
+    .locals 9
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Ljava/io/IOException;
+        }
+    .end annotation
+
+    const/4 v5, 0x3
+
+    const/4 v8, 0x2
+
+    const/4 v7, 0x1
+
+    const/4 v6, 0x0
+
+    const-string v0, "connectivity"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/net/ConnectivityManager;
+
+    const-string v1, "requestRouteToHostMSMS"
+
+    invoke-static {v6}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v2
+
+    new-array v3, v5, [Ljava/lang/Class;
+
+    sget-object v4, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v4, v3, v6
+
+    sget-object v4, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v4, v3, v7
+
+    sget-object v4, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v4, v3, v8
+
+    new-array v4, v5, [Ljava/lang/Object;
+
+    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v5
+
+    aput-object v5, v4, v6
+
+    invoke-static {p3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v5
+
+    aput-object v5, v4, v7
+
+    invoke-static {p4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v5
+
+    aput-object v5, v4, v8
+
+    invoke-static {v0, v1, v2, v3, v4}, Lm;->a(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Boolean;
+
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    new-instance v0, Ljava/io/IOException;
+
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    const-string v2, "Cannot establish route to proxy "
+
+    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {v1, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+
+    throw v0
+
+    :cond_0
+    return-void
+.end method
+
+.method public setExpandValues(Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;Landroid/net/Uri;Landroid/content/ContentValues;Ljava/lang/String;)V
+    .locals 2
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->SMS:Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;
+
+    if-eq p1, v0, :cond_0
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->MMS:Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;
+
+    if-ne p1, v0, :cond_1
+
+    :cond_0
+    const-string v0, "seen"
+
+    const/4 v1, 0x1
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    invoke-virtual {p3, v0, v1}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+
+    :cond_1
+    return-void
+.end method
+
+.method public setMobileDataState(Landroid/content/Context;ZZ)Z
+    .locals 10
+
+    const/4 v1, 0x1
+
+    const/4 v2, 0x0
+
+    :try_start_0
+    const-string v0, "connectivity"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/net/ConnectivityManager;
+
+    invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v3
+
+    const-string v4, "ps_default"
+
+    invoke-static {v3, v4}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;)I
+
+    move-result v3
+
+    const-string v4, "setMobileDataEnabledMSMS"
+
+    const/4 v5, 0x0
+
+    const/4 v6, 0x2
+
+    new-array v6, v6, [Ljava/lang/Class;
+
+    const/4 v7, 0x0
+
+    sget-object v8, Ljava/lang/Boolean;->TYPE:Ljava/lang/Class;
+
+    aput-object v8, v6, v7
+
+    const/4 v7, 0x1
+
+    sget-object v8, Ljava/lang/Integer;->TYPE:Ljava/lang/Class;
+
+    aput-object v8, v6, v7
+
+    const/4 v7, 0x2
+
+    new-array v7, v7, [Ljava/lang/Object;
+
+    const/4 v8, 0x0
+
+    invoke-static {p2}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v9
+
+    aput-object v9, v7, v8
+
+    const/4 v8, 0x1
+
+    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v3
+
+    aput-object v3, v7, v8
+
+    invoke-static {v0, v4, v5, v6, v7}, Lm;->a(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Object;
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    move v0, v1
+
+    :goto_0
+    return v0
+
+    :catch_0
+    move-exception v0
+
+    invoke-virtual {v0}, Ljava/lang/Exception;->printStackTrace()V
+
+    if-eqz p3, :cond_0
+
+    sget-object v0, Lcom/qihoo360/mobilesafe/telephonyInterface/OperatorInterface;->telephoneEnvConfig:Lcom/qihoo360/mobilesafe/telephonyInterface/TelephoneEnvInterface;
+
+    invoke-virtual {v0}, Lcom/qihoo360/mobilesafe/telephonyInterface/TelephoneEnvInterface;->getDataConnectionIntent()Landroid/content/Intent;
+
+    move-result-object v0
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->startActivity(Landroid/content/Intent;)V
+
+    :cond_0
+    move v0, v2
+
+    goto :goto_0
+.end method
+
+.method public setSimId(Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;Landroid/content/ContentValues;I)V
+    .locals 2
+
+    invoke-static {}, Lcom/qihoo360/mobilesafe/telephony_leadcore/DoubleTelephonyManager;->a()[I
+
+    move-result-object v0
+
+    invoke-virtual {p1}, Lcom/qihoo360/mobilesafe/telephonyInterface/DoubleTelephonyManagerInterface$SysIdType;->ordinal()I
+
+    move-result v1
+
+    aget v0, v0, v1
+
+    packed-switch v0, :pswitch_data_0
+
+    :goto_0
+    return-void
+
+    :pswitch_0
+    const-string v0, "sim_id"
+
+    invoke-static {p3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    invoke-virtual {p2, v0, v1}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+
+    goto :goto_0
+
+    :pswitch_1
+    if-nez p3, :cond_0
+
+    const/4 v0, 0x2
+
+    :goto_1
+    const-string v1, "sim_id"
+
+    invoke-static {v0}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    invoke-virtual {p2, v1, v0}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+
+    goto :goto_0
+
+    :cond_0
+    const/4 v0, 0x1
+
+    goto :goto_1
+
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x1
+        :pswitch_0
+        :pswitch_1
+        :pswitch_1
+    .end packed-switch
+.end method

@@ -8,20 +8,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/result"
+    <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/hello_world"
-        android:textSize="25px" />
+        android:hint="输入名字"
+        android:textSize="25sp" />
+    <EditText
+        android:id="@+id/count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="50dp"
+        android:inputType="number"
+        android:hint="输入次数"
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/go"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/result"
+        android:layout_below="@+id/count"
         android:layout_marginTop="50dp"
+        android:onClick="onClick"
         android:text="Yaya" />
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/go"
+        android:layout_marginTop="50dp"
+        android:text="@string/hello_world"
+        android:textSize="25sp" />
 
 </RelativeLayout>

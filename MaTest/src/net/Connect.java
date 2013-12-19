@@ -10,6 +10,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import net.CryptoCn.E_CODE;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -31,7 +33,7 @@ public class Connect {
 	private static final String Key = "2DbcAh3G";
 
 	private static DefaultHttpClient client;
-	
+	private static CryptoCn dk;
 	public Connect() {
 		client = new DefaultHttpClient();
 		HttpParams hp = client.getParams();
@@ -40,19 +42,21 @@ public class Connect {
 	}
 	
 	//加密参数
-	private static List<NameValuePair> requestProcess(List<NameValuePair> source) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
-		ArrayList<NameValuePair> result = new ArrayList<NameValuePair>();
-		Iterator<NameValuePair> i  = source.iterator();
-		while(i.hasNext()) {
-			NameValuePair n = i.next();
-			result.add(new BasicNameValuePair(n.getName(),Crypto.Encrypt2Base64NoKey(n.getValue())));
-		}
-		return result;
-	}
+//	private static List<NameValuePair> requestProcess(List<NameValuePair> source) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
+//		ArrayList<NameValuePair> result = new ArrayList<NameValuePair>();
+//		Iterator<NameValuePair> i  = source.iterator();
+//		while(i.hasNext()) {
+//			NameValuePair n = i.next();
+//			result.add(new BasicNameValuePair(n.getName(),Crypto.Encrypt2Base64NoKey(n.getValue())));
+//		}
+//		return result;
+//	}
 
 	//访问请求
 	public byte[] connectToServer(String url, List<NameValuePair> content) throws Exception {
-		List<NameValuePair> post = requestProcess(content);
+//		List<NameValuePair> post = requestProcess(content);
+		dk = new CryptoCn();
+		List<NameValuePair> post = dk.addnew_crypt_K_param(content,url);
 		HttpPost hp = new HttpPost(url);
 		hp.setHeader("User-Agent", UserAgent);
 		hp.setHeader("Accept-Encoding", "gzip, deflate");
@@ -70,10 +74,16 @@ public class Connect {
 				// need to be decoded
 				return null;
 			}
-			try {
-				return Crypto.DecryptNoKey(b);
-			} catch (Exception ex) {
-				throw ex;
+//			try {
+//				return Crypto.DecryptNoKey(b);
+//			} catch (Exception ex) {
+//				throw ex;
+//			}
+			if(url.indexOf("login?") != -1 || url.indexOf("regist?") != -1)
+			{
+				return dk.new_decrypt_cn(E_CODE.RSA, b);
+			}else{
+				return dk.new_decrypt_cn(E_CODE.AES, b);
 			}
 		} else{
 			connectToServer(url,content);

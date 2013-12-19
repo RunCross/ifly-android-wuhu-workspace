@@ -3,8 +3,6 @@ package com.runcross.maback.mini;
 import com.runcross.maback.mini.services.ActionGo;
 import com.runcross.maback.mini.services.ActionGo.ActionThread;
 import com.runcross.maback.mini.start.Info;
-import net.Process;
-
 import android.app.Activity;
 import android.app.Service;
 import android.content.ComponentName;

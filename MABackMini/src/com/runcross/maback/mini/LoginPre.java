@@ -38,7 +38,7 @@ public class LoginPre extends Activity implements Callback {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-
+		
 		hand = new Handler(this);
 
 		world = (RadioGroup) findViewById(R.id.world);
@@ -61,7 +61,7 @@ public class LoginPre extends Activity implements Callback {
 			}
 		});
 		shared = getSharedPreferences("app", MODE_PRIVATE);
-		DeviecInfo.app_version = shared.getString("version", "101");
+		DeviecInfo.app_version = shared.getString("version", "102");
 //		ContentResolver cr = getContentResolver();
 //		Cursor cursor = cr.query(
 //				Uri.parse("content://com.runcross.maback.go/version"), null,
@@ -120,8 +120,8 @@ public class LoginPre extends Activity implements Callback {
 				// Toast.LENGTH_SHORT).show();
 				// return ;
 				// }
-//				Info.LoginId = "15552873330";
-//				Info.LoginPw = "12345678";
+				Info.LoginId = "15552873330";
+				Info.LoginPw = "12345678";
 				Info.LoginServer = HTTPLink.getHost();
 				
 				
