@@ -125,7 +125,7 @@ public class Process {
 		switch (action) {
 			case LOGIN:
 				try {
-					if (Login.run()) {
+					if (Login.run(false)) {
 						Go.log("cookie:"+info.cookie);
 						Go.log("登陆成功，角色名："+info.userName+",等级："+info.userLv+"，最大ap："+info.apMax+"，当前ap："+info.apCurrent+"，最大bc："+info.bcMax+"，当前bc："+info.bcCurrent+"，剩余属性点："+info.freeApBcPoint);
 						info.events.push(Info.EventType.fairyAppear);

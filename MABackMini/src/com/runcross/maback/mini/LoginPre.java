@@ -1,6 +1,8 @@
 package com.runcross.maback.mini;
 
 
+import net.DeKey;
+
 import com.runcross.maback.mini.action.Login;
 import com.runcross.maback.mini.data.DeviecInfo;
 import com.runcross.maback.mini.data.HTTPLink;
@@ -38,6 +40,8 @@ public class LoginPre extends Activity implements Callback {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		
+		
 		
 		hand = new Handler(this);
 
@@ -120,8 +124,8 @@ public class LoginPre extends Activity implements Callback {
 				// Toast.LENGTH_SHORT).show();
 				// return ;
 				// }
-				Info.LoginId = "15552873330";
-				Info.LoginPw = "12345678";
+//				Info.LoginId = "15552873330";
+//				Info.LoginPw = "12345678";
 				Info.LoginServer = HTTPLink.getHost();
 				
 				

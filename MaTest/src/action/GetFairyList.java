@@ -27,6 +27,7 @@ public class GetFairyList {
 		ArrayList<NameValuePair> al = new ArrayList<NameValuePair>();
 		try {
 			result = Process.connect.connectToServer(URL_FAIRY_LIST, al);
+			System.out.println(new String(result));
 		} catch (Exception ex) {
 			throw ex;
 		}
@@ -80,6 +81,8 @@ public class GetFairyList {
 									fairyInfo.name = f1.getFirstChild().getNodeValue();
 								}else if(f1.getNodeName().equals("lv")){
 									fairyInfo.lv = f1.getFirstChild().getNodeValue();
+								}else if(f1.getNodeName().equals("race_type")){
+									fairyInfo.race_type = f1.getFirstChild().getNodeValue();
 								}
 								f1 = f1.getNextSibling();
 							}while(f1 != null);

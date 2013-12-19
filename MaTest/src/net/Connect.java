@@ -1,14 +1,6 @@
 package net;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import net.CryptoCn.E_CODE;
 
@@ -19,7 +11,6 @@ import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 
 import start.Info;
@@ -27,7 +18,7 @@ import start.Info;
 public class Connect {
 
 	//游戏版本
-	private static final String UserAgent = "	Million/"+Info.userAgent+" (GT-I9100; GT-I9100; 2.3.4) samsung/GT-I9100/GT-I9100:2.3.4/GRJ22/eng.build.20120314.185218:eng/release-keys";
+	private static final String UserAgent = "Million/"+Info.userAgent+" (GT-I9100; GT-I9100; 2.3.4) samsung/GT-I9100/GT-I9100:2.3.4/GRJ22/eng.build.20120314.185218:eng/release-keys";
 	
 	private static final String Auth = "eWa25vrE";
 	private static final String Key = "2DbcAh3G";
@@ -79,12 +70,13 @@ public class Connect {
 //			} catch (Exception ex) {
 //				throw ex;
 //			}
-			if(url.indexOf("login?") != -1 || url.indexOf("regist?") != -1)
-			{
-				return dk.new_decrypt_cn(E_CODE.RSA, b);
-			}else{
-				return dk.new_decrypt_cn(E_CODE.AES, b);
-			}
+//			if(url.indexOf("login?") != -1 || url.indexOf("regist?") != -1)
+//			{
+//				return dk.new_decrypt_cn(E_CODE.RSA, b);
+//			}else{
+//				return dk.new_decrypt_cn(E_CODE.AES, b);
+//			}
+			return CryptoCn.decode(b);
 		} else{
 			connectToServer(url,content);
 		}

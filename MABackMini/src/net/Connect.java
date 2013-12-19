@@ -24,6 +24,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpParams;
 
+import android.util.Base64;
+
 import com.runcross.maback.mini.data.DeviecInfo;
 
 public class Connect {
@@ -99,6 +101,9 @@ public class Connect {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+//		String st = "1zy+Fhy323W9zsMjoJ3Y8g==\n";
+//		System.out.println("deck_id"+new String(DeKey.decode(Base64.decode(st.getBytes(), Base64.DEFAULT))));
 		
 		/* end */
 		if (b != null) {

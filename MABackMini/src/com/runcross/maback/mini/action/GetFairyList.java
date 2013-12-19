@@ -81,6 +81,8 @@ public class GetFairyList {
 									fairyInfo.name = f1.getFirstChild().getNodeValue();
 								}else if(f1.getNodeName().equals("lv")){
 									fairyInfo.lv = f1.getFirstChild().getNodeValue();
+								}else if(f1.getNodeName().equals("race_type")){
+									fairyInfo.race_type = f1.getFirstChild().getNodeValue();
 								}
 								f1 = f1.getNextSibling();
 							}while(f1 != null);

@@ -2,6 +2,8 @@ package info;
 
 public class FairyInfo {
 	
+	public String race_type = "";
+	
 	public String serialId = ""; 
 	
 	public String name = "";

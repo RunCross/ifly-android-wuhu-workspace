@@ -4,6 +4,8 @@ import info.CreateXML;
 import info.GetUserInfo;
 
 import java.util.ArrayList;
+
+import net.CryptoCn;
 import net.Process;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -13,6 +15,7 @@ import start.Info;
 
 public class Login {
 	
+	private static final String URL_CHECK_INSPECTION = Info.LoginServer +"/connect/app/check_inspection?cyt=1";
 	//登陆url
 	private static final String URL_LOGIN = Info.LoginServer + "/connect/app/login?cyt=1";
 
@@ -20,6 +23,25 @@ public class Login {
 	private static byte[] result;
 	
 	public static boolean run() throws Exception {
+		try {
+			return run(true);
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
+	public static boolean run(boolean jump) throws Exception {
+		
+		if (!jump) {
+			try {
+				result = Process.connect.connectToServer(URL_CHECK_INSPECTION, new ArrayList<NameValuePair>());
+			} catch (Exception ex) {
+				throw ex;
+			}
+		}
+		CryptoCn.set_dynamic_aes_key_json("");
+		
+		
 		Document doc;
 		ArrayList<NameValuePair> al = new ArrayList<NameValuePair>();
 		al.add(new BasicNameValuePair("login_id",Info.LoginId));

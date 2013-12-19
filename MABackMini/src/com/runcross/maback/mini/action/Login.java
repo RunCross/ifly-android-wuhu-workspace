@@ -39,14 +39,14 @@ public class Login {
 		
 		if (!jump) {
 			try {
-				result = Process.connect.connectToServerCheckIn(URL_CHECK_INSPECTION, new ArrayList<NameValuePair>());
+				result = Process.connect.connectToServer(URL_CHECK_INSPECTION, new ArrayList<NameValuePair>());
 			} catch (Exception ex) {
 				throw ex;
 			}
 		}
-		System.out.println("result -"+result.length);
-		System.out.println(new String(result));
-		System.out.println(Base64.encodeToString(DeKey.decode(result),Base64.DEFAULT));
+//		System.out.println("result -"+result.length);
+//		System.out.println(new String(result));
+//		System.out.println(Base64.encodeToString(DeKey.decode(result),Base64.DEFAULT));
 		
 		DeKey.set_dynamic_aes_key_json("");
 		

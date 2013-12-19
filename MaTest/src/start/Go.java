@@ -13,7 +13,7 @@ public class Go {
 			Process proc = new Process();
 			//System.out.println(Crypto.DecryptBase64NoKey2Str("NzgOGTK08BvkZN5q8XvG6Q"));
 			while(true){
-				System.out.println(Info.LoginId);
+//				System.out.println(Info.LoginId);
 				proc.start();
 			}
 		}catch(Exception e){
