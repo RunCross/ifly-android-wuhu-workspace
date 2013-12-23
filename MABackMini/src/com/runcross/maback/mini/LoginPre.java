@@ -1,13 +1,6 @@
 package com.runcross.maback.mini;
 
 
-import net.DeKey;
-
-import com.runcross.maback.mini.action.Login;
-import com.runcross.maback.mini.data.DeviecInfo;
-import com.runcross.maback.mini.data.HTTPLink;
-import com.runcross.maback.mini.start.Info;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -27,6 +20,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.runcross.maback.mini.action.Login;
+import com.runcross.maback.mini.data.DeviecInfo;
+import com.runcross.maback.mini.data.HTTPLink;
+import com.runcross.maback.mini.start.Info;
 
 public class LoginPre extends Activity implements Callback {
 
@@ -124,8 +122,8 @@ public class LoginPre extends Activity implements Callback {
 				// Toast.LENGTH_SHORT).show();
 				// return ;
 				// }
-//				Info.LoginId = "15552873330";
-//				Info.LoginPw = "12345678";
+				Info.LoginId = "15552873330";
+				Info.LoginPw = "12345678";
 				Info.LoginServer = HTTPLink.getHost();
 				
 				
