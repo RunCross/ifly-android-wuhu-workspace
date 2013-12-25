@@ -29,6 +29,7 @@ public class FairyHistory {
 		al.add(new BasicNameValuePair("user_id", fairyInfo.userId));
 		try {
 			result = Process.connect.connectToServer(URL_FAIRY_HISTORY, al);
+//			System.out.println(new String(result));
 		} catch (Exception ex) {
 			throw ex;
 		}

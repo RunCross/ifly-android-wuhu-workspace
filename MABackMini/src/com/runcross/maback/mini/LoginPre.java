@@ -122,8 +122,8 @@ public class LoginPre extends Activity implements Callback {
 				// Toast.LENGTH_SHORT).show();
 				// return ;
 				// }
-				Info.LoginId = "15552873330";
-				Info.LoginPw = "12345678";
+//				Info.LoginId = "15552873330";
+//				Info.LoginPw = "12345678";
 				Info.LoginServer = HTTPLink.getHost();
 				
 				
