@@ -38,7 +38,7 @@ public class LoginPre extends Activity implements Callback {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		
+		System.out.println("create");
 		
 		
 		hand = new Handler(this);
@@ -122,8 +122,8 @@ public class LoginPre extends Activity implements Callback {
 				// Toast.LENGTH_SHORT).show();
 				// return ;
 				// }
-//				Info.LoginId = "15552873330";
-//				Info.LoginPw = "12345678";
+				Info.LoginId = "15552873330";
+				Info.LoginPw = "12345678";
 				Info.LoginServer = HTTPLink.getHost();
 				
 				
@@ -162,6 +162,21 @@ public class LoginPre extends Activity implements Callback {
 
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		System.out.println("onResume");
+	}
+	
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		System.out.println("onRestart");
+	}
+	
 	@Override
 	public boolean handleMessage(Message msg) {
 		switch (msg.what) {

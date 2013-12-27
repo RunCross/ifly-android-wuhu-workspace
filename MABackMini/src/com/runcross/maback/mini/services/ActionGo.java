@@ -36,10 +36,16 @@ public class ActionGo extends Service {
 				public void run() {
 					Process proc = new Process();
 					while (true) {
+						System.out.println("in");
 						proc.start();
 					}
 				}
 			}).start();
 		}
+	}
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		System.out.println("serviceDestory");
 	}
 }

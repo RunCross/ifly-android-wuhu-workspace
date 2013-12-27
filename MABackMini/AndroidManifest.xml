@@ -20,20 +20,22 @@
         android:allowBackup="true"
         android:icon="@drawable/face_392"
         android:label="@string/app_name"
+        android:name="com.runcross.maback.mini.ApplicationTest"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginPre"
             android:label="@string/app_name" 
+            android:launchMode="standard" 
             >
-             <intent-filter>
+              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> 
         </activity>
         <activity
             android:name=".UserInfoShow"
-            android:launchMode="singleTask" >
+            android:launchMode="standard" >
         </activity>
         <service android:name="com.runcross.maback.mini.services.ActionGo">
             
